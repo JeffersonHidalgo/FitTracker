@@ -10,13 +10,13 @@ export default function Plan() {
               Product name
             </th>
             <th scope="col" className="px-6 py-3">
-              Color
+              Disponibilidad
             </th>
             <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">
               Category
             </th>
             <th scope="col" className="px-6 py-3">
-              Price
+              Precio
             </th>
           </tr>
         </thead>
@@ -26,57 +26,57 @@ export default function Plan() {
               scope="row"
               className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800"
             >
-              Apple MacBook Pro 17"
+              Membresia del Gym"
             </th>
-            <td className="px-6 py-4">Silver</td>
-            <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">Laptop</td>
-            <td className="px-6 py-4">$2999</td>
+            <td className="px-6 py-4">Disponible</td>
+            <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">Digital</td>
+            <td className="px-6 py-4">$1,000</td>
           </tr>
           <tr className="border-b border-gray-200 dark:border-gray-700">
             <th
               scope="row"
               className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800"
             >
-              Microsoft Surface Pro
+              Coach Personal Asignado
             </th>
-            <td className="px-6 py-4">White</td>
-            <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">Laptop PC</td>
-            <td className="px-6 py-4">$1999</td>
+            <td className="px-6 py-4">No disponible</td>
+            <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">FIsico</td>
+            <td className="px-6 py-4">$3,000</td>
           </tr>
           <tr className="border-b border-gray-200 dark:border-gray-700">
             <th
               scope="row"
               className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800"
             >
-              Magic Mouse 2
+              Rutina Semanal
             </th>
-            <td className="px-6 py-4">Black</td>
+            <td className="px-6 py-4">Disponible</td>
             <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-              Accessories
+              Fisico/Digital
             </td>
-            <td className="px-6 py-4">$99</td>
+            <td className="px-6 py-4">$250</td>
           </tr>
           <tr className="border-b border-gray-200 dark:border-gray-700">
             <th
               scope="row"
               className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800"
             >
-              Google Pixel Phone
+              Plan de Nutricion
             </th>
-            <td className="px-6 py-4">Gray</td>
-            <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">Phone</td>
-            <td className="px-6 py-4">$799</td>
+            <td className="px-6 py-4">Disponible</td>
+            <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">Personal</td>
+            <td className="px-6 py-4">1,200</td>
           </tr>
           <tr>
             <th
               scope="row"
               className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800"
             >
-              Apple Watch 5
+              Plan 5
             </th>
-            <td className="px-6 py-4">Red</td>
+            <td className="px-6 py-4">No stock</td>
             <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">Wearables</td>
-            <td className="px-6 py-4">$999</td>
+            <td className="px-6 py-4">$9999</td>
           </tr>
         </tbody>
       </table>

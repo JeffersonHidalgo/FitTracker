@@ -1,220 +1,254 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
-  const [isRegistroOpen, setIsRegistroOpen] = useState(false);
-  const [isConfiguracionOpen, setIsConfiguracionOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Datos de ejemplo
+  const username = "Charlie";
+  const handleLogout = () => {
+    console.log("Cerrar sesión");
+    // Lógica de logout aquí
+  };
+
+  // Paleta:
+  // #DFF2EB - Texto principal (claro)
+  // #B9E5E8 - Fondo de dropdowns
+  // #7AB2D3 - Hover en botones y enlaces
+  // #4A628A - Fondo principal del header
+
+  const menuItems = [
+    { name: "Inicio", path: "/", submenu: [] },
+    { name: "Información Cliente", path: "/", submenu: [] },
+    {
+      name: "Registro",
+      submenu: [
+        { name: "Cliente", path: "/registro/cliente" },
+        { name: "Métricas", path: "/registro/metricas" },
+        { name: "Planes de Entrenamiento", path: "/registro/planes" },
+        { name: "Dietas", path: "/registro/dietas" }
+      ]
+    },
+    { name: "Informes",
+      submenu: [
+        { name: "Progreso", path: "/registro/progreso" },
+        { name: "Recomendaciones", path: "/registro/recomendaciones" }
+      ] },
+    {
+      name: "Configuración",
+      submenu: [
+        { name: "Empresa", path: "/configuracion/empresa" },
+        { name: "Usuarios", path: "/gestion-usuarios" },
+        { name: "Cambiar mi clave", path: "/configuracion/clave" }
+      ]
+    }
+  ];
 
   return (
-    <nav className="bg-blue-100 border-gray-200 dark:bg-gray-800">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="./src/logo.webp" className="h-8" alt="Flowbite Logo" />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap text-gray-800 dark:text-white">
-            FitTracker
-          </span>
-        </a>
-        <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button
-            type="button"
-            className="flex text-sm bg-blue-500 rounded-full md:me-0 focus:ring-4 focus:ring-blue-300 dark:focus:ring-gray-600"
-            id="user-menu-button"
-            aria-expanded="false"
-            data-dropdown-toggle="user-dropdown"
-            data-dropdown-placement="bottom"
-          >
-            <span className="sr-only">Open user menu</span>
-            <img
-              className="w-8 h-8 rounded-full"
-              src="/profile-picture-3.jpg"
-              alt="user photo"
-            />
-          </button>
-          {/* Dropdown menu */}
-          <div
-            className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600"
-            id="user-dropdown"
-          >
-            <div className="px-4 py-3">
-              <span className="block text-sm text-gray-900 dark:text-white">
-                Bonnie Green
+    <nav className="shadow-lg sticky top-0 z-50" style={{ backgroundColor: "#4A628A" }}>
+      <div className="max-w-screen-xl mx-auto px-4 py-3">
+        <div className="flex items-center justify-between">
+          {/* Sección izquierda: Logo */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="flex items-center space-x-3">
+              <img src="./src/logo.webp" alt="Logo" className="h-8" />
+              <span className="text-2xl font-semibold" style={{ color: "#DFF2EB" }}>
+                FitTracker
               </span>
-              <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
-                name@flowbite.com
-              </span>
-            </div>
-            <ul className="py-2" aria-labelledby="user-menu-button">
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  Dashboard
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  Settings
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  Earnings
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  Sign out
-                </a>
-              </li>
-            </ul>
+            </Link>
           </div>
-          <button
-            data-collapse-toggle="navbar-user"
-            type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-user"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
+
+          {/* Sección central: Menú */}
+          <div className="hidden md:flex flex-1 justify-center">
+            <div className="flex space-x-6">
+              {menuItems.map((item) => (
+                <div key={item.name} className="relative group">
+                  {item.submenu ? (
+                    <>
+                      <button
+                        className="px-3 py-2 rounded transition"
+                        style={{ color: "#DFF2EB" }}
+                      >
+                        {item.name}
+                      </button>
+                      <div
+                        className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-48 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                        style={{ backgroundColor: "#B9E5E8" }}
+                      >
+                        {item.submenu.map((subItem) => (
+                          <Link
+                            key={subItem.path}
+                            to={subItem.path}
+                            className="block px-4 py-2 text-base transition"
+                            style={{ color: "#4A628A" }}
+                            onMouseEnter={(e) =>
+                              (e.currentTarget.style.backgroundColor = "#7AB2D3")
+                            }
+                            onMouseLeave={(e) =>
+                              (e.currentTarget.style.backgroundColor = "transparent")
+                            }
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <Link
+                      to={item.path}
+                      className="px-3 py-2 rounded transition"
+                      style={{ color: "#DFF2EB" }}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.backgroundColor = "#7AB2D3")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.backgroundColor = "transparent")
+                      }
+                    >
+                      {item.name}
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Sección derecha: Usuario y Logout */}
+          <div className="hidden md:flex items-center space-x-4">
+            <span className="font-medium" style={{ color: "#DFF2EB" }}>
+              {username}
+            </span>
+            <button
+              onClick={handleLogout}
+              className="p-2 rounded transition hover:bg-[#7AB2D3]"
+              style={{ color: "#DFF2EB" }}
             >
-              <path
+              <svg
+                className="w-6 h-6"
+                fill="none"
                 stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Botón para el menú móvil */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded focus:outline-none"
+              style={{ color: "#DFF2EB" }}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
-        <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-          id="navbar-user"
-        >
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-blue-100 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-blue-100 dark:bg-gray-800 md:dark:bg-gray-800 dark:border-gray-700">
+      </div>
+
+      {/* Menú móvil */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden" style={{ backgroundColor: "#4A628A" }}>
+          <ul className="px-4 pt-2 pb-4 space-y-2">
+            {menuItems.map((item) => (
+              <li key={item.name}>
+                {item.submenu ? (
+                  <>
+                    <div className="font-semibold py-2" style={{ color: "#DFF2EB" }}>
+                      {item.name}
+                    </div>
+                    <ul className="mt-1 pl-4 space-y-1">
+                      {item.submenu.map((subItem) => (
+                        <li key={subItem.path}>
+                          <Link
+                            to={subItem.path}
+                            className="block text-base px-3 py-2 rounded transition"
+                            style={{ color: "#DFF2EB" }}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            onMouseEnter={(e) =>
+                              (e.currentTarget.style.backgroundColor = "#7AB2D3")
+                            }
+                            onMouseLeave={(e) =>
+                              (e.currentTarget.style.backgroundColor = "transparent")
+                            }
+                          >
+                            {subItem.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <Link
+                    to={item.path}
+                    className="block text-base px-3 py-2 rounded transition"
+                    style={{ color: "#DFF2EB" }}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.backgroundColor = "#7AB2D3")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.backgroundColor = "transparent")
+                    }
+                  >
+                    {item.name}
+                  </Link>
+                )}
+              </li>
+            ))}
+            {/* Opción de cerrar sesión en móvil */}
             <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-white bg-blue-500 rounded-sm md:bg-transparent md:text-blue-500 md:p-0 md:dark:text-blue-400"
-                aria-current="page"
-              >
-                Inicio
-              </a>
-            </li>
-            <li className="relative group">
               <button
-                onClick={() => setIsRegistroOpen(!isRegistroOpen)}
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-blue-200 md:hover:bg-transparent md:hover:text-blue-500 md:p-0 dark:text-white md:dark:hover:text-blue-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                onClick={() => {
+                  handleLogout();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full text-base px-3 py-2 rounded transition flex items-center space-x-2"
+                style={{ color: "#DFF2EB" }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#7AB2D3")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = "transparent")
+                }
               >
-                Registro
+                <span>Cerrar sesión</span>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"
+                  />
+                </svg>
               </button>
-              {isRegistroOpen && (
-                <ul className="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Cliente
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Métricas
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Planes de Entrenamiento
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Progreso
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Recomendaciones
-                    </a>
-                  </li>
-                </ul>
-              )}
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-blue-200 md:hover:bg-transparent md:hover:text-blue-500 md:p-0 dark:text-white md:dark:hover:text-blue-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Informes
-              </a>
-            </li>
-            <li className="relative group">
-              <button
-                onClick={() => setIsConfiguracionOpen(!isConfiguracionOpen)}
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-blue-200 md:hover:bg-transparent md:hover:text-blue-500 md:p-0 dark:text-white md:dark:hover:text-blue-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Configuración
-              </button>
-              {isConfiguracionOpen && (
-                <ul className="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Empresa
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Usuarios
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Cambiar mi clave
-                    </a>
-                  </li>
-                </ul>
-              )}
             </li>
           </ul>
         </div>
-      </div>
+      )}
     </nav>
   );
 }

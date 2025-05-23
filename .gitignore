@@ -1,6 +1,8 @@
 # .gitignore
 
 # Visual Studio
+*.v2
+
 .vs/
 *.user
 *.suo

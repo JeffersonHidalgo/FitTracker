@@ -33,13 +33,29 @@ namespace FitTrackerApi.Controllers
         }
 
         [HttpPost("insertar")]
-        public async Task<IActionResult> InsertUsuario([FromBody] Usuario usuario)
+        public async Task<IActionResult> InsertarUsuarioConAccesos([FromBody] Usuario usuario)
         {
             if (usuario == null)
                 return BadRequest("Datos inválidos.");
 
-            var ok = await _usuarioRepository.InsertUsuario(usuario);
-            return ok ? Ok("Usuario creado.") : StatusCode(500, "Error al crear usuario.");
+            var usuarioCreado = await _usuarioRepository.InsertUsuario(usuario);
+
+            if (!usuarioCreado)
+                return StatusCode(500, "Error al crear el usuario.");
+
+
+            if (usuario.Accesos != null && usuario.Accesos.Count > 0)
+            {
+                foreach (var acceso in usuario.Accesos)
+                {
+                    acceso.UsuarioId = usuario.Id; 
+                    var ok = await _usuarioRepository.InsertUsuarioAcceso(acceso);
+                    if (!ok)
+                        return StatusCode(500, "Error al asignar accesos.");
+                }
+            }
+
+            return Ok("Usuario y accesos creados correctamente.");
         }
 
         [HttpPut("actualizar")]

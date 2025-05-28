@@ -36,33 +36,80 @@ namespace FitTrackerApi.Controllers
         [HttpPost("insertar")]
         public async Task<IActionResult> InsertCliente([FromBody] Cliente cliente)
         {
-            if (cliente == null)
-            {
-                return BadRequest();
-            }
-            if (!ModelState.IsValid)
-            {
+            if (cliente == null || !ModelState.IsValid)
                 return BadRequest(ModelState);
-            }
 
-            var created = await _clienteRepository.InsertCliente(cliente);
-            return Created("created", created);
+            // InsertCliente devuelve el ID generado o 0 si falla
+            var newId = await _clienteRepository.InsertCliente(cliente);
+            if (newId == 0)
+                return StatusCode(500, "Error inserting the client.");
+
+            // Devuelve 201 Created con Location y el ID
+            return CreatedAtAction(
+                nameof(GetCliente),
+                new { id = newId },
+                new { codigoCli = newId }
+            );
         }
 
         // PUT api/cliente/actualizar
         [HttpPut("actualizar")]
         public async Task<IActionResult> UpdateCliente([FromBody] Cliente cliente)
         {
-            if (cliente == null)
-            {
-                return BadRequest();
-            }
-            if (!ModelState.IsValid)
-            {
+            if (cliente == null || !ModelState.IsValid)
                 return BadRequest(ModelState);
-            }
-            await _clienteRepository.UpdateCliente(cliente);
-            return NoContent();
+
+            // UpdateCliente devuelve el mismo ID o 0 si falla
+            var updatedId = await _clienteRepository.UpdateCliente(cliente);
+            if (updatedId == 0)
+                return NotFound("Client not found or error updating.");
+
+            // Devuelve 200 OK con el ID
+            return Ok(new { codigoCli = updatedId });
+
         }
+
+        [HttpPost("subir-foto/{clienteId}")]
+        public async Task<IActionResult> SubirFotoCliente(int clienteId, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("No se envió ningún archivo.");
+
+            if (clienteId <= 0)
+                return BadRequest("ID de cliente inválido.");
+
+            try
+            {
+                var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+                var permitidas = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+                if (!permitidas.Contains(extension))
+                    return BadRequest("Tipo de archivo no permitido.");
+
+                // Nombre generado automáticamente
+                var nombreArchivo = $"cliente_{clienteId}{extension}";
+
+                var carpeta = Path.Combine(Directory.GetCurrentDirectory(), "imagen-cliente");
+                if (!Directory.Exists(carpeta))
+                    Directory.CreateDirectory(carpeta);
+
+                var ruta = Path.Combine(carpeta, nombreArchivo);
+
+                using var stream = new FileStream(ruta, FileMode.Create);
+                await file.CopyToAsync(stream);
+
+                return Ok(new
+                {
+                    mensaje = "Imagen subida correctamente.",
+                    nombreArchivo = nombreArchivo,
+                    rutaRelativa = $"imagen-cliente/{nombreArchivo}"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al guardar la imagen: {ex.Message}");
+            }
+        }
+
+
     }
 }

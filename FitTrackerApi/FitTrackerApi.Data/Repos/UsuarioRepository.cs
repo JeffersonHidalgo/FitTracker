@@ -7,28 +7,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utils;
 
 namespace Data.Repos
 {
     public class UsuarioRepository : IUsuarioRepository
     {
         private readonly MysqlConfig _config;
-        private readonly string _logPath = "log_errores.txt";
 
         public UsuarioRepository(MysqlConfig config) => _config = config;
         protected MySqlConnection GetConnection() => new MySqlConnection(_config.ConnectionString);
-
-        private void LogError(string metodo, Exception ex)
-        {
-            try
-            {
-                var mensaje = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] Error en {metodo}: {ex}\n";
-                File.AppendAllText(_logPath, mensaje);
-            }
-            catch
-            {
-            }
-        }
 
         public async Task<IEnumerable<Usuario>> SlistaUsuarios()
         {
@@ -52,7 +40,7 @@ namespace Data.Repos
             }
             catch (Exception ex)
             {
-                LogError(nameof(SlistaUsuarios), ex);
+                LogHelper.LogError(nameof(SlistaUsuarios), ex);
                 return Enumerable.Empty<Usuario>();
             }
         }
@@ -111,7 +99,7 @@ namespace Data.Repos
             }
             catch (Exception ex)
             {
-                LogError(nameof(GetUsuarioConAccesos), ex);
+                LogHelper.LogError(nameof(GetUsuarioConAccesos), ex);
                 return null;
             }
         }
@@ -141,7 +129,7 @@ namespace Data.Repos
             }
             catch (Exception ex)
             {
-                LogError(nameof(InsertUsuario), ex);
+                LogHelper.LogError(nameof(InsertUsuario), ex);
                 return false;
             }
         }
@@ -180,11 +168,10 @@ namespace Data.Repos
             }
             catch (Exception ex)
             {
-                LogError(nameof(UpdateUsuario), ex);
+                LogHelper.LogError(nameof(UpdateUsuario), ex);
                 return false;
             }
         }
-
 
         public async Task<bool> InsertUsuarioAcceso(UsuarioAcceso acceso)
         {
@@ -202,7 +189,7 @@ namespace Data.Repos
             }
             catch (Exception ex)
             {
-                LogError(nameof(InsertUsuarioAcceso), ex);
+                LogHelper.LogError(nameof(InsertUsuarioAcceso), ex);
                 return false;
             }
         }
@@ -222,7 +209,7 @@ namespace Data.Repos
             }
             catch (Exception ex)
             {
-                LogError(nameof(DeleteUsuarioAcceso), ex);
+                LogHelper.LogError(nameof(DeleteUsuarioAcceso), ex);
                 return false;
             }
         }
@@ -235,7 +222,7 @@ namespace Data.Repos
             }
             catch (Exception ex)
             {
-                LogError(nameof(GetUsuario), ex);
+                LogHelper.LogError(nameof(GetUsuario), ex);
                 return Task.FromResult<Usuario>(null);
             }
         }
@@ -260,7 +247,7 @@ namespace Data.Repos
             }
             catch (Exception ex)
             {
-                LogError(nameof(SlistaPantallas), ex);
+                LogHelper.LogError(nameof(SlistaPantallas), ex);
                 return Enumerable.Empty<Pantalla>();
             }
         }

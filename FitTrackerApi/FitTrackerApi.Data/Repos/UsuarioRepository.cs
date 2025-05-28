@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using Utils;
 
 namespace Data.Repos
@@ -104,47 +105,61 @@ namespace Data.Repos
             }
         }
 
-        public async Task<bool> InsertUsuario(Usuario usuario)
+        public async Task<int> InsertUsuario(Usuario usuario)
         {
+            using var conn = GetConnection();
+            await conn.OpenAsync();
+            using var transaction = await conn.BeginTransactionAsync();
             try
             {
-                using var conn = GetConnection();
-                await conn.OpenAsync();
-                using var cmd = new MySqlCommand("InsertarUsuario", conn) { CommandType = CommandType.StoredProcedure };
-                cmd.Parameters.AddWithValue("prm_Username", usuario.Username);
-                cmd.Parameters.AddWithValue("prm_Nombre", usuario.Nombre);
-                cmd.Parameters.AddWithValue("prm_Password", usuario.Password);
-                cmd.Parameters.AddWithValue("prm_Email", usuario.Email);
-                cmd.Parameters.AddWithValue("prm_Nivel", usuario.Nivel);
+                int codigoGenerado = 0;
 
-                cmd.Parameters.Add(new MySqlParameter("id", MySqlDbType.Int32)
+                using (var cmd = new MySqlCommand("InsertarUsuario", conn, (MySqlTransaction)transaction))
                 {
-                    Direction = ParameterDirection.Output
-                });
+                    cmd.CommandType = CommandType.StoredProcedure; // Add this line
+                    cmd.Parameters.AddWithValue("prm_Username", usuario.Username);
+                    cmd.Parameters.AddWithValue("prm_Nombre", usuario.Nombre);
+                    cmd.Parameters.AddWithValue("prm_Password", usuario.Password);
+                    cmd.Parameters.AddWithValue("prm_Email", usuario.Email);
+                    cmd.Parameters.AddWithValue("prm_Nivel", usuario.Nivel);
 
-                await cmd.ExecuteNonQueryAsync();
-
-                usuario.Id = Convert.ToInt32(cmd.Parameters["id"].Value);
-                return usuario.Id > 0;
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            codigoGenerado = reader.GetInt32("codigo_generado");
+                        }
+                    }
+                }
+                if (codigoGenerado <= 0)
+                {
+                    await transaction.RollbackAsync();
+                    return 0;
+                }
+                await transaction.CommitAsync();
+                return codigoGenerado;
             }
             catch (Exception ex)
             {
                 LogHelper.LogError(nameof(InsertUsuario), ex);
-                return false;
+                await transaction.RollbackAsync();
+                return 0;
             }
         }
 
-        public async Task<bool> UpdateUsuario(Usuario usuario)
+        public async Task<int> UpdateUsuario(Usuario usuario)
         {
+            using var conn = GetConnection();
+            await conn.OpenAsync();
+            using var transaction = await conn.BeginTransactionAsync();
             try
             {
-                int affected;
-                using var conn = GetConnection();
-                await conn.OpenAsync();
+                int affected = 0;
 
                 // Actualizar datos del usuario
-                using (var cmd = new MySqlCommand("UpdateUsuario", conn) { CommandType = CommandType.StoredProcedure })
+                using (var cmd = new MySqlCommand("UpdateUsuario", conn, (MySqlTransaction)transaction))
                 {
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("prm_Id", usuario.Id);
                     cmd.Parameters.AddWithValue("prm_Username", usuario.Username);
                     cmd.Parameters.AddWithValue("prm_Nombre", usuario.Nombre);
@@ -157,19 +172,24 @@ namespace Data.Repos
                 // Actualizar accesos
                 foreach (var acceso in usuario.Accesos)
                 {
-                    using var cmdAcceso = new MySqlCommand("UpdateUsuarioAcceso", conn) { CommandType = CommandType.StoredProcedure };
+                    using var cmdAcceso = new MySqlCommand("UpdateUsuarioAcceso", conn, (MySqlTransaction)transaction)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
                     cmdAcceso.Parameters.AddWithValue("prm_UsuarioId", usuario.Id);
                     cmdAcceso.Parameters.AddWithValue("prm_PantallaId", acceso.PantallaId);
                     cmdAcceso.Parameters.AddWithValue("prm_Acceso", acceso.Acceso);
                     await cmdAcceso.ExecuteNonQueryAsync();
                 }
 
-                return affected > 0;
+                await transaction.CommitAsync();
+                return affected;
             }
             catch (Exception ex)
             {
                 LogHelper.LogError(nameof(UpdateUsuario), ex);
-                return false;
+                await transaction.RollbackAsync();
+                return 0;
             }
         }
 
@@ -242,6 +262,7 @@ namespace Data.Repos
                         Id = reader.GetInt32("id"),
                         nombre = reader.GetString("nombre"),
                         descripcion = reader.GetString("descripcion"),
+                        nivel = reader.GetString("nivel"),
                     });
                 return list;
             }

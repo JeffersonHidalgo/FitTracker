@@ -28,8 +28,7 @@ import {
 import rdData from "../assets/rd.json"; // Ajusta la ruta si es necesario
 import FotoUploader from "components/FotoUploader";
 import InputMask from "react-input-mask";
-
-const API_ROOT = "https://localhost:44323"; // Puedes mover esto arriba del componente si prefieres
+import { API_ROOT } from "../../services/apiClient";
 
 const ClientForm = () => {
   const [activeTab, setActiveTab] = useState("basic");
@@ -816,7 +815,7 @@ const ClientForm = () => {
                                 mask="999-999-9999"
                                 value={phone.numero}
                                 onChange={e => handlePhoneChange(index, "numero", e.target.value)}
-                                disabled={!(editMode || insertMode)} // Solo editable en edición o inserción
+                                disabled={!(editMode || insertMode)}
                               >
                                 {(inputProps) => (
                                   <Input
@@ -824,7 +823,6 @@ const ClientForm = () => {
                                     className="form-control-alternative"
                                     placeholder="Número de teléfono"
                                     type="tel"
-                                    disabled={!(editMode || insertMode)} // Asegura que también aquí esté deshabilitado
                                   />
                                 )}
                               </InputMask>

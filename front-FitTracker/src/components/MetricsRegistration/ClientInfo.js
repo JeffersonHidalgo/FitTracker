@@ -4,8 +4,7 @@ import {
 } from "reactstrap";
 import { obtenerClientes, obtenerDetalleCliente } from "../../services/clienteService";
 import FotoUploader from "../FotoUploader"; // Agrega esta importación
-
-const API_ROOT = "https://localhost:44323"; // Usa tu URL base
+import { API_ROOT } from "../../services/apiClient";
 
 const ClientInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

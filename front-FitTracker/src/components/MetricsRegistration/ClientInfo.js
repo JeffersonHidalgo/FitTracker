@@ -1,15 +1,62 @@
-import React from "react";
-import { Card, CardHeader, CardBody, Row, Col, Button, FormGroup, Input } from "reactstrap";
+import React, { useState } from "react";
+import {
+  Card, CardHeader, CardBody, Row, Col, Button, FormGroup, Input, Modal, ModalHeader, ModalBody, Table, Form
+} from "reactstrap";
+import { obtenerClientes, obtenerDetalleCliente } from "../../services/clienteService";
+import FotoUploader from "../FotoUploader"; // Agrega esta importación
 
-const ClientInfo = ({ toggleModal }) => {
-  const clientData = {
-    name: "John Doe",
-    id: "001",
-    age: 30,
-    gender: "Masculino",
-    email: "johndoe@example.com",
-    phone: "+123456789",
-    address: "123 Main St, City, Country",
+const API_ROOT = "https://localhost:44323"; // Usa tu URL base
+
+const ClientInfo = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [clientes, setClientes] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [clientData, setClientData] = useState(null);
+
+  const toggleModal = async () => {
+    setIsModalOpen(!isModalOpen);
+    if (!isModalOpen && clientes.length === 0) {
+      try {
+        const data = await obtenerClientes();
+        setClientes(data);
+        setSearchResults(data);
+      } catch (e) {
+        alert("Error al cargar clientes");
+      }
+    }
+  };
+
+  const handleSearchInput = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    const filtered = clientes.filter(
+      c =>
+        (c.nombreCompleto && c.nombreCompleto.toLowerCase().includes(value.toLowerCase())) ||
+        (c.codigoCli && c.codigoCli.toString().includes(value))
+    );
+    setSearchResults(filtered);
+  };
+
+  const handleSelectCliente = async (codigoCli) => {
+    try {
+      const detalle = await obtenerDetalleCliente(codigoCli);
+      setClientData({
+        name: detalle.nombreCompleto || "",
+        id: detalle.codigoCli || "",
+        age: detalle.fechaNacimiento ? (new Date().getFullYear() - new Date(detalle.fechaNacimiento).getFullYear()) : "",
+        gender: detalle.genero === "M" ? "Masculino" : detalle.genero === "F" ? "Femenino" : "Otro",
+        email: (detalle.emails && detalle.emails[0]?.email) || "",
+        phone: (detalle.telefonos && detalle.telefonos[0]?.numero) || "",
+        address: `${detalle.calle || ""}, ${detalle.ciudad || ""}, ${detalle.provincia || ""}`,
+        fotoPerfil: detalle.fotoPerfil
+          ? `${API_ROOT}/imagen-cliente/${detalle.fotoPerfil}`
+          : null,
+      });
+      setIsModalOpen(false);
+    } catch (e) {
+      alert("No se pudo cargar el cliente");
+    }
   };
 
   return (
@@ -29,56 +76,143 @@ const ClientInfo = ({ toggleModal }) => {
       </CardHeader>
       <CardBody>
         <Row>
-          <Col md="6">
-            <FormGroup>
-              <label>Nombre</label>
-              <Input type="text" value={clientData.name} readOnly />
-            </FormGroup>
+          <Col md="3" className="d-flex align-items-center justify-content-center">
+            <div style={{ width: 110 }}>
+              <FotoUploader
+                value={
+                  clientData?.fotoPerfil
+                    ? { url: clientData.fotoPerfil }
+                    : undefined
+                }
+                disabled={true} // Solo consulta, no editable
+              />
+            </div>
           </Col>
-          <Col md="6">
-            <FormGroup>
-              <label>Identificación</label>
-              <Input type="text" value={clientData.id} readOnly />
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col md="6">
-            <FormGroup>
-              <label>Edad</label>
-              <Input type="number" value={clientData.age} readOnly />
-            </FormGroup>
-          </Col>
-          <Col md="6">
-            <FormGroup>
-              <label>Género</label>
-              <Input type="text" value={clientData.gender} readOnly />
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col md="6">
-            <FormGroup>
-              <label>Correo Electrónico</label>
-              <Input type="email" value={clientData.email} readOnly />
-            </FormGroup>
-          </Col>
-          <Col md="6">
-            <FormGroup>
-              <label>Teléfono</label>
-              <Input type="text" value={clientData.phone} readOnly />
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col md="12">
-            <FormGroup>
-              <label>Dirección</label>
-              <Input type="text" value={clientData.address} readOnly />
-            </FormGroup>
+          <Col md="9">
+            <Row>
+              <Col xs="6" sm="4" md="3">
+                <FormGroup>
+                  <label style={{ fontSize: 13 }}>Código</label>
+                  <Input
+                    type="text"
+                    value={clientData?.id || ""}
+                    readOnly
+                    bsSize="sm"
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="6" sm="8" md="9">
+                <FormGroup>
+                  <label style={{ fontSize: 13 }}>Nombre</label>
+                  <Input
+                    type="text"
+                    value={clientData?.name || ""}
+                    readOnly
+                    bsSize="sm"
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs="6" sm="4" md="3">
+                <FormGroup>
+                  <label style={{ fontSize: 13 }}>Edad</label>
+                  <Input
+                    type="text"
+                    value={
+                      clientData?.age
+                        ? `${clientData.age} años`
+                        : ""
+                    }
+                    readOnly
+                    bsSize="sm"
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="6" sm="4" md="3">
+                <FormGroup>
+                  <label style={{ fontSize: 13 }}>Género</label>
+                  <Input
+                    type="text"
+                    value={clientData?.gender || ""}
+                    readOnly
+                    bsSize="sm"
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="12" sm="4" md="6">
+                <FormGroup>
+                  <label style={{ fontSize: 13 }}>Teléfono</label>
+                  <Input
+                    type="text"
+                    value={clientData?.phone || ""}
+                    readOnly
+                    bsSize="sm"
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs="12" sm="6">
+                <FormGroup>
+                  <label style={{ fontSize: 13 }}>Correo Electrónico</label>
+                  <Input
+                    type="email"
+                    value={clientData?.email || ""}
+                    readOnly
+                    bsSize="sm"
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="12" sm="6">
+                <FormGroup>
+                  <label style={{ fontSize: 13 }}>Dirección</label>
+                  <Input
+                    type="text"
+                    value={clientData?.address || ""}
+                    readOnly
+                    bsSize="sm"
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </CardBody>
+
+      <Modal isOpen={isModalOpen} toggle={toggleModal}>
+        <ModalHeader toggle={toggleModal}>Consultar Cliente</ModalHeader>
+        <ModalBody>
+          <Form>
+            <FormGroup>
+              <Input
+                type="text"
+                placeholder="Buscar por nombre o código"
+                value={searchQuery}
+                onChange={handleSearchInput}
+              />
+            </FormGroup>
+          </Form>
+          <Table className="mt-3" responsive>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {searchResults.map((result) => (
+                <tr key={result.codigoCli} onClick={() => handleSelectCliente(result.codigoCli)} style={{ cursor: "pointer" }}>
+                  <td>{result.codigoCli}</td>
+                  <td>{result.nombreCompleto}</td>
+                  <td>{result.estado}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </ModalBody>
+      </Modal>
     </Card>
   );
 };

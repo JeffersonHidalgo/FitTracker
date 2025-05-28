@@ -28,7 +28,7 @@ import {
 import rdData from "../assets/rd.json"; // Ajusta la ruta si es necesario
 import FotoUploader from "components/FotoUploader";
 import InputMask from "react-input-mask";
-import { API_ROOT } from "../../services/apiClient";
+import { API_ROOT } from "../services/apiClient"; // Asegúrate de que esta ruta sea correct
 
 const ClientForm = () => {
   const [activeTab, setActiveTab] = useState("basic");

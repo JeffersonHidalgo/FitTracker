@@ -31,13 +31,30 @@ const FotoUploader = ({ nombreCliente, fechaNacimiento, value, onChange, disable
   };
 
   // Decide qué imagen mostrar
-  const imagenSrc = value?.preview
-    ? value.preview
-    : value?.url
-      ? value.url.startsWith("http") 
-        ? value.url 
-        : `${API_ROOT}${value.url.startsWith("/") ? "" : "/"}${value.url}`
-      : ejemploImg;
+  const [imagenSrc, setImagenSrc] = React.useState(() => {
+    if (value?.preview) return value.preview;
+    if (value?.url) {
+      if (value.url.startsWith("http")) return value.url;
+      return `${API_ROOT}${value.url.startsWith("/") ? "" : "/"}${value.url}`;
+    }
+    return ejemploImg;
+  });
+
+  // Si cambian los props, actualiza la imagen
+  React.useEffect(() => {
+    if (value?.preview) setImagenSrc(value.preview);
+    else if (value?.url) {
+      if (value.url.startsWith("http")) setImagenSrc(value.url);
+      else setImagenSrc(`${API_ROOT}${value.url.startsWith("/") ? "" : "/"}${value.url}`);
+    } else {
+      setImagenSrc(ejemploImg);
+    }
+  }, [value]);
+
+  // Si la imagen no carga, muestra la de ejemplo
+  const handleImgError = () => {
+    setImagenSrc(ejemploImg);
+  };
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -67,6 +84,7 @@ const FotoUploader = ({ nombreCliente, fechaNacimiento, value, onChange, disable
           src={imagenSrc}
           alt="Foto del cliente"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          onError={handleImgError} // <-- Esto asegura que si hay error, se muestra la imagen de ejemplo
         />
       </div>
       <div style={{ marginTop: 8, fontSize: 13, color: "#888" }}>

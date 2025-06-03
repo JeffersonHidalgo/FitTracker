@@ -29,3 +29,11 @@ export const subirFotoCliente = async (clienteId, file) => {
     { headers: { "Content-Type": "multipart/form-data" } }
   );
 };
+
+// Analizar métricas del cliente
+export const analizarMetricasCliente = (datos) =>
+  request("post", "cliente/metricas/analizar", datos);
+
+// Obtener historial de métricas de un cliente
+export const obtenerHistorialMetricasCliente = (codigoCli) =>
+  request("get", `cliente/metricas/historial/${codigoCli}`);

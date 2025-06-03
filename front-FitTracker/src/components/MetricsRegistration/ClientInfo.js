@@ -6,12 +6,11 @@ import { obtenerClientes, obtenerDetalleCliente } from "../../services/clienteSe
 import FotoUploader from "../FotoUploader"; // Agrega esta importación
 import { API_ROOT } from "../../services/apiClient";
 
-const ClientInfo = () => {
+const ClientInfo = ({ selectedCliente, setSelectedCliente }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clientes, setClientes] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [clientData, setClientData] = useState(null);
 
   const toggleModal = async () => {
     setIsModalOpen(!isModalOpen);
@@ -40,7 +39,7 @@ const ClientInfo = () => {
   const handleSelectCliente = async (codigoCli) => {
     try {
       const detalle = await obtenerDetalleCliente(codigoCli);
-      setClientData({
+      const clienteObj = {
         name: detalle.nombreCompleto || "",
         id: detalle.codigoCli || "",
         age: detalle.fechaNacimiento ? (new Date().getFullYear() - new Date(detalle.fechaNacimiento).getFullYear()) : "",
@@ -51,7 +50,8 @@ const ClientInfo = () => {
         fotoPerfil: detalle.fotoPerfil
           ? `${API_ROOT}/imagen-cliente/${detalle.fotoPerfil}`
           : null,
-      });
+      };
+      setSelectedCliente(clienteObj);
       setIsModalOpen(false);
     } catch (e) {
       alert("No se pudo cargar el cliente");
@@ -79,8 +79,8 @@ const ClientInfo = () => {
             <div style={{ width: 110 }}>
               <FotoUploader
                 value={
-                  clientData?.fotoPerfil
-                    ? { url: clientData.fotoPerfil }
+                  selectedCliente?.fotoPerfil
+                    ? { url: selectedCliente.fotoPerfil }
                     : undefined
                 }
                 disabled={true} // Solo consulta, no editable
@@ -94,7 +94,7 @@ const ClientInfo = () => {
                   <label style={{ fontSize: 13 }}>Código</label>
                   <Input
                     type="text"
-                    value={clientData?.id || ""}
+                    value={selectedCliente?.id || ""}
                     readOnly
                     bsSize="sm"
                   />
@@ -105,7 +105,7 @@ const ClientInfo = () => {
                   <label style={{ fontSize: 13 }}>Nombre</label>
                   <Input
                     type="text"
-                    value={clientData?.name || ""}
+                    value={selectedCliente?.name || ""}
                     readOnly
                     bsSize="sm"
                   />
@@ -119,8 +119,8 @@ const ClientInfo = () => {
                   <Input
                     type="text"
                     value={
-                      clientData?.age
-                        ? `${clientData.age} años`
+                      selectedCliente?.age
+                        ? `${selectedCliente.age} años`
                         : ""
                     }
                     readOnly
@@ -133,7 +133,7 @@ const ClientInfo = () => {
                   <label style={{ fontSize: 13 }}>Género</label>
                   <Input
                     type="text"
-                    value={clientData?.gender || ""}
+                    value={selectedCliente?.gender || ""}
                     readOnly
                     bsSize="sm"
                   />
@@ -144,7 +144,7 @@ const ClientInfo = () => {
                   <label style={{ fontSize: 13 }}>Teléfono</label>
                   <Input
                     type="text"
-                    value={clientData?.phone || ""}
+                    value={selectedCliente?.phone || ""}
                     readOnly
                     bsSize="sm"
                   />
@@ -157,7 +157,7 @@ const ClientInfo = () => {
                   <label style={{ fontSize: 13 }}>Correo Electrónico</label>
                   <Input
                     type="email"
-                    value={clientData?.email || ""}
+                    value={selectedCliente?.email || ""}
                     readOnly
                     bsSize="sm"
                   />
@@ -168,7 +168,7 @@ const ClientInfo = () => {
                   <label style={{ fontSize: 13 }}>Dirección</label>
                   <Input
                     type="text"
-                    value={clientData?.address || ""}
+                    value={selectedCliente?.address || ""}
                     readOnly
                     bsSize="sm"
                   />

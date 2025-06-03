@@ -9,6 +9,11 @@ const MetricsRegistration = () => {
   const [result, setResult] = useState(null);
   const [selectedCliente, setSelectedCliente] = useState(null);
 
+  const handleLimpiar = () => {
+    setSelectedCliente(null);
+    setResult(null);
+  };
+
   return (
     <>
       <Header />
@@ -19,6 +24,7 @@ const MetricsRegistration = () => {
               <ClientInfo
                 selectedCliente={selectedCliente}
                 setSelectedCliente={setSelectedCliente}
+                onLimpiar={handleLimpiar}
               />
             </Col>
           </Row>
@@ -27,6 +33,7 @@ const MetricsRegistration = () => {
               <MetricsForm
                 codigoCli={selectedCliente?.id || selectedCliente?.codigoCli}
                 onResult={setResult}
+                result={result}
               />
             </Col>
           </Row>

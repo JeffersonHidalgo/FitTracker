@@ -3,14 +3,21 @@ import {
   Card, CardHeader, CardBody, Row, Col, Button, FormGroup, Input, Modal, ModalHeader, ModalBody, Table, Form
 } from "reactstrap";
 import { obtenerClientes, obtenerDetalleCliente } from "../../services/clienteService";
-import FotoUploader from "../FotoUploader"; // Agrega esta importación
+import FotoUploader from "../FotoUploader";
 import { API_ROOT } from "../../services/apiClient";
+import CustomAlert from "components/CustomAlert"; // Asegúrate de importar
 
-const ClientInfo = ({ selectedCliente, setSelectedCliente }) => {
+const ClientInfo = ({ selectedCliente, setSelectedCliente, onLimpiar }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clientes, setClientes] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [alert, setAlert] = useState({ isOpen: false, color: "danger", message: "" });
+
+  const showAlert = (color, message) => {
+    setAlert({ isOpen: true, color, message });
+    setTimeout(() => setAlert(a => ({ ...a, isOpen: false })), 3500);
+  };
 
   const toggleModal = async () => {
     setIsModalOpen(!isModalOpen);
@@ -20,7 +27,7 @@ const ClientInfo = ({ selectedCliente, setSelectedCliente }) => {
         setClientes(data);
         setSearchResults(data);
       } catch (e) {
-        alert("Error al cargar clientes");
+        showAlert("danger", "Error al cargar clientes");
       }
     }
   };
@@ -54,24 +61,47 @@ const ClientInfo = ({ selectedCliente, setSelectedCliente }) => {
       setSelectedCliente(clienteObj);
       setIsModalOpen(false);
     } catch (e) {
-      alert("No se pudo cargar el cliente");
+      showAlert("danger", "No se pudo cargar el cliente");
     }
   };
 
   return (
     <Card className="shadow">
+      <CustomAlert
+        isOpen={alert.isOpen}
+        color={alert.color}
+        message={alert.message}
+        toggle={() => setAlert(a => ({ ...a, isOpen: false }))}
+      />
       <CardHeader className="bg-white border-0 d-flex justify-content-between align-items-center">
         <h3 className="mb-0" style={{ color: "#4A628A" }}>
           Información del Cliente
         </h3>
-        <Button
-          color="primary"
-          size="sm"
-          style={{ padding: "8px 16px", fontSize: "14px" }}
-          onClick={toggleModal}
-        >
-          Buscar Cliente
-        </Button>
+        <div>
+          <Button
+            color="info"
+            size="md"
+            style={{
+              padding: "6px 18px",
+              minWidth: 100,
+              backgroundColor: "#11cdef",
+              borderColor: "#11cdef",
+              color: "#fff"
+            }}
+            onClick={toggleModal}
+            className="mr-2"
+          >
+            Consultar Cliente
+          </Button>
+          <Button
+            color="danger"
+            size="md"
+            style={{ padding: "6px 18px", minWidth: 100 }}
+            onClick={onLimpiar}
+          >
+            Limpiar
+          </Button>
+        </div>
       </CardHeader>
       <CardBody>
         <Row>

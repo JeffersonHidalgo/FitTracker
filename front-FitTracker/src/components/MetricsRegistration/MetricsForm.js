@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card, CardHeader, CardBody, Form, Row, Col, FormGroup, Input, Button, Tooltip, Nav, NavItem, NavLink, TabContent, TabPane, Label
 } from "reactstrap";
@@ -9,32 +9,32 @@ import Loading from "components/Loading";
 import CustomAlert from "components/CustomAlert";
 
 const tooltips = {
-  weight: "Peso corporal en kilogramos.",
-  height: "Altura en centímetros.",
-  bmi: "Índice de Masa Corporal (IMC) calculado automáticamente.",
-  bodyFat: "Porcentaje de grasa corporal.",
-  muscleMass: "Masa muscular en kilogramos.",
-  waist: "Circunferencia de la cintura en centímetros.",
-  hip: "Circunferencia de la cadera en centímetros.",
-  arms: "Circunferencia de los brazos en centímetros.",
-  rmPress: "Máximo peso levantado en una repetición de press de banca.",
-  rmSquat: "Máximo peso levantado en una repetición de sentadilla.",
-  rmDeadlift: "Máximo peso levantado en una repetición de peso muerto.",
-  repetitions: "Cantidad máxima de repeticiones realizadas.",
+  weight: "Peso corporal. Ingresa el valor en la unidad seleccionada (kg o lb).",
+  height: "Altura total. Ingresa el valor en la unidad seleccionada (cm o in).",
+  bmi: "Índice de Masa Corporal. Se calcula automáticamente con peso y altura.",
+  bodyFat: "Porcentaje estimado de grasa corporal (%).",
+  muscleMass: "Masa muscular total en la unidad seleccionada (kg o lb).",
+  waist: "Circunferencia de la cintura en la unidad seleccionada (cm o in).",
+  hip: "Circunferencia de la cadera en la unidad seleccionada (cm o in).",
+  arms: "Circunferencia de los brazos en la unidad seleccionada (cm o in).",
+  rmPress: "Peso máximo levantado en una repetición de press de banca (kg o lb).",
+  rmSquat: "Peso máximo levantado en una repetición de sentadilla (kg o lb).",
+  rmDeadlift: "Peso máximo levantado en una repetición de peso muerto (kg o lb).",
+  repetitions: "Cantidad máxima de repeticiones realizadas en un ejercicio.",
   executionSpeed: "Tiempo en segundos para completar una repetición.",
-  cooperTest: "Distancia recorrida en metros en 12 minutos (Test de Cooper).",
-  restingHeartRate: "Pulsaciones por minuto en reposo.",
-  recoveryHeartRate: "Pulsaciones por minuto después del ejercicio.",
-  aerobicDuration: "Duración total de ejercicio aeróbico en minutos.",
-  flexibilityTest: "Distancia alcanzada en el test de flexibilidad (cm).",
-  rangeOfMotion: "Grados de movimiento articular.",
-  verticalJump: "Altura alcanzada en el salto vertical (cm).",
+  cooperTest: "Distancia recorrida en el Test de Cooper (12 minutos), en metros.",
+  restingHeartRate: "Pulsaciones por minuto en reposo (ppm).",
+  recoveryHeartRate: "Pulsaciones por minuto tras el ejercicio (ppm).",
+  aerobicDuration: "Duración total de ejercicio aeróbico (minutos).",
+  flexibilityTest: "Distancia alcanzada en el test de flexibilidad (cm o in).",
+  rangeOfMotion: "Grados de movimiento articular (°).",
+  verticalJump: "Altura alcanzada en el salto vertical (cm o in).",
   sprintSpeed: "Tiempo en segundos en una carrera corta (sprint).",
   agilityTest: "Resultado de la prueba de agilidad (segundos o puntos).",
   rpe: "Escala subjetiva de esfuerzo percibido (1-10)."
 };
 
-const MetricsForm = ({ codigoCli, onResult }) => {
+const MetricsForm = ({ codigoCli, onResult, result }) => {
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [bmi, setBmi] = useState("");
@@ -199,6 +199,13 @@ const MetricsForm = ({ codigoCli, onResult }) => {
     );
   };
 
+  // Actualiza el IMC si cambia el resultado externo (por ejemplo, al consultar un cliente)
+  useEffect(() => {
+    if (result && result.metricas && result.metricas.imc !== undefined && result.metricas.imc !== null) {
+      setBmi(result.metricas.imc.toFixed(2));
+    }
+  }, [result]);
+
   return (
     <>
       <CustomAlert
@@ -293,11 +300,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="weight-label" style={{ fontSize: 13 }}>
                         Peso ({unidades[sistemaMetrico].weight})
-                        <span id="weight-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-weight" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.weight}
-                          target="weight-tooltip"
+                          target="tooltip-weight"
                           toggle={() => toggleTooltip("weight")}
                         >
                           {tooltips.weight}
@@ -322,11 +329,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="height-label" style={{ fontSize: 13 }}>
                         Altura ({unidades[sistemaMetrico].height})
-                        <span id="height-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-height" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.height}
-                          target="height-tooltip"
+                          target="tooltip-height"
                           toggle={() => toggleTooltip("height")}
                         >
                           {tooltips.height}
@@ -351,11 +358,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="bmi-label" style={{ fontSize: 13 }}>
                         IMC
-                        <span id="bmi-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-bmi" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.bmi}
-                          target="bmi-tooltip"
+                          target="tooltip-bmi"
                           toggle={() => toggleTooltip("bmi")}
                         >
                           {tooltips.bmi}
@@ -368,11 +375,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="bodyFat-label" style={{ fontSize: 13 }}>
                         % Grasa
-                        <span id="bodyFat-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-bodyFat" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.bodyFat}
-                          target="bodyFat-tooltip"
+                          target="tooltip-bodyFat"
                           toggle={() => toggleTooltip("bodyFat")}
                         >
                           {tooltips.bodyFat}
@@ -399,11 +406,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="muscleMass-label" style={{ fontSize: 13 }}>
                         Masa Muscular
-                        <span id="muscleMass-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-muscleMass" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.muscleMass}
-                          target="muscleMass-tooltip"
+                          target="tooltip-muscleMass"
                           toggle={() => toggleTooltip("muscleMass")}
                         >
                           {tooltips.muscleMass}
@@ -428,11 +435,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="waist-label" style={{ fontSize: 13 }}>
                         Cintura
-                        <span id="waist-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-waist" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.waist}
-                          target="waist-tooltip"
+                          target="tooltip-waist"
                           toggle={() => toggleTooltip("waist")}
                         >
                           {tooltips.waist}
@@ -457,11 +464,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="hip-label" style={{ fontSize: 13 }}>
                         Caderas
-                        <span id="hip-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-hip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.hip}
-                          target="hip-tooltip"
+                          target="tooltip-hip"
                           toggle={() => toggleTooltip("hip")}
                         >
                           {tooltips.hip}
@@ -486,11 +493,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="arms-label" style={{ fontSize: 13 }}>
                         Brazos
-                        <span id="arms-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-arms" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.arms}
-                          target="arms-tooltip"
+                          target="tooltip-arms"
                           toggle={() => toggleTooltip("arms")}
                         >
                           {tooltips.arms}
@@ -522,11 +529,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="rmPress-label" style={{ fontSize: 13, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                         1RM Press de Banca ({unidades[sistemaMetrico].rmPress})
-                        <span id="rmPress-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-rmPress" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.rmPress}
-                          target="rmPress-tooltip"
+                          target="tooltip-rmPress"
                           toggle={() => toggleTooltip("rmPress")}
                         >
                           {tooltips.rmPress}
@@ -551,11 +558,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="rmSquat-label" style={{ fontSize: 13, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                         1RM Sentadilla ({unidades[sistemaMetrico].rmSquat})
-                        <span id="rmSquat-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-rmSquat" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.rmSquat}
-                          target="rmSquat-tooltip"
+                          target="tooltip-rmSquat"
                           toggle={() => toggleTooltip("rmSquat")}
                         >
                           {tooltips.rmSquat}
@@ -580,11 +587,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="rmDeadlift-label" style={{ fontSize: 13, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                         1RM Peso Muerto ({unidades[sistemaMetrico].rmDeadlift})
-                        <span id="rmDeadlift-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-rmDeadlift" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.rmDeadlift}
-                          target="rmDeadlift-tooltip"
+                          target="tooltip-rmDeadlift"
                           toggle={() => toggleTooltip("rmDeadlift")}
                         >
                           {tooltips.rmDeadlift}
@@ -790,11 +797,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="flexibilityTest-label" style={{ fontSize: 13 }}>
                         Test de Flexibilidad ({unidades[sistemaMetrico].flexibilityTest})
-                        <span id="flexibilityTest-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-flexibilityTest" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.flexibilityTest}
-                          target="flexibilityTest-tooltip"
+                          target="tooltip-flexibilityTest"
                           toggle={() => toggleTooltip("flexibilityTest")}
                         >
                           {tooltips.flexibilityTest}
@@ -854,11 +861,11 @@ const MetricsForm = ({ codigoCli, onResult }) => {
                     <FormGroup>
                       <Label id="verticalJump-label" style={{ fontSize: 13 }}>
                         Salto Vertical ({unidades[sistemaMetrico].verticalJump})
-                        <span id="verticalJump-tooltip" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
+                        <span id="tooltip-verticalJump" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
                           isOpen={tooltipOpen.verticalJump}
-                          target="verticalJump-tooltip"
+                          target="tooltip-verticalJump"
                           toggle={() => toggleTooltip("verticalJump")}
                         >
                           {tooltips.verticalJump}

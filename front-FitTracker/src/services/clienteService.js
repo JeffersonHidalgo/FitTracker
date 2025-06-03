@@ -37,3 +37,7 @@ export const analizarMetricasCliente = (datos) =>
 // Obtener historial de métricas de un cliente
 export const obtenerHistorialMetricasCliente = (codigoCli) =>
   request("get", `cliente/metricas/historial/${codigoCli}`);
+
+// Obtener historial completo de métricas de un cliente (nuevo endpoint)
+export const obtenerHistorialCompletoCliente = (codigoCli) =>
+  request("get", `cliente/historial-completo/${codigoCli}`);

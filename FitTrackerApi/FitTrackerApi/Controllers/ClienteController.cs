@@ -138,6 +138,12 @@ namespace FitTrackerApi.Controllers
             return Ok(historial);
         }
 
+        [HttpGet("historial-completo/{codigoCli}")]
+        public async Task<IActionResult> GetHistorialCompleto(int codigoCli)
+        {
+           var historial = await _clienteRepository.ObtenerHistorialCompletoAsync(codigoCli);
+            return Ok(historial);
+        }
 
     }
 }

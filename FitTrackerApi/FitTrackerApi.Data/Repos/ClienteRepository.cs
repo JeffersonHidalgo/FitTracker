@@ -1,9 +1,6 @@
 ﻿using Models;
 using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 using Utils;
 
 namespace Data.Repos
@@ -230,7 +227,7 @@ namespace Data.Repos
                                     CodigoCli = reader.GetInt32("codigo_cli"),
                                     NombreCompleto = reader.GetString("nombre_completo"),
                                     Estado = reader.GetString("estado")
-                                  
+
                                 };
                                 clientes.Add(cliente);
                             }
@@ -572,6 +569,85 @@ namespace Data.Repos
 
             return historial;
         }
+        public async Task<IEnumerable<ClienteMetricasHistorial>> ObtenerHistorialCompletoAsync(int codigoCli)
+        {
+            var historial = new List<ClienteMetricasHistorial>();
+
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+
+                using (var cmd = new MySqlCommand("SClienteHistorialMetricasCompleto", conn) { CommandType = CommandType.StoredProcedure })
+                {
+                    cmd.Parameters.AddWithValue("prm_CodigoCli", codigoCli);
+                    using var reader = await cmd.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        var metricaId = reader.GetInt32("metrica_id");
+
+                        var item = new ClienteMetricasHistorial
+                        {
+                            MetricaId = metricaId,
+                            FechaRegistro = reader.GetDateTime("fecha_registro"),
+                            IMC = reader["imc"] as decimal?,
+                            GrasaCorporal = reader["grasa_corporal"] as decimal?,
+                            MasaMuscular = reader["masa_muscular"] as decimal?,
+                            RmPress = reader["rm_press"] as decimal?,
+                            RmSentadilla = reader["rm_sentadilla"] as decimal?,
+                            RmPesoMuerto = reader["rm_peso_muerto"] as decimal?,
+                            TestCooper = reader["test_cooper"] as decimal?,
+                            FcReposo = reader["fc_reposo"] as int?,
+                            TestFlexibilidad = reader["test_flexibilidad"] as decimal?,
+                            SaltoVertical = reader["salto_vertical"] as decimal?,
+                            Rpe = reader["rpe"] as decimal?,
+                            ResumenPorSeccion = new Dictionary<string, string>
+                            {
+                                ["Antropometria"] = Convertidor.ToStringSafe(reader["antropometria"]),
+                                ["FuerzaResistencia"] = Convertidor.ToStringSafe(reader["fuerza_resistencia"]),
+                                ["Cardio"] = Convertidor.ToStringSafe(reader["cardio"]),
+                                ["Flexibilidad"] = Convertidor.ToStringSafe(reader["flexibilidad"]),
+                                ["PotenciaAgilidad"] = Convertidor.ToStringSafe(reader["potencia_agilidad"]),
+                                ["EsfuerzoPercibido"] = Convertidor.ToStringSafe(reader["esfuerzo_percibido"])
+                            },
+                            Recomendaciones = new List<string>()
+                        };
+
+                        historial.Add(item);
+                    }
+                }
+
+                foreach (var h in historial)
+                {
+                    foreach (var (seccion, texto) in h.ResumenPorSeccion)
+                    {
+                        using var cmdRec = new MySqlCommand("SRecomendacionesPorCondicion", conn)
+                        {
+                            CommandType = CommandType.StoredProcedure
+                        };
+
+                        cmdRec.Parameters.AddWithValue("prm_Seccion", seccion);
+                        cmdRec.Parameters.AddWithValue("prm_Texto", texto);
+
+                        using var readerRec = await cmdRec.ExecuteReaderAsync();
+                        while (await readerRec.ReadAsync())
+                        {
+                            h.Recomendaciones.Add(readerRec.GetString("recomendacion"));
+                        }
+
+                        await readerRec.CloseAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerHistorialCompletoAsync), ex);
+            }
+
+            return historial;
+        }
+
 
 
     }

@@ -26,5 +26,8 @@ namespace Models
         public decimal? SaltoVertical { get; set; }
 
         public decimal? Rpe { get; set; }
+        
+    public Dictionary<string, string> ResumenPorSeccion { get; set; } = new();
+    public List<string> Recomendaciones { get; set; } = new();
     }
 }

@@ -14,5 +14,8 @@ namespace Data.Repos
         Task<Cliente> GetCliente(int id);
         Task<int> InsertCliente(Cliente cliente);
         Task<int> UpdateCliente(Cliente cliente);
+        Task<(int metricaId, Dictionary<string, string> seccionAnalisis, List<string> recomendaciones)> InsertarMetricasConAnalisisAsync(ClienteMetrica metricas);
+        Task<IEnumerable<ClienteMetricasHistorial>> ObtenerHistorialMetricas(int codigoCli);
+
     }
 }

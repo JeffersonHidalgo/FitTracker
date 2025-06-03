@@ -338,6 +338,241 @@ namespace Data.Repos
                 return 0;
             }
         }
+        public async Task<(int metricaId, Dictionary<string, string> seccionAnalisis, List<string> recomendaciones)> InsertarMetricasConAnalisisAsync(ClienteMetrica metricas)
+        {
+            int metricaId = 0;
+            var seccionAnalisis = AnalizarMetricas(metricas);
+            var recomendaciones = new List<string>();
+
+            using var connection = GetConnection();
+            await connection.OpenAsync();
+            using var transaction = await connection.BeginTransactionAsync();
+
+            try
+            {
+                if (metricas.Peso.HasValue && metricas.Altura.HasValue && metricas.Altura > 0)
+                {
+                    decimal alturaEnMetros = metricas.Altura.Value / 100.0m;
+
+                    metricas.IMC = Math.Round(metricas.Peso.Value / (alturaEnMetros * alturaEnMetros), 2);
+                }
+                else
+                {
+                    metricas.IMC = null;
+                }
+                // 1. Insertar métricas del cliente
+                using (var cmd = new MySqlCommand("InsertarClienteMetricas", connection, (MySqlTransaction)transaction))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("prm_CodigoCli", metricas.CodigoCli);
+                    cmd.Parameters.AddWithValue("prm_SistemaMetrico", metricas.SistemaMetrico);
+                    cmd.Parameters.AddWithValue("prm_Peso", metricas.Peso);
+                    cmd.Parameters.AddWithValue("prm_Altura", metricas.Altura);
+                    cmd.Parameters.AddWithValue("prm_Imc", metricas.IMC);
+                    cmd.Parameters.AddWithValue("prm_GrasaCorporal", metricas.GrasaCorporal);
+                    cmd.Parameters.AddWithValue("prm_MasaMuscular", metricas.MasaMuscular);
+                    cmd.Parameters.AddWithValue("prm_Cintura", metricas.Cintura);
+                    cmd.Parameters.AddWithValue("prm_Caderas", metricas.Caderas);
+                    cmd.Parameters.AddWithValue("prm_Brazos", metricas.Brazos);
+                    cmd.Parameters.AddWithValue("prm_RmPress", metricas.RmPress);
+                    cmd.Parameters.AddWithValue("prm_RmSentadilla", metricas.RmSentadilla);
+                    cmd.Parameters.AddWithValue("prm_RmPesoMuerto", metricas.RmPesoMuerto);
+                    cmd.Parameters.AddWithValue("prm_Repeticiones", metricas.Repeticiones);
+                    cmd.Parameters.AddWithValue("prm_VelocidadEjecucion", metricas.VelocidadEjecucion);
+                    cmd.Parameters.AddWithValue("prm_TestCooper", metricas.TestCooper);
+                    cmd.Parameters.AddWithValue("prm_FcReposo", metricas.FcReposo);
+                    cmd.Parameters.AddWithValue("prm_FcRecuperacion", metricas.FcRecuperacion);
+                    cmd.Parameters.AddWithValue("prm_DuracionAerobica", metricas.DuracionAerobica);
+                    cmd.Parameters.AddWithValue("prm_TestFlexibilidad", metricas.TestFlexibilidad);
+                    cmd.Parameters.AddWithValue("prm_RangoMovimiento", metricas.RangoMovimiento);
+                    cmd.Parameters.AddWithValue("prm_SaltoVertical", metricas.SaltoVertical);
+                    cmd.Parameters.AddWithValue("prm_VelocidadSprint", metricas.VelocidadSprint);
+                    cmd.Parameters.AddWithValue("prm_PruebaAgilidad", metricas.PruebaAgilidad);
+                    cmd.Parameters.AddWithValue("prm_Rpe", metricas.Rpe);
+
+                    using var reader = await cmd.ExecuteReaderAsync();
+                    if (await reader.ReadAsync())
+                        metricaId = Convert.ToInt32(reader["metrica_id"]);
+                    await reader.CloseAsync();
+                }
+
+                // 2. Insertar resumen del análisis
+                using (var cmd = new MySqlCommand("InsertarRespuestasAnalisis", connection, (MySqlTransaction)transaction))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("prm_CodigoCli", metricas.CodigoCli);
+                    cmd.Parameters.AddWithValue("prm_MetricaId", metricaId);
+                    cmd.Parameters.AddWithValue("prm_Antropometria", seccionAnalisis.GetValueOrDefault("Antropometria"));
+                    cmd.Parameters.AddWithValue("prm_FuerzaResistencia", seccionAnalisis.GetValueOrDefault("FuerzaResistencia"));
+                    cmd.Parameters.AddWithValue("prm_Cardio", seccionAnalisis.GetValueOrDefault("Cardio"));
+                    cmd.Parameters.AddWithValue("prm_Flexibilidad", seccionAnalisis.GetValueOrDefault("Flexibilidad"));
+                    cmd.Parameters.AddWithValue("prm_PotenciaAgilidad", seccionAnalisis.GetValueOrDefault("PotenciaAgilidad"));
+                    cmd.Parameters.AddWithValue("prm_EsfuerzoPercibido", seccionAnalisis.GetValueOrDefault("EsfuerzoPercibido"));
+
+                    await cmd.ExecuteNonQueryAsync();
+                }
+
+                // 3. Obtener recomendaciones
+                foreach (var (seccion, texto) in seccionAnalisis)
+                {
+                    using var recCmd = new MySqlCommand("SRecomendacionesPorCondicion", connection, (MySqlTransaction)transaction);
+                    recCmd.CommandType = CommandType.StoredProcedure;
+                    recCmd.Parameters.AddWithValue("prm_Seccion", seccion);
+                    recCmd.Parameters.AddWithValue("prm_Texto", texto);
+
+                    using var recReader = await recCmd.ExecuteReaderAsync();
+                    while (await recReader.ReadAsync())
+                    {
+                        recomendaciones.Add(recReader.GetString("recomendacion"));
+                    }
+                    await recReader.CloseAsync();
+                }
+
+                await transaction.CommitAsync();
+                return (metricaId, seccionAnalisis, recomendaciones);
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                LogHelper.LogError("InsertarMetricasConAnalisisAsync", ex);
+                return (0, new Dictionary<string, string>(), new List<string>());
+            }
+        }
+
+        private Dictionary<string, string> AnalizarMetricas(ClienteMetrica m)
+        {
+            var result = new Dictionary<string, string>();
+
+            // ANTROPOMETRÍA
+            if (m.Peso.HasValue && m.Altura.HasValue && m.Altura > 0)
+            {
+                var imc = (double)m.Peso / Math.Pow((double)m.Altura / 100, 2); // altura en cm
+                if (imc < 18.5)
+                    result["Antropometria"] = "Bajo peso";
+                else if (imc < 25)
+                    result["Antropometria"] = "IMC normal";
+                else if (imc < 30)
+                    result["Antropometria"] = "Sobrepeso";
+                else
+                    result["Antropometria"] = "Obesidad";
+            }
+
+            // FUERZA Y RESISTENCIA
+            if (m.RmPress > 0 || m.RmSentadilla > 0 || m.RmPesoMuerto > 0)
+            {
+                if ((m.RmPress ?? 0) < 40 || (m.RmSentadilla ?? 0) < 60)
+                    result["FuerzaResistencia"] = "Baja fuerza";
+                else if ((m.RmPress ?? 0) > 80 || (m.RmSentadilla ?? 0) > 100)
+                    result["FuerzaResistencia"] = "Progreso en fuerza";
+                else
+                    result["FuerzaResistencia"] = "Fuerza promedio";
+            }
+
+            // CARDIO
+            if (m.FcReposo.HasValue && m.FcRecuperacion.HasValue)
+            {
+                if (m.FcReposo > 85)
+                    result["Cardio"] = "Alta frecuencia cardiaca";
+                else if (m.FcRecuperacion - m.FcReposo < -30)
+                    result["Cardio"] = "Buena recuperación";
+                else
+                    result["Cardio"] = "Baja resistencia";
+            }
+
+            // FLEXIBILIDAD
+            if (m.TestFlexibilidad.HasValue || m.RangoMovimiento.HasValue)
+            {
+                double total = 0;
+                int count = 0;
+
+                if (m.TestFlexibilidad.HasValue)
+                {
+                    total += Convertidor.ToDouble(m.TestFlexibilidad.Value);
+                    count++;
+                }
+
+                if (m.RangoMovimiento.HasValue)
+                {
+                    total += Convertidor.ToDouble(m.RangoMovimiento.Value);
+                    count++;
+                }
+
+                double promedio = total / count;
+
+                if (promedio < 15)
+                    result["Flexibilidad"] = "Flexibilidad limitada";
+                else if (promedio <= 25)
+                    result["Flexibilidad"] = "Flexibilidad aceptable";
+                else
+                    result["Flexibilidad"] = "Flexibilidad óptima";
+            }
+
+
+            // POTENCIA Y AGILIDAD
+            if (m.SaltoVertical.HasValue || m.VelocidadSprint.HasValue)
+            {
+                if ((m.SaltoVertical ?? 0) > 50m && (m.VelocidadSprint ?? 0) < 4.5m)
+                    result["PotenciaAgilidad"] = "Buena potencia y agilidad";
+                else
+                    result["PotenciaAgilidad"] = "Potencia mejorable";
+            }
+
+            // ESFUERZO PERCIBIDO
+            if (m.Rpe.HasValue)
+            {
+                if (m.Rpe >= 8)
+                    result["EsfuerzoPercibido"] = "Esfuerzo excesivo";
+                else if (m.Rpe <= 4)
+                    result["EsfuerzoPercibido"] = "Esfuerzo insuficiente";
+                else
+                    result["EsfuerzoPercibido"] = "Carga manejable";
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<ClienteMetricasHistorial>> ObtenerHistorialMetricas(int codigoCli)
+        {
+            var historial = new List<ClienteMetricasHistorial>();
+
+            try
+            {
+                using var connection = GetConnection();
+                await connection.OpenAsync();
+
+                using var command = new MySqlCommand("SClienteHistorialMetricas", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("prm_CodigoCli", codigoCli);
+
+                using var reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    historial.Add(new ClienteMetricasHistorial
+                    {
+                        MetricaId = reader.GetInt32("id"),
+                        FechaRegistro = reader.GetDateTime("fecha_registro"),
+                        IMC = reader.GetDecimal("imc"),
+                        GrasaCorporal = reader.GetDecimal("grasa_corporal"),
+                        MasaMuscular = reader.GetDecimal("masa_muscular"),
+                        RmPress = reader.GetDecimal("rm_press"),
+                        RmSentadilla = reader.GetDecimal("rm_sentadilla"),
+                        RmPesoMuerto = reader.GetDecimal("rm_peso_muerto"),
+                        TestCooper = reader.GetDecimal("test_cooper"),
+                        FcReposo = reader.GetInt32("fc_reposo"),
+                        TestFlexibilidad = reader.GetDecimal("test_flexibilidad"),
+                        SaltoVertical = reader.GetDecimal("salto_vertical"),
+                        Rpe = reader.GetDecimal("rpe")
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerHistorialMetricas), ex);
+            }
+
+            return historial;
+        }
+
 
     }
 }

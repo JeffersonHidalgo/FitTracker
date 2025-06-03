@@ -110,6 +110,34 @@ namespace FitTrackerApi.Controllers
             }
         }
 
+        [HttpPost("metricas/analizar")]
+        public async Task<IActionResult> InsertarMetricas([FromBody] ClienteMetrica metricas)
+        {
+            if (metricas == null || metricas.CodigoCli <= 0)
+                return BadRequest("Datos inválidos");
+
+            int codigoCli = metricas.CodigoCli;
+            var (metricaId, resumenAnalisis, recomendaciones) = await _clienteRepository.InsertarMetricasConAnalisisAsync(metricas);
+
+            if (metricaId == 0)
+                return StatusCode(500, "No se pudieron registrar las métricas.");
+
+            return Ok(new
+            {
+                codigoCli,
+                metricaId,
+                resumenAnalisis,
+                recomendaciones
+            });
+        }
+
+        [HttpGet("metricas/historial/{codigoCli}")]
+        public async Task<IActionResult> ObtenerHistorialMetricas(int codigoCli)
+        {
+            var historial = await _clienteRepository.ObtenerHistorialMetricas(codigoCli);
+            return Ok(historial);
+        }
+
 
     }
 }

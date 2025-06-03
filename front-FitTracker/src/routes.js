@@ -1,4 +1,3 @@
- 
 import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
 import Maps from "views/examples/Maps.js";
@@ -9,7 +8,7 @@ import Icons from "views/examples/Icons.js";
 import UserPermissionsNew from "views/user-permissons.js";
 import ClientForm from "views/ClientForm.js";
 import MetricsRegistration from "views/examples/MetricsRegistration.js";
-
+import ClienteHistorialMetricas from "views/ClienteHistorialMetricas";
 
 var routes = [
   {
@@ -84,6 +83,13 @@ var routes = [
     name: "Metrics Registration",
     icon: "ni ni-ruler-pencil text-green",
     component: <MetricsRegistration />,
+    layout: "/admin",
+  },
+  {
+    path: "/cliente/historial",
+    name: "Historial Métricas",
+    icon: "ni ni-collection text-info",
+    component: <ClienteHistorialMetricas/>,
     layout: "/admin",
   },
 ];

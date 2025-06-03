@@ -33,29 +33,30 @@ namespace FitTrackerApi.Controllers
         }
 
         [HttpPost("insertar")]
-        public async Task<IActionResult> InsertarUsuarioConAccesos([FromBody] Usuario usuario)
+        public async Task<ActionResult<int>> InsertUsuario([FromBody] Usuario usuario)
         {
             if (usuario == null)
                 return BadRequest("Datos inválidos.");
 
-            var usuarioCreado = await _usuarioRepository.InsertUsuario(usuario);
-
-            if (!usuarioCreado)
+            // InsertUsuario devuelve el ID generado o 0 si falla
+            var newId = await _usuarioRepository.InsertUsuario(usuario);
+            if (newId == 0)
                 return StatusCode(500, "Error al crear el usuario.");
 
-
+            // Si hay accesos, los insertamos
             if (usuario.Accesos != null && usuario.Accesos.Count > 0)
             {
                 foreach (var acceso in usuario.Accesos)
                 {
-                    acceso.UsuarioId = usuario.Id; 
+                    acceso.UsuarioId = newId;
                     var ok = await _usuarioRepository.InsertUsuarioAcceso(acceso);
                     if (!ok)
                         return StatusCode(500, "Error al asignar accesos.");
                 }
             }
 
-            return Ok("Usuario y accesos creados correctamente.");
+            // Devuelve solo el ID generado como entero
+            return Ok(newId);
         }
 
         [HttpPut("actualizar")]
@@ -64,8 +65,8 @@ namespace FitTrackerApi.Controllers
             if (usuario == null)
                 return BadRequest("Datos inválidos.");
 
-            var ok = await _usuarioRepository.UpdateUsuario(usuario);
-            return ok ? Ok("Usuario actualizado.") : NotFound("Usuario no encontrado.");
+            var affected = await _usuarioRepository.UpdateUsuario(usuario);
+            return affected > 0 ? Ok("Usuario actualizado.") : NotFound("Usuario no encontrado.");
         }
 
         [HttpPost("asignar-acceso")]

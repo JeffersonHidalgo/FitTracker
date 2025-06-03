@@ -1,7 +1,7 @@
-
 import axios from 'axios';
 
-const API_BASE_URL = 'https://localhost:44323/api/'; 
+export const API_ROOT = 'https://localhost:44323'; // Solo dominio/base
+const API_BASE_URL = `${API_ROOT}/api/`;
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,

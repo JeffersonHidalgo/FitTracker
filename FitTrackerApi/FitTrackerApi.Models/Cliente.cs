@@ -24,6 +24,9 @@ namespace Models
         public DateTime FechaCrea { get; set; }
         public DateTime FechaModifica { get; set; }
         public int UsuModifica { get; set; }
+
+        public List<ClienteEmail> Emails { get; set; }
+        public List<ClienteTelefono> Telefonos { get; set; }
     }
 }
 

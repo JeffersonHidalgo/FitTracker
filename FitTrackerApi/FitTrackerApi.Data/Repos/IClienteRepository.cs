@@ -12,7 +12,12 @@ namespace Data.Repos
     {
         Task<IEnumerable<Cliente>> SlistaClientes();
         Task<Cliente> GetCliente(int id);
-        Task<bool> InsertCliente(Cliente cliente);
-        Task<bool> UpdateCliente(Cliente cliente);
+        Task<int> InsertCliente(Cliente cliente);
+        Task<int> UpdateCliente(Cliente cliente);
+        Task<(int metricaId, Dictionary<string, string> seccionAnalisis, List<string> recomendaciones)> InsertarMetricasConAnalisisAsync(ClienteMetrica metricas);
+        Task<IEnumerable<ClienteMetricasHistorial>> ObtenerHistorialMetricas(int codigoCli);
+        Task<IEnumerable<ClienteMetricasHistorial>> ObtenerHistorialCompletoAsync(int codigoCli);
+
+
     }
 }

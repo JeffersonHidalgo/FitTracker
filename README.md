@@ -1,3 +1,3 @@
 # FitTracker
 
-## Vencel View: https://fit-tracker-eta.vercel.app/
+## Vercel View:

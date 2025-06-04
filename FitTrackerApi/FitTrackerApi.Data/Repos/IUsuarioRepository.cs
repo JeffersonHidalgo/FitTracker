@@ -13,8 +13,6 @@ namespace Data.Repos
         Task<Usuario> GetUsuarioConAccesos(int id);
         Task<int> InsertUsuario(Usuario usuario);
         Task<int> UpdateUsuario(Usuario usuario);
-        Task<bool> InsertUsuarioAcceso(UsuarioAcceso acceso);
-        Task<bool> DeleteUsuarioAcceso(int usuarioId, int pantallaId);
         Task<IEnumerable<Pantalla>> SlistaPantallas();
 
     }

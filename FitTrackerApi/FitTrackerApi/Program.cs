@@ -18,6 +18,7 @@ builder.Services.AddSingleton(new MysqlConfig(builder.Configuration.GetConnectio
 
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IRolRepository, RolRepository>();
 
 builder.Services.AddCors(options =>
 {

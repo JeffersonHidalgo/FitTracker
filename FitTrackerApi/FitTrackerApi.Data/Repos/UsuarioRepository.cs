@@ -3,11 +3,8 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Transactions;
 using Utils;
 
 namespace Data.Repos
@@ -35,7 +32,7 @@ namespace Data.Repos
                         Username = reader.GetString("username"),
                         Nombre = reader.GetString("nombre"),
                         Email = reader.GetString("email"),
-                        Nivel = reader.GetString("nivel")[0]
+                        RolId = reader.GetInt32("rol_id")
                     });
                 return list;
             }
@@ -51,7 +48,6 @@ namespace Data.Repos
             try
             {
                 Usuario usuario = null;
-
                 using var conn = GetConnection();
                 await conn.OpenAsync();
 
@@ -59,40 +55,40 @@ namespace Data.Repos
                 using (var cmdUsuario = new MySqlCommand("SUsuario", conn) { CommandType = CommandType.StoredProcedure })
                 {
                     cmdUsuario.Parameters.AddWithValue("prm_Id", id);
-                    using var readerUsuario = await cmdUsuario.ExecuteReaderAsync();
-
-                    if (await readerUsuario.ReadAsync())
+                    using var reader = await cmdUsuario.ExecuteReaderAsync();
+                    if (await reader.ReadAsync())
                     {
                         usuario = new Usuario
                         {
-                            Id = readerUsuario.GetInt32("id"),
-                            Username = readerUsuario.GetString("username"),
-                            Nombre = readerUsuario.GetString("nombre"),
-                            Password = readerUsuario.GetString("password"),
-                            Email = readerUsuario.GetString("email"),
-                            Nivel = readerUsuario.GetString("nivel")[0],
-                            Accesos = new List<UsuarioAcceso>()
+                            Id = reader.GetInt32("id"),
+                            Username = reader.GetString("username"),
+                            Nombre = reader.GetString("nombre"),
+                            Password = reader.GetString("password"),
+                            Email = reader.GetString("email"),
+                            RolId = reader.GetInt32("rol_id"),
+                            Accesos = new List<RolAcceso>()
                         };
                     }
+                    await reader.CloseAsync(); // Necesario para liberar la conexión
                 }
 
-                // 2. Obtener accesos del usuario
-                if (usuario != null)
-                {
-                    using (var cmdAccesos = new MySqlCommand("SUsuarioConAccesos", conn) { CommandType = CommandType.StoredProcedure })
-                    {
-                        cmdAccesos.Parameters.AddWithValue("prm_Id", id);
-                        using var readerAccesos = await cmdAccesos.ExecuteReaderAsync();
+                if (usuario == null)
+                    return null;
 
-                        while (await readerAccesos.ReadAsync())
+                // 2. Obtener accesos del rol del usuario
+                using (var cmdAccesos = new MySqlCommand("SAccesosPorRol", conn) { CommandType = CommandType.StoredProcedure })
+                {
+                    cmdAccesos.Parameters.AddWithValue("prm_RolId", usuario.RolId);
+                    using var readerAccesos = await cmdAccesos.ExecuteReaderAsync();
+
+                    while (await readerAccesos.ReadAsync())
+                    {
+                        usuario.Accesos.Add(new RolAcceso
                         {
-                            usuario.Accesos.Add(new UsuarioAcceso
-                            {
-                                UsuarioId = readerAccesos.GetInt32(readerAccesos.GetOrdinal("usuario_id")),
-                                PantallaId = readerAccesos.GetInt32(readerAccesos.GetOrdinal("pantalla_id")),
-                                Acceso = readerAccesos.GetString(readerAccesos.GetOrdinal("acceso"))[0]
-                            });
-                        }
+                            RolId = usuario.RolId,
+                            PantallaId = readerAccesos.GetInt32("pantalla_id"),
+                            Acceso = readerAccesos.GetString("acceso")
+                        });
                     }
                 }
 
@@ -105,6 +101,7 @@ namespace Data.Repos
             }
         }
 
+
         public async Task<int> InsertUsuario(Usuario usuario)
         {
             using var conn = GetConnection();
@@ -116,12 +113,12 @@ namespace Data.Repos
 
                 using (var cmd = new MySqlCommand("InsertarUsuario", conn, (MySqlTransaction)transaction))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure; // Add this line
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("prm_Username", usuario.Username);
                     cmd.Parameters.AddWithValue("prm_Nombre", usuario.Nombre);
                     cmd.Parameters.AddWithValue("prm_Password", usuario.Password);
                     cmd.Parameters.AddWithValue("prm_Email", usuario.Email);
-                    cmd.Parameters.AddWithValue("prm_Nivel", usuario.Nivel);
+                    cmd.Parameters.AddWithValue("prm_RolId", usuario.RolId);
 
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {
@@ -156,7 +153,6 @@ namespace Data.Repos
             {
                 int affected = 0;
 
-                // Actualizar datos del usuario
                 using (var cmd = new MySqlCommand("UpdateUsuario", conn, (MySqlTransaction)transaction))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -165,21 +161,8 @@ namespace Data.Repos
                     cmd.Parameters.AddWithValue("prm_Nombre", usuario.Nombre);
                     cmd.Parameters.AddWithValue("prm_Password", usuario.Password);
                     cmd.Parameters.AddWithValue("prm_Email", usuario.Email);
-                    cmd.Parameters.AddWithValue("prm_Nivel", usuario.Nivel);
+                    cmd.Parameters.AddWithValue("prm_RolId", usuario.RolId);
                     affected = await cmd.ExecuteNonQueryAsync();
-                }
-
-                // Actualizar accesos
-                foreach (var acceso in usuario.Accesos)
-                {
-                    using var cmdAcceso = new MySqlCommand("UpdateUsuarioAcceso", conn, (MySqlTransaction)transaction)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-                    cmdAcceso.Parameters.AddWithValue("prm_UsuarioId", usuario.Id);
-                    cmdAcceso.Parameters.AddWithValue("prm_PantallaId", acceso.PantallaId);
-                    cmdAcceso.Parameters.AddWithValue("prm_Acceso", acceso.Acceso);
-                    await cmdAcceso.ExecuteNonQueryAsync();
                 }
 
                 await transaction.CommitAsync();
@@ -190,47 +173,6 @@ namespace Data.Repos
                 LogHelper.LogError(nameof(UpdateUsuario), ex);
                 await transaction.RollbackAsync();
                 return 0;
-            }
-        }
-
-        public async Task<bool> InsertUsuarioAcceso(UsuarioAcceso acceso)
-        {
-            try
-            {
-                int affected;
-                using var conn = GetConnection();
-                await conn.OpenAsync();
-                using var cmd = new MySqlCommand("InsertarUsuarioAcceso", conn) { CommandType = CommandType.StoredProcedure };
-                cmd.Parameters.AddWithValue("prm_UsuarioId", acceso.UsuarioId);
-                cmd.Parameters.AddWithValue("prm_PantallaId", acceso.PantallaId);
-                cmd.Parameters.AddWithValue("prm_Acceso", acceso.Acceso);
-                affected = await cmd.ExecuteNonQueryAsync();
-                return affected > 0;
-            }
-            catch (Exception ex)
-            {
-                LogHelper.LogError(nameof(InsertUsuarioAcceso), ex);
-                return false;
-            }
-        }
-
-        public async Task<bool> DeleteUsuarioAcceso(int usuarioId, int pantallaId)
-        {
-            try
-            {
-                int affected;
-                using var conn = GetConnection();
-                await conn.OpenAsync();
-                using var cmd = new MySqlCommand("DeleteUsuarioAcceso", conn) { CommandType = CommandType.StoredProcedure };
-                cmd.Parameters.AddWithValue("prm_UsuarioId", usuarioId);
-                cmd.Parameters.AddWithValue("prm_PantallaId", pantallaId);
-                affected = await cmd.ExecuteNonQueryAsync();
-                return affected > 0;
-            }
-            catch (Exception ex)
-            {
-                LogHelper.LogError(nameof(DeleteUsuarioAcceso), ex);
-                return false;
             }
         }
 
@@ -262,7 +204,7 @@ namespace Data.Repos
                         Id = reader.GetInt32("id"),
                         nombre = reader.GetString("nombre"),
                         descripcion = reader.GetString("descripcion"),
-                        nivel = reader.GetString("nivel"),
+                        nivel = reader.GetString("nivel")
                     });
                 return list;
             }

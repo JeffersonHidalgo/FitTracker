@@ -13,7 +13,7 @@ import ClienteHistorialMetricas from "views/ClienteHistorialMetricas";
 var routes = [
   {
     path: "/index",
-    name: "Dashboard",
+    name: "Inicio",
     icon: "ni ni-tv-2 text-primary",
     component: <Index />,
     layout: "/admin",

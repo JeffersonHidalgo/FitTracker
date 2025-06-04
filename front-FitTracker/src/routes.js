@@ -25,6 +25,7 @@ var routes = [
     icon: "ni ni-planet text-blue",
     component: <Icons />,
     layout: "/admin",
+    invisible: true,
   },
   {
     path: "/maps",
@@ -32,6 +33,7 @@ var routes = [
     icon: "ni ni-pin-3 text-orange",
     component: <Maps />,
     layout: "/admin",
+    invisible: true,
   },
   {
     path: "/user-profile",
@@ -46,6 +48,7 @@ var routes = [
     icon: "ni ni-bullet-list-67 text-red",
     component: <Tables />,
     layout: "/admin",
+    invisible: true,
   },
   {
     path: "/login",
@@ -60,6 +63,7 @@ var routes = [
     icon: "ni ni-circle-08 text-pink",
     component: <Register />,
     layout: "/auth",
+    invisible: true,
   },
   {
     path: "/user-permissions",

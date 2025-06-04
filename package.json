@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/JeffersonHidalgo/FitTracker#readme",
   "dependencies": {
-    "fittracker": "file:"
+    "fittracker": "file:",
+    "react-scripts": "^5.0.1"
   }
 }

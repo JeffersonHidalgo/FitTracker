@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/JeffersonHidalgo/FitTracker/issues"
   },
-  "homepage": "https://github.com/JeffersonHidalgo/FitTracker#readme"
+  "homepage": "https://github.com/JeffersonHidalgo/FitTracker#readme",
+  "dependencies": {
+    "fittracker": "file:",
+    "react-scripts": "^5.0.1"
+  }
 }

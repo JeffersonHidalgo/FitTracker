@@ -1,0 +1,132 @@
+{
+  "provincias": [
+    {
+      "nombre": "Azua",
+      "municipios": ["Azua de Compostela", "Estebanía", "Guayabal", "Las Charcas", "Padre Las Casas", "Peralta", "Pueblo Viejo", "Sabana Yegua", "Tábara Arriba"]
+    },
+    {
+      "nombre": "Bahoruco",
+      "municipios": ["Neiba", "Galván", "Los Ríos", "Tamayo", "Villa Jaragua", "Uvilla"]
+    },
+    {
+      "nombre": "Barahona",
+      "municipios": ["Santa Cruz de Barahona", "Cabral", "El Peñón", "Enriquillo", "Fundación", "Jaquimeyes", "La Ciénaga", "Las Salinas", "Paraiso", "Polo", "Vicente Noble"]
+    },
+    {
+      "nombre": "Dajabón",
+      "municipios": ["Dajabón", "El Pino", "Loma de Cabrera", "Partido", "Restauración"]
+    },
+    {
+      "nombre": "Distrito Nacional",
+      "municipios": ["Santo Domingo (Ciudad)"]
+    },
+    {
+      "nombre": "Duarte",
+      "municipios": ["San Francisco de Macorís", "Arenoso", "Castillo", "Eugenio María de Hostos", "Las Guáranas", "Pimentel", "Villa Riva"]
+    },
+    {
+      "nombre": "Elías Piña",
+      "municipios": ["Comendador", "Bánica", "El Llano", "Hondo Valle", "Juan Santiago", "Pedro Santana"]
+    },
+    {
+      "nombre": "El Seibo",
+      "municipios": ["Santa Cruz del Seibo", "Miches"]
+    },
+    {
+      "nombre": "Espaillat",
+      "municipios": ["Moca", "Cayetano Germosén", "Gaspar Hernández", "Jamao al Norte"]
+    },
+    {
+      "nombre": "Hato Mayor",
+      "municipios": ["Hato Mayor del Rey", "El Valle", "Sabana de la Mar"]
+    },
+    {
+      "nombre": "Hermanas Mirabal",
+      "municipios": ["Salcedo", "Tenares", "Villa Tapia"]
+    },
+    {
+      "nombre": "Independencia",
+      "municipios": ["Jimaní", "Cristóbal", "Duvergé", "La Descubierta", "Mella", "Postrer Río"]
+    },
+    {
+      "nombre": "La Altagracia",
+      "municipios": ["Higüey", "San Rafael del Yuma", "Bávaro", "Verón", "Punta Cana"]
+    },
+    {
+      "nombre": "La Romana",
+      "municipios": ["La Romana", "Guaymate", "Villa Hermosa"]
+    },
+    {
+      "nombre": "La Vega",
+      "municipios": ["La Vega", "Constanza", "Jarabacoa", "Jima Abajo"]
+    },
+    {
+      "nombre": "María Trinidad Sánchez",
+      "municipios": ["Nagua", "Cabrera", "El Factor", "Río San Juan"]
+    },
+    {
+      "nombre": "Monseñor Nouel",
+      "municipios": ["Bonao", "Maimón", "Piedra Blanca"]
+    },
+    {
+      "nombre": "Monte Cristi",
+      "municipios": ["San Fernando de Monte Cristi", "Castañuela", "Guayubín", "Las Matas de Santa Cruz", "Pepillo Salcedo", "Villa Vásquez"]
+    },
+    {
+      "nombre": "Monte Plata",
+      "municipios": ["Monte Plata", "Bayaguana", "Peralvillo", "Sabana Grande de Boyá", "Yamasá"]
+    },
+    {
+      "nombre": "Pedernales",
+      "municipios": ["Pedernales", "Oviedo"]
+    },
+    {
+      "nombre": "Peravia",
+      "municipios": ["Baní", "Nizao", "Matanzas"]
+    },
+    {
+      "nombre": "Puerto Plata",
+      "municipios": ["San Felipe de Puerto Plata", "Altamira", "Guananico", "Imbert", "Los Hidalgos", "Luperón", "Sosúa", "Villa Isabela", "Villa Montellano"]
+    },
+    {
+      "nombre": "Samaná",
+      "municipios": ["Santa Bárbara de Samaná", "Las Terrenas", "Sánchez"]
+    },
+    {
+      "nombre": "San Cristóbal",
+      "municipios": ["San Cristóbal", "Bajos de Haina", "Cambita Garabitos", "Los Cacaos", "Nigua", "Sabana Grande de Palenque", "San Gregorio de Nigua", "Villa Altagracia", "Yaguate"]
+    },
+    {
+      "nombre": "San José de Ocoa",
+      "municipios": ["San José de Ocoa", "Rancho Arriba", "Sabana Larga"]
+    },
+    {
+      "nombre": "San Juan",
+      "municipios": ["San Juan de la Maguana", "Bohechío", "El Cercado", "Juan de Herrera", "Las Matas de Farfán", "Vallejuelo"]
+    },
+    {
+      "nombre": "San Pedro de Macorís",
+      "municipios": ["San Pedro de Macorís", "Consuelo", "Guayacanes", "Quisqueya", "Ramón Santana", "San José de los Llanos"]
+    },
+    {
+      "nombre": "Sánchez Ramírez",
+      "municipios": ["Cotuí", "Cevicos", "Fantino", "La Mata"]
+    },
+    {
+      "nombre": "Santiago",
+      "municipios": ["Santiago de los Caballeros", "Bisonó", "Jánico", "Licey al Medio", "Puñal", "San José de las Matas", "Tamboril", "Villa Bisonó", "Villa González"]
+    },
+    {
+      "nombre": "Santiago Rodríguez",
+      "municipios": ["San Ignacio de Sabaneta", "Los Almácigos", "Monción"]
+    },
+    {
+      "nombre": "Santo Domingo",
+      "municipios": ["Santo Domingo Este", "Santo Domingo Norte", "Santo Domingo Oeste", "Boca Chica", "Pedro Brand", "Los Alcarrizos", "San Antonio de Guerra"]
+    },
+    {
+      "nombre": "Valverde",
+      "municipios": ["Santa Cruz de Mao", "Esperanza", "Laguna Salada"]
+    }
+  ]
+}

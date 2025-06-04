@@ -23,6 +23,8 @@ import {
   obtenerDetalleUsuario,
   actualizarUsuario,
 } from "../services/usuarioService";
+import CustomAlert from "components/CustomAlert";
+import Loading from "components/Loading";
 
 const initialForm = {
   codigo: "",
@@ -31,7 +33,7 @@ const initialForm = {
   password: "",
   password2: "",
   email: "",
-  rol: "Administrador",
+  rol: "Usuario", // Cambiado aquí
 };
 
 const UserPermissionsNew = () => {
@@ -42,12 +44,31 @@ const UserPermissionsNew = () => {
   const [editMode, setEditMode] = useState(false);
   const [saving, setSaving] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Usuarios
   const [usuarios, setUsuarios] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [filtroUsuario, setFiltroUsuario] = useState("");
   const [filtroPantalla, setFiltroPantalla] = useState(""); // <-- Nuevo estado para filtro de pantallas
+
+  const [alert, setAlert] = useState({
+    isOpen: false,
+    color: "success",
+    message: ""
+  });
+
+  // Función para mostrar alertas
+  const showAlert = (color, message) => {
+    setAlert({
+      isOpen: true,
+      color,
+      message
+    });
+    setTimeout(() => {
+      setAlert(a => ({ ...a, isOpen: false }));
+    }, 3000);
+  };
 
   useEffect(() => {
     setLoadingPantallas(true);
@@ -96,14 +117,15 @@ const UserPermissionsNew = () => {
       !form.email ||
       !form.rol
     ) {
-      alert("Completa todos los campos.");
+      showAlert("warning", "Completa todos los campos.");
       return;
     }
     if (form.password !== form.password2) {
-      alert("Las contraseñas no coinciden.");
+      showAlert("warning", "Las contraseñas no coinciden.");
       return;
     }
     setSaving(true);
+    setLoading(true);
     try {
       const usuario = {
         username: form.usuario,
@@ -117,15 +139,20 @@ const UserPermissionsNew = () => {
         })),
       };
       await crearUsuario(usuario);
-      alert("Usuario creado correctamente");
+      showAlert("success", "Usuario creado correctamente");
       setEditMode(false);
-      setForm(initialForm);
+      const usuariosActualizados = await obtenerUsuarios();
+      setUsuarios(usuariosActualizados);
+      const usuarioCreado = usuariosActualizados.find(u => u.username === form.usuario);
+      if (usuarioCreado) {
+        await handleSelectUser(usuarioCreado);
+      }
       setPantallasSeleccionadas([]);
-      cargarUsuarios();
     } catch (e) {
-      alert("Error al crear usuario");
+      showAlert("danger", "Error al crear usuario");
     }
     setSaving(false);
+    setLoading(false);
   };
 
   // Selección y edición de usuario existente
@@ -138,11 +165,11 @@ const UserPermissionsNew = () => {
         usuario.id || usuario.Id || usuario.ID || usuario.codigo || usuario.username
       );
       setForm({
-        codigo: detalle.codigo || "",
+        codigo: detalle.id || detalle.codigo || "", // <-- Cambia aquí: usa primero 'id'
         usuario: detalle.username || "",
         nombre: detalle.nombre || "",
-        password: detalle.password || "",      // <-- Llena la contraseña
-        password2: detalle.password || "",     // <-- Llena repetir contraseña
+        password: detalle.password || "",
+        password2: detalle.password || "",
         email: detalle.email || "",
         rol:
           detalle.nivel === "A"
@@ -157,7 +184,7 @@ const UserPermissionsNew = () => {
           .map((p) => p.pantallaId)
       );
     } catch {
-      alert("No se pudo cargar el detalle del usuario");
+      showAlert("danger", "No se pudo cargar el detalle del usuario");
     }
   };
 
@@ -195,14 +222,20 @@ const UserPermissionsNew = () => {
       };
       console.log("Enviando a actualizarUsuario:", usuario); // <-- Agrega esto
       await actualizarUsuario(usuario);
-      alert("Usuario actualizado correctamente");
+      showAlert("success", "Usuario actualizado correctamente");
       setEditMode(false);
       setForm(initialForm);
       setPantallasSeleccionadas([]);
       setSelectedUser(null);
       cargarUsuarios();
+      const usuariosActualizados = await obtenerUsuarios();
+      setUsuarios(usuariosActualizados);
+      const usuarioActualizado = usuariosActualizados.find(u => u.username === form.usuario);
+      if (usuarioActualizado) {
+        await handleSelectUser(usuarioActualizado);
+      }
     } catch (e) {
-      alert("Error al actualizar usuario");
+      showAlert("danger", "Error al actualizar usuario");
     }
     setSaving(false);
   };
@@ -220,7 +253,7 @@ const UserPermissionsNew = () => {
       case "A":
         return "Administrador";
       case "U":
-        return "Usuario Normal";
+        return "Usuario"; // Cambiado aquí
       case "I":
         return "Invitado";
       default:
@@ -237,6 +270,55 @@ const UserPermissionsNew = () => {
     (p.nombre || "").toLowerCase().includes(filtroPantalla.toLowerCase()) ||
     (p.descripcion || "").toLowerCase().includes(filtroPantalla.toLowerCase())
   );
+
+  // Función para marcar pantallas según el nivel seleccionado
+  const marcarPantallasPorNivel = (nivel) => {
+    if (!nivel) return [];
+    if (nivel === "A") {
+      // Administrador: acceso a todas
+      return pantallas
+        .filter(p => p.nivel) // Solo las que tengan nivel definido
+        .map(p => p.id || p.codigo || p.nombre);
+    }
+    if (nivel === "U") {
+      // Usuario Normal: acceso a U o I
+      return pantallas
+        .filter(p => p.nivel === "U" || p.nivel === "I")
+        .map(p => p.id || p.codigo || p.nombre);
+    }
+    if (nivel === "I") {
+      // Invitado: acceso solo a I
+      return pantallas
+        .filter(p => p.nivel === "I")
+        .map(p => p.id || p.codigo || p.nombre);
+    }
+    return [];
+  };
+
+  // Solo marcar automáticamente si el usuario cambia el campo rol manualmente
+  const prevRolRef = React.useRef(form.rol);
+  useEffect(() => {
+    if (!editMode) return;
+    // Solo marcar si el rol cambió manualmente (no al cargar usuario)
+    if (prevRolRef.current !== form.rol) {
+      const nivel = form.rol === "Administrador" ? "A" : form.rol === "Usuario" ? "U" : "I";
+      setPantallasSeleccionadas(marcarPantallasPorNivel(nivel));
+    }
+    prevRolRef.current = form.rol;
+    // eslint-disable-next-line
+  }, [form.rol]);
+
+  useEffect(() => {
+    // Al cargar las pantallas, marca por defecto las de "Usuario Normal"
+    if (pantallas.length > 0 && !editMode && !selectedUser) {
+      setPantallasSeleccionadas(
+        pantallas
+          .filter(p => p.nivel === "U" || p.nivel === "I")
+          .map(p => p.id || p.codigo || p.nombre)
+      );
+    }
+    // eslint-disable-next-line
+  }, [pantallas]);
 
   return (
     <>
@@ -461,7 +543,7 @@ const UserPermissionsNew = () => {
                             disabled={!editMode}
                           >
                             <option>Administrador</option>
-                            <option>Usuario Normal</option>
+                            <option>Usuario</option> {/* Cambiado aquí */}
                             <option>Invitado</option>
                           </Input>
                         </FormGroup>
@@ -548,6 +630,7 @@ const UserPermissionsNew = () => {
                           <th style={{ minWidth: 200 }}>Pantalla</th>
                           <th style={{ minWidth: 250 }}>Descripción</th>
                           <th style={{ textAlign: "center", width: 120, minWidth: 120 }}>Acceso</th>
+                          {/* El nivel NO se muestra, pero sí se usa internamente */}
                         </tr>
                       </thead>
                       <tbody>
@@ -561,6 +644,7 @@ const UserPermissionsNew = () => {
                           </tr>
                         ) : (
                           pantallasFiltradas.map((pantalla) => (
+                            // El nivel se obtiene aquí pero NO se muestra
                             <tr key={pantalla.id || pantalla.codigo || pantalla.nombre}>
                               <td>{pantalla.nombre}</td>
                               <td>{pantalla.descripcion}</td>
@@ -570,7 +654,7 @@ const UserPermissionsNew = () => {
                                   verticalAlign: "middle",
                                   width: 120,
                                   minWidth: 120,
-                                  background: "#f8f9fe", // Opcional: para resaltar la columna de checks
+                                  background: "#f8f9fe",
                                   position: "relative",
                                 }}
                               >
@@ -603,6 +687,13 @@ const UserPermissionsNew = () => {
           </Row>
         </Container>
       </div>
+      <CustomAlert
+        isOpen={alert.isOpen}
+        color={alert.color}
+        message={alert.message}
+        toggle={() => setAlert(a => ({ ...a, isOpen: false }))}
+      />
+      <Loading show={loading} />
     </>
   );
 };

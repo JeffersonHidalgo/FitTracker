@@ -192,7 +192,7 @@ namespace Data.Repos
                         Id = reader.GetInt32("id"),
                         Nombre = reader.GetString("nombre"),
                         Descripcion = reader.GetString("descripcion"),
-                        Accesos = new List<RolAcceso>() // opcionalmente puedes omitir esto
+                        Accesos = new List<RolAcceso>()
                     });
                 }
             }

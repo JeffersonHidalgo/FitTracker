@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class UsuarioAcceso
+    public class RolAcceso
     {
-        public int Id { get; set; }
-        public int UsuarioId { get; set; }
+        public int RolId { get; set; }
         public int PantallaId { get; set; }
-        public char Acceso { get; set; }
+        public string Acceso { get; set; } // 'S' o 'N'
     }
 }

@@ -184,19 +184,47 @@ const MetricsForm = ({ codigoCli, onResult, result }) => {
     display: "block"
   };
 
+  // Define los campos obligatorios principales
+  const REQUIRED_FIELDS = [
+    "weight",
+    "height",
+    "bodyFat",
+    "muscleMass",
+    "waist",
+    "hip",
+    "arms",
+    "rmPress",
+    "rmSquat",
+    "rmDeadlift",
+    "cooperTest",
+    "restingHeartRate",
+    "flexibilityTest",
+    "verticalJump",
+    "rpe"
+  ];
+
   // Función para validar campos requeridos
   const isRequiredFieldsFilled = () => {
-    // Puedes ajustar los campos requeridos según tu lógica
-    return (
-      !!codigoCli &&
-      weight !== "" &&
-      height !== "" &&
-      bodyFat !== "" &&
-      muscleMass !== "" &&
-      waist !== "" &&
-      hip !== "" &&
-      arms !== ""
-    );
+    return REQUIRED_FIELDS.every(field => {
+      const value = {
+        weight,
+        height,
+        bodyFat,
+        muscleMass,
+        waist,
+        hip,
+        arms,
+        rmPress,
+        rmSquat,
+        rmDeadlift,
+        cooperTest,
+        restingHeartRate,
+        flexibilityTest,
+        verticalJump,
+        rpe
+      }[field];
+      return value !== "" && value !== undefined && !isNaN(Number(value));
+    });
   };
 
   // Actualiza el IMC si cambia el resultado externo (por ejemplo, al consultar un cliente)
@@ -300,6 +328,7 @@ const MetricsForm = ({ codigoCli, onResult, result }) => {
                     <FormGroup>
                       <Label id="weight-label" style={{ fontSize: 13 }}>
                         Peso ({unidades[sistemaMetrico].weight})
+                        <span style={{ color: "red" }}>*</span>
                         <span id="tooltip-weight" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
@@ -329,6 +358,7 @@ const MetricsForm = ({ codigoCli, onResult, result }) => {
                     <FormGroup>
                       <Label id="height-label" style={{ fontSize: 13 }}>
                         Altura ({unidades[sistemaMetrico].height})
+                        <span style={{ color: "red" }}>*</span>
                         <span id="tooltip-height" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"
@@ -375,6 +405,7 @@ const MetricsForm = ({ codigoCli, onResult, result }) => {
                     <FormGroup>
                       <Label id="bodyFat-label" style={{ fontSize: 13 }}>
                         % Grasa
+                        <span style={{ color: "red" }}>*</span>
                         <span id="tooltip-bodyFat" style={{ cursor: "pointer", color: "#11cdef", marginLeft: 5 }}>ⓘ</span>
                         <Tooltip
                           placement="right"

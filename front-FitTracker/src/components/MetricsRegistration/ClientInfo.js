@@ -6,6 +6,7 @@ import { obtenerClientes, obtenerDetalleCliente } from "../../services/clienteSe
 import FotoUploader from "../FotoUploader";
 import { API_ROOT } from "../../services/apiClient";
 import CustomAlert from "components/CustomAlert"; // Asegúrate de importar
+import ClienteSelectorModal from "components/ClienteSelectorModal";
 
 const ClientInfo = ({ selectedCliente, setSelectedCliente, onLimpiar }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -209,39 +210,11 @@ const ClientInfo = ({ selectedCliente, setSelectedCliente, onLimpiar }) => {
         </Row>
       </CardBody>
 
-      <Modal isOpen={isModalOpen} toggle={toggleModal}>
-        <ModalHeader toggle={toggleModal}>Consultar Cliente</ModalHeader>
-        <ModalBody>
-          <Form>
-            <FormGroup>
-              <Input
-                type="text"
-                placeholder="Buscar por nombre o código"
-                value={searchQuery}
-                onChange={handleSearchInput}
-              />
-            </FormGroup>
-          </Form>
-          <Table className="mt-3" responsive>
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Nombre</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {searchResults.map((result) => (
-                <tr key={result.codigoCli} onClick={() => handleSelectCliente(result.codigoCli)} style={{ cursor: "pointer" }}>
-                  <td>{result.codigoCli}</td>
-                  <td>{result.nombreCompleto}</td>
-                  <td>{result.estado}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </ModalBody>
-      </Modal>
+      <ClienteSelectorModal
+        isOpen={isModalOpen}
+        toggle={() => setIsModalOpen(!isModalOpen)}
+        onSelect={handleSelectCliente}
+      />
     </Card>
   );
 };

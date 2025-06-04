@@ -226,7 +226,9 @@ namespace Data.Repos
                                 {
                                     CodigoCli = reader.GetInt32("codigo_cli"),
                                     NombreCompleto = reader.GetString("nombre_completo"),
-                                    Estado = reader.GetString("estado")
+                                    Estado = reader.GetString("estado"),
+                                    Provincia = reader.GetString("provincia"),
+                                    Ciudad = reader.GetString("ciudad")
 
                                 };
                                 clientes.Add(cliente);

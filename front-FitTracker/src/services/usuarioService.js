@@ -11,10 +11,5 @@ export const crearUsuario = (usuario) =>
 export const actualizarUsuario = (usuario) =>
   request("put", "/usuario/actualizar", usuario);
 
-export const asignarAcceso = (acceso) =>
-  request("post", "/usuario/asignar-acceso", acceso);
-
-export const eliminarAcceso = (usuarioId, pantallaId) =>
-  request("delete", `/usuario/eliminar-acceso?usuarioId=${usuarioId}&pantallaId=${pantallaId}`);
 
 export const obtenerPantallas = () => request("get", "/usuario/listaPantallas");

@@ -23,6 +23,7 @@ import {
   obtenerDetalleUsuario,
   actualizarUsuario,
 } from "../services/usuarioService";
+import rolService from "../services/rolService";
 import CustomAlert from "components/CustomAlert";
 import Loading from "components/Loading";
 
@@ -33,24 +34,26 @@ const initialForm = {
   password: "",
   password2: "",
   email: "",
-  rol: "Usuario", // Cambiado aquí
+  rolId: "", // Ahora es rolId (int)
 };
 
 const UserPermissionsNew = () => {
   const [form, setForm] = useState(initialForm);
   const [pantallas, setPantallas] = useState([]);
-  const [pantallasSeleccionadas, setPantallasSeleccionadas] = useState([]);
   const [loadingPantallas, setLoadingPantallas] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [saving, setSaving] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Usuarios
+  // Usuarios y roles
   const [usuarios, setUsuarios] = useState([]);
+  const [roles, setRoles] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [filtroUsuario, setFiltroUsuario] = useState("");
-  const [filtroPantalla, setFiltroPantalla] = useState(""); // <-- Nuevo estado para filtro de pantallas
+  const [filtroPantalla, setFiltroPantalla] = useState("");
+
+  const [accesosUsuario, setAccesosUsuario] = useState([]); // Solo visualización
 
   const [alert, setAlert] = useState({
     isOpen: false,
@@ -77,6 +80,7 @@ const UserPermissionsNew = () => {
       .catch(() => setPantallas([]))
       .finally(() => setLoadingPantallas(false));
     cargarUsuarios();
+    rolService.listar().then(setRoles).catch(() => setRoles([]));
   }, []);
 
   const cargarUsuarios = async () => {
@@ -93,19 +97,11 @@ const UserPermissionsNew = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckboxChange = (pantallaId) => {
-    setPantallasSeleccionadas((prev) =>
-      prev.includes(pantallaId)
-        ? prev.filter((id) => id !== pantallaId)
-        : [...prev, pantallaId]
-    );
-  };
-
   const handleNuevo = () => {
     setEditMode(true);
     setForm(initialForm);
-    setPantallasSeleccionadas([]);
     setSelectedUser(null);
+    setAccesosUsuario([]);
   };
 
   const handleGuardar = async () => {
@@ -115,7 +111,7 @@ const UserPermissionsNew = () => {
       !form.password ||
       !form.password2 ||
       !form.email ||
-      !form.rol
+      !form.rolId
     ) {
       showAlert("warning", "Completa todos los campos.");
       return;
@@ -132,11 +128,7 @@ const UserPermissionsNew = () => {
         nombre: form.nombre,
         password: form.password,
         email: form.email,
-        nivel: form.rol.charAt(0),
-        accesos: pantallas.map((p) => ({
-          pantallaId: p.id || p.codigo || p.nombre,
-          acceso: pantallasSeleccionadas.includes(p.id || p.codigo || p.nombre) ? "S" : "N"
-        })),
+        rolId: parseInt(form.rolId, 10),
       };
       await crearUsuario(usuario);
       showAlert("success", "Usuario creado correctamente");
@@ -147,7 +139,6 @@ const UserPermissionsNew = () => {
       if (usuarioCreado) {
         await handleSelectUser(usuarioCreado);
       }
-      setPantallasSeleccionadas([]);
     } catch (e) {
       showAlert("danger", "Error al crear usuario");
     }
@@ -165,24 +156,15 @@ const UserPermissionsNew = () => {
         usuario.id || usuario.Id || usuario.ID || usuario.codigo || usuario.username
       );
       setForm({
-        codigo: detalle.id || detalle.codigo || "", // <-- Cambia aquí: usa primero 'id'
+        codigo: detalle.id || detalle.codigo || "",
         usuario: detalle.username || "",
         nombre: detalle.nombre || "",
         password: detalle.password || "",
         password2: detalle.password || "",
         email: detalle.email || "",
-        rol:
-          detalle.nivel === "A"
-            ? "Administrador"
-            : detalle.nivel === "U"
-            ? "Usuario Normal"
-            : "Invitado",
+        rolId: detalle.rolId ? String(detalle.rolId) : "",
       });
-      setPantallasSeleccionadas(
-        (detalle.accesos || [])
-          .filter((p) => p.acceso === "S")
-          .map((p) => p.pantallaId)
-      );
+      setAccesosUsuario(detalle.accesos || []);
     } catch {
       showAlert("danger", "No se pudo cargar el detalle del usuario");
     }
@@ -194,39 +176,38 @@ const UserPermissionsNew = () => {
 
   const handleActualizar = async () => {
     if (
+      !form.codigo ||
+      isNaN(Number(form.codigo)) ||
       !form.usuario ||
       !form.nombre ||
       !form.email ||
-      !form.rol
+      !form.rolId
     ) {
-      alert("Completa todos los campos.");
+      showAlert("warning", "Completa todos los campos obligatorios.");
       return;
     }
     if (form.password && form.password !== form.password2) {
-      alert("Las contraseñas no coinciden.");
+      showAlert("warning", "Las contraseñas no coinciden.");
       return;
     }
     setSaving(true);
     try {
       const usuario = {
-        id: selectedUser.id || selectedUser.Id || selectedUser.ID || selectedUser.codigo || selectedUser.username,
+        id: Number(form.codigo),
         username: form.usuario,
         nombre: form.nombre,
+        password: form.password || "", // Si no se cambia, envía string vacío
         email: form.email,
-        nivel: form.rol.charAt(0),
-        accesos: pantallas.map((p) => ({
-          pantallaId: p.id || p.codigo || p.nombre,
-          acceso: pantallasSeleccionadas.includes(p.id || p.codigo || p.nombre) ? "S" : "N"
-        })),
-        ...(form.password ? { password: form.password } : {}),
+        rolId: parseInt(form.rolId, 10),
+        accesos: accesosUsuario && accesosUsuario.length > 0 ? accesosUsuario : [], // Si tienes accesos, envíalos, si no, array vacío
       };
-      console.log("Enviando a actualizarUsuario:", usuario); // <-- Agrega esto
+      console.log("Enviando usuario:", usuario);
       await actualizarUsuario(usuario);
       showAlert("success", "Usuario actualizado correctamente");
       setEditMode(false);
       setForm(initialForm);
-      setPantallasSeleccionadas([]);
       setSelectedUser(null);
+      setAccesosUsuario([]);
       cargarUsuarios();
       const usuariosActualizados = await obtenerUsuarios();
       setUsuarios(usuariosActualizados);
@@ -235,7 +216,8 @@ const UserPermissionsNew = () => {
         await handleSelectUser(usuarioActualizado);
       }
     } catch (e) {
-      showAlert("danger", "Error al actualizar usuario");
+      const msg = e?.response?.data?.message || "Error al actualizar usuario";
+      showAlert("danger", msg);
     }
     setSaving(false);
   };
@@ -243,22 +225,13 @@ const UserPermissionsNew = () => {
   const handleCancelar = () => {
     setEditMode(false);
     setForm(initialForm);
-    setPantallasSeleccionadas([]);
     setSelectedUser(null);
+    setAccesosUsuario([]);
   };
 
-  const getRolNombre = (nivel) => {
-    if (!nivel) return "";
-    switch (nivel) {
-      case "A":
-        return "Administrador";
-      case "U":
-        return "Usuario"; // Cambiado aquí
-      case "I":
-        return "Invitado";
-      default:
-        return nivel;
-    }
+  const getRolNombre = (rolId) => {
+    const rol = roles.find(r => String(r.id) === String(rolId));
+    return rol ? rol.nombre : "";
   };
 
   const usuariosFiltrados = usuarios.filter((u) =>
@@ -271,54 +244,10 @@ const UserPermissionsNew = () => {
     (p.descripcion || "").toLowerCase().includes(filtroPantalla.toLowerCase())
   );
 
-  // Función para marcar pantallas según el nivel seleccionado
-  const marcarPantallasPorNivel = (nivel) => {
-    if (!nivel) return [];
-    if (nivel === "A") {
-      // Administrador: acceso a todas
-      return pantallas
-        .filter(p => p.nivel) // Solo las que tengan nivel definido
-        .map(p => p.id || p.codigo || p.nombre);
-    }
-    if (nivel === "U") {
-      // Usuario Normal: acceso a U o I
-      return pantallas
-        .filter(p => p.nivel === "U" || p.nivel === "I")
-        .map(p => p.id || p.codigo || p.nombre);
-    }
-    if (nivel === "I") {
-      // Invitado: acceso solo a I
-      return pantallas
-        .filter(p => p.nivel === "I")
-        .map(p => p.id || p.codigo || p.nombre);
-    }
-    return [];
-  };
+  // Accesos del usuario (solo visualización)
+  const accesosPantallasUsuario = (accesosUsuario || []).filter(a => a.acceso === "S").map(a => a.pantallaId);
 
-  // Solo marcar automáticamente si el usuario cambia el campo rol manualmente
-  const prevRolRef = React.useRef(form.rol);
-  useEffect(() => {
-    if (!editMode) return;
-    // Solo marcar si el rol cambió manualmente (no al cargar usuario)
-    if (prevRolRef.current !== form.rol) {
-      const nivel = form.rol === "Administrador" ? "A" : form.rol === "Usuario" ? "U" : "I";
-      setPantallasSeleccionadas(marcarPantallasPorNivel(nivel));
-    }
-    prevRolRef.current = form.rol;
-    // eslint-disable-next-line
-  }, [form.rol]);
-
-  useEffect(() => {
-    // Al cargar las pantallas, marca por defecto las de "Usuario Normal"
-    if (pantallas.length > 0 && !editMode && !selectedUser) {
-      setPantallasSeleccionadas(
-        pantallas
-          .filter(p => p.nivel === "U" || p.nivel === "I")
-          .map(p => p.id || p.codigo || p.nombre)
-      );
-    }
-    // eslint-disable-next-line
-  }, [pantallas]);
+  // Maneja el cambio de acceso a pantallas (checkbox)
 
   return (
     <>
@@ -537,14 +466,17 @@ const UserPermissionsNew = () => {
                           <Input
                             className="form-control-alternative"
                             type="select"
-                            name="rol"
-                            value={form.rol}
+                            name="rolId"
+                            value={form.rolId}
                             onChange={handleInputChange}
                             disabled={!editMode}
                           >
-                            <option>Administrador</option>
-                            <option>Usuario</option> {/* Cambiado aquí */}
-                            <option>Invitado</option>
+                            <option value="">Seleccione un rol</option>
+                            {roles.map(rol => (
+                              <option key={rol.id} value={rol.id}>
+                                {rol.nombre}
+                              </option>
+                            ))}
                           </Input>
                         </FormGroup>
                       </Col>
@@ -596,7 +528,7 @@ const UserPermissionsNew = () => {
                           >
                             <td>{u.nombre}</td>
                             <td>{u.username}</td>
-                            <td>{getRolNombre(u.nivel)}</td>
+                            <td>{getRolNombre(u.rolId)}</td>
                           </tr>
                         );
                       })}
@@ -660,18 +592,13 @@ const UserPermissionsNew = () => {
                               >
                                 <Input
                                   type="checkbox"
-                                  disabled={!editMode}
-                                  checked={pantallasSeleccionadas.includes(
+                                  disabled
+                                  checked={accesosPantallasUsuario.includes(
                                     pantalla.id || pantalla.codigo || pantalla.nombre
                                   )}
-                                  onChange={() =>
-                                    handleCheckboxChange(
-                                      pantalla.id || pantalla.codigo || pantalla.nombre
-                                    )
-                                  }
                                   style={{
                                     transform: "scale(1.2)",
-                                    cursor: editMode ? "pointer" : "not-allowed",
+                                    cursor: "not-allowed",
                                   }}
                                 />
                               </td>

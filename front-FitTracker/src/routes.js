@@ -9,6 +9,8 @@ import UserPermissionsNew from "views/user-permissons.js";
 import ClientForm from "views/ClientForm.js";
 import MetricsRegistration from "views/examples/MetricsRegistration.js";
 import ClienteHistorialMetricas from "views/ClienteHistorialMetricas";
+import RoleManagement from "views/RoleManagement";
+import RecomendacionAdmin from "views/RecomendacionAdmin";
 
 var routes = [
   {
@@ -86,10 +88,24 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/cliente/historial",
-    name: "Historial Métricas",
-    icon: "ni ni-collection text-info",
-    component: <ClienteHistorialMetricas/>,
+    path: "/clientes/historial-metricas",
+    name: "Historial de Métricas",
+    icon: "ni ni-chart-bar-32 text-purple",
+    component: <ClienteHistorialMetricas />,
+    layout: "/admin",
+  },
+  {
+    path: "/usuarios/roles",
+    name: "Roles",
+    icon: "ni ni-settings-gear-65 text-blue",
+    component: <RoleManagement />,
+    layout: "/admin",
+  },
+  {
+    path: "/recomendaciones",
+    name: "Recomendaciones",
+    icon: "fa fa-lightbulb",
+    component: <RecomendacionAdmin />,
     layout: "/admin",
   },
 ];

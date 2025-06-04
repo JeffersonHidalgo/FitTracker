@@ -7,6 +7,7 @@ import Header from "components/Headers/Header";
 import ClientInfo from "components/MetricsRegistration/ClientInfo";
 import { obtenerHistorialCompletoCliente } from "services/clienteService";
 import { Line } from "react-chartjs-2";
+import Loading from "components/Loading";
 import CustomAlert from "components/CustomAlert";
 
 const metricasKeyMap = {
@@ -295,25 +296,15 @@ const ClienteHistorialMetricas = () => {
   return (
     <>
       <Header />
+      <Loading show={loading} />
+      <CustomAlert
+        isOpen={alert.isOpen}
+        color={alert.color}
+        message={alert.message}
+        toggle={() => setAlert(a => ({ ...a, isOpen: false }))}
+      />
       <div className="main-content" style={{ marginTop: "50px" }}>
         <Container className="mt--5" fluid>
-          {/* ALERTA SUPERIOR */}
-          {alert.isOpen && (
-            <Row className="justify-content-center">
-              <Col xl="8" lg="10" md="12">
-                <Alert
-                  color={alert.color}
-                  isOpen={alert.isOpen}
-                  toggle={() => setAlert(a => ({ ...a, isOpen: false }))}
-                  className="shadow-sm text-center"
-                  style={{ fontSize: 16 }}
-                >
-                  {alert.message}
-                </Alert>
-              </Col>
-            </Row>
-          )}
-
           {/* DATOS BÁSICOS DEL CLIENTE */}
           <Row className="justify-content-center">
             <Col xl="10" lg="10" md="12">

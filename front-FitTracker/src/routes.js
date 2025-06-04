@@ -10,6 +10,7 @@ import ClientForm from "views/ClientForm.js";
 import MetricsRegistration from "views/examples/MetricsRegistration.js";
 import ClienteHistorialMetricas from "views/ClienteHistorialMetricas";
 import RoleManagement from "views/RoleManagement";
+import RecomendacionAdmin from "views/RecomendacionAdmin";
 
 var routes = [
   {
@@ -94,6 +95,13 @@ var routes = [
     name: "Roles",
     icon: "ni ni-settings-gear-65 text-blue",
     component: <RoleManagement />,
+    layout: "/admin",
+  },
+  {
+    path: "/recomendaciones",
+    name: "Recomendaciones",
+    icon: "fa fa-lightbulb",
+    component: <RecomendacionAdmin />,
     layout: "/admin",
   },
 ];

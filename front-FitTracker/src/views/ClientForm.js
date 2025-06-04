@@ -14,6 +14,12 @@ import {
   ModalHeader,
   ModalBody,
   Table,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Pagination,
+  PaginationItem,
+  PaginationLink
 } from "reactstrap";
 import Header from "components/Headers/Header.js";
 import CustomAlert from "components/CustomAlert";
@@ -29,6 +35,7 @@ import rdData from "../assets/rd.json"; // Ajusta la ruta si es necesario
 import FotoUploader from "components/FotoUploader";
 import InputMask from "react-input-mask";
 import { API_ROOT } from "../services/apiClient"; // Asegúrate de que esta ruta sea correct
+import ClienteSelectorModal from "components/ClienteSelectorModal";
 
 const ClientForm = () => {
   const [activeTab, setActiveTab] = useState("basic");
@@ -67,8 +74,11 @@ const ClientForm = () => {
   });
   const [loading, setLoading] = useState(false);
   const [foto, setFoto] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const provinciasRD = rdData.provincias.map(p => p.nombre);
+
+  const PAGE_SIZE = 8; // Puedes ajustar el tamaño de página
 
   const addPhone = () => setPhones([...phones, { numero: "", tipo: "", descripcion: "", principal: false }]);
   const removePhone = (index) => setPhones(phones.filter((_, i) => i !== index));
@@ -99,23 +109,12 @@ const ClientForm = () => {
     }
   };
 
-  const handleSearch = async () => {
-    try {
-      const clientes = await obtenerClientes();
-      const filtered = clientes.filter(
-        c =>
-          (c.nombreCompleto && c.nombreCompleto.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (c.codigoCli && c.codigoCli.toString().includes(searchQuery))
-      );
-      setSearchResults(filtered);
-    } catch (e) {
-      showAlert("danger", "Error al buscar clientes");
-    }
-  };
+
 
   const handleSearchInput = (e) => {
     const value = e.target.value;
     setSearchQuery(value);
+    setCurrentPage(1);
     const filtered = clientes.filter(
       c =>
         (c.nombreCompleto && c.nombreCompleto.toLowerCase().includes(value.toLowerCase())) ||
@@ -289,9 +288,9 @@ const ClientForm = () => {
     }
   };
 
-  const handleSelectCliente = async (id) => {
+  const handleSelectCliente = async (codigoCli) => {
     try {
-      const detalle = await obtenerDetalleCliente(id);
+      const detalle = await obtenerDetalleCliente(codigoCli);
       // Busca los municipios de la provincia seleccionada
       const provObj = rdData.provincias.find(p => p.nombre === (detalle.provincia ?? ""));
       const municipiosList = provObj ? provObj.municipios : [];
@@ -958,37 +957,96 @@ const ClientForm = () => {
         <ModalBody>
           <Form>
             <FormGroup>
-              <Input
-                type="text"
-                placeholder="Buscar por nombre o código"
-                value={searchQuery}
-                onChange={handleSearchInput}
-              />
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText style={{ background: "#f6f9fc" }}>
+                    <i className="fa fa-search" />
+                  </InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="text"
+                  placeholder="Buscar por nombre o código"
+                  value={searchQuery}
+                  onChange={handleSearchInput}
+                  style={{
+                    borderLeft: "none",
+                    background: "#f6f9fc",
+                    borderRadius: "0 0.375rem 0.375rem 0"
+                  }}
+                />
+              </InputGroup>
             </FormGroup>
           </Form>
-          <Button color="primary" size="sm" onClick={handleSearch}>
-            Buscar
-          </Button>
-          <Table className="mt-3" responsive>
-            <thead>
+          
+          <Table className="mt-3 table-hover table-striped" responsive bordered>
+            <thead className="thead-light">
               <tr>
-                <th>Código</th>
+                <th style={{ width: 100 }}>Código</th>
                 <th>Nombre</th>
-                <th>Estado</th>
+                <th style={{ width: 100 }}>Estado</th>
               </tr>
             </thead>
             <tbody>
-              {searchResults.map((result) => (
-                <tr key={result.codigoCli} onClick={() => handleSelectCliente(result.codigoCli)} style={{ cursor: "pointer" }}>
-                  <td>{result.codigoCli}</td>
-                  <td>{result.nombreCompleto}</td>
-                  <td>{result.estado}</td>
+              {searchResults.length === 0 ? (
+                <tr>
+                  <td colSpan={3} className="text-center text-muted">
+                    No se encontraron resultados.
+                  </td>
                 </tr>
-              ))}
+              ) : (
+                searchResults.slice(
+                  (currentPage - 1) * PAGE_SIZE,
+                  currentPage * PAGE_SIZE
+                ).map((result) => (
+                  <tr
+                    key={result.codigoCli}
+                    onClick={() => handleSelectCliente(result.codigoCli)}
+                    style={{ cursor: "pointer" }}
+                    className="align-middle"
+                  >
+                    <td>{result.codigoCli}</td>
+                    <td>{result.nombreCompleto}</td>
+                    <td>
+                      <span className={`badge badge-${result.estado === "A" ? "success" : "secondary"}`}>
+                        {result.estado === "A" ? "Activo" : "Inactivo"}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </Table>
+          {Math.ceil(searchResults.length / PAGE_SIZE) > 1 && (
+            <Pagination className="justify-content-center">
+              <PaginationItem disabled={currentPage === 1}>
+                <PaginationLink first onClick={() => setCurrentPage(1)} />
+              </PaginationItem>
+              <PaginationItem disabled={currentPage === 1}>
+                <PaginationLink previous onClick={() => setCurrentPage(currentPage - 1)} />
+              </PaginationItem>
+              {Array.from({ length: Math.ceil(searchResults.length / PAGE_SIZE) }, (_, i) => (
+                <PaginationItem active={currentPage === i + 1} key={i}>
+                  <PaginationLink onClick={() => setCurrentPage(i + 1)}>
+                    {i + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+              <PaginationItem disabled={currentPage === Math.ceil(searchResults.length / PAGE_SIZE)}>
+                <PaginationLink next onClick={() => setCurrentPage(currentPage + 1)} />
+              </PaginationItem>
+              <PaginationItem disabled={currentPage === Math.ceil(searchResults.length / PAGE_SIZE)}>
+                <PaginationLink last onClick={() => setCurrentPage(Math.ceil(searchResults.length / PAGE_SIZE))} />
+              </PaginationItem>
+            </Pagination>
+          )}
         </ModalBody>
       </Modal>
+
+      <ClienteSelectorModal
+        isOpen={isModalOpen}
+        toggle={() => setIsModalOpen(!isModalOpen)}
+        onSelect={handleSelectCliente}
+      />
     </>
   );
 };

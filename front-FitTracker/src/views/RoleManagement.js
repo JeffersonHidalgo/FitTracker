@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
-  Card, CardHeader, CardBody, Button, Row, Col, Table, Form, FormGroup, Input, Label, Container, Alert, Spinner
+  Card, CardHeader, CardBody, Button, Row, Col, Table, Form, FormGroup, Input, Label, Container, Alert, Spinner,
+  Pagination, PaginationItem, PaginationLink
 } from "reactstrap";
 import Header from "components/Headers/Header";
 import rolService from "../services/rolService";
@@ -13,6 +14,9 @@ const initialForm = {
   accesos: [],
 };
 
+const PAGE_SIZE_ROLES = 8;
+const PAGE_SIZE_PANTALLAS = 8;
+
 const RoleManagement = () => {
   const [roles, setRoles] = useState([]);
   const [pantallas, setPantallas] = useState([]);
@@ -24,10 +28,39 @@ const RoleManagement = () => {
   const [alert, setAlert] = useState({ isOpen: false, color: "success", message: "" });
   const [filtro, setFiltro] = useState("");
 
+  // Paginación para roles
+  const [currentPageRoles, setCurrentPageRoles] = useState(1);
+  const filteredRoles = roles.filter(r =>
+    r.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
+    (r.descripcion || "").toLowerCase().includes(filtro.toLowerCase())
+  );
+  const totalPagesRoles = Math.ceil(filteredRoles.length / PAGE_SIZE_ROLES);
+  const paginatedRoles = filteredRoles.slice(
+    (currentPageRoles - 1) * PAGE_SIZE_ROLES,
+    currentPageRoles * PAGE_SIZE_ROLES
+  );
+
+  // Paginación para pantallas (en el form)
+  const [currentPagePantallas, setCurrentPagePantallas] = useState(1);
+  const filteredPantallas = pantallas.filter(p =>
+    !form.pantallaFiltro ||
+    p.nombre.toLowerCase().includes(form.pantallaFiltro?.toLowerCase()) ||
+    (p.descripcion || "").toLowerCase().includes(form.pantallaFiltro?.toLowerCase())
+  );
+  const totalPagesPantallas = Math.ceil(filteredPantallas.length / PAGE_SIZE_PANTALLAS);
+  const paginatedPantallas = filteredPantallas.slice(
+    (currentPagePantallas - 1) * PAGE_SIZE_PANTALLAS,
+    currentPagePantallas * PAGE_SIZE_PANTALLAS
+  );
+
   // Fetch roles and pantallas on mount
   useEffect(() => {
     fetchAll();
   }, []);
+
+  // Reiniciar página al filtrar
+  useEffect(() => { setCurrentPageRoles(1); }, [filtro, roles.length]);
+  useEffect(() => { setCurrentPagePantallas(1); }, [form.pantallaFiltro, pantallas.length]);
 
   const fetchAll = async () => {
     setLoading(true);
@@ -142,11 +175,6 @@ const RoleManagement = () => {
     setSelectedRole(null);
   };
 
-  const filteredRoles = roles.filter(r =>
-    r.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
-    (r.descripcion || "").toLowerCase().includes(filtro.toLowerCase())
-  );
-
   return (
     <>
       <Header />
@@ -156,7 +184,7 @@ const RoleManagement = () => {
       <div className="main-content" style={{ marginTop: "50px" }}>
         <Container className="mt--5" fluid>
           <Row>
-            <Col xl="5" lg="6" md="12">
+            <Col xl="6" lg="7" md="12">
               <Card className="shadow mb-4">
                 <CardHeader className="bg-white border-0 d-flex justify-content-between align-items-center">
                   <h3 className="mb-0" style={{ color: "#4A628A" }}>Roles</h3>
@@ -175,44 +203,69 @@ const RoleManagement = () => {
                   {loading ? (
                     <div className="text-center py-4"><Spinner size="sm" /> Cargando...</div>
                   ) : (
-                    <Table hover responsive size="sm">
-                      <thead className="thead-light">
-                        <tr>
-                          <th>Nombre</th>
-                          <th>Descripción</th>
-                          <th>Acciones</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {filteredRoles.length === 0 ? (
+                    <>
+                      <Table hover responsive size="sm">
+                        <thead className="thead-light">
                           <tr>
-                            <td colSpan={3} className="text-center text-muted">No hay roles</td>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
                           </tr>
-                        ) : (
-                          filteredRoles.map((rol) => (
-                            <tr key={rol.id}>
-                              <td>{rol.nombre}</td>
-                              <td>{rol.descripcion}</td>
-                              <td>
-                                <Button
-                                  color="info"
-                                  size="sm"
-                                  onClick={() => handleSelectRole(rol)}
-                                  disabled={loading || saving}
-                                >
-                                  Editar
-                                </Button>
-                              </td>
+                        </thead>
+                        <tbody>
+                          {paginatedRoles.length === 0 ? (
+                            <tr>
+                              <td colSpan={3} className="text-center text-muted">No hay roles</td>
                             </tr>
-                          ))
-                        )}
-                      </tbody>
-                    </Table>
+                          ) : (
+                            paginatedRoles.map((rol) => (
+                              <tr key={rol.id}>
+                                <td>{rol.nombre}</td>
+                                <td>{rol.descripcion}</td>
+                                <td>
+                                  <Button
+                                    color="info"
+                                    size="sm"
+                                    onClick={() => handleSelectRole(rol)}
+                                    disabled={loading || saving}
+                                  >
+                                    Editar
+                                  </Button>
+                                </td>
+                              </tr>
+                            ))
+                          )}
+                        </tbody>
+                      </Table>
+                      {totalPagesRoles > 1 && (
+                        <Pagination className="justify-content-center">
+                          <PaginationItem disabled={currentPageRoles === 1}>
+                            <PaginationLink first onClick={() => setCurrentPageRoles(1)} />
+                          </PaginationItem>
+                          <PaginationItem disabled={currentPageRoles === 1}>
+                            <PaginationLink previous onClick={() => setCurrentPageRoles(currentPageRoles - 1)} />
+                          </PaginationItem>
+                          {Array.from({ length: totalPagesRoles }, (_, i) => (
+                            <PaginationItem active={currentPageRoles === i + 1} key={i}>
+                              <PaginationLink onClick={() => setCurrentPageRoles(i + 1)}>
+                                {i + 1}
+                              </PaginationLink>
+                            </PaginationItem>
+                          ))}
+                          <PaginationItem disabled={currentPageRoles === totalPagesRoles}>
+                            <PaginationLink next onClick={() => setCurrentPageRoles(currentPageRoles + 1)} />
+                          </PaginationItem>
+                          <PaginationItem disabled={currentPageRoles === totalPagesRoles}>
+                            <PaginationLink last onClick={() => setCurrentPageRoles(totalPagesRoles)} />
+                          </PaginationItem>
+                        </Pagination>
+                      )}
+                    </>
                   )}
                 </CardBody>
               </Card>
             </Col>
-            <Col xl="7" lg="6" md="12">
+            <Col xl="6" lg="6" md="12">
               <Card className="shadow mb-4">
                 <CardHeader className="bg-white border-0">
                   <h3 className="mb-0" style={{ color: "#4A628A" }}>
@@ -281,58 +334,69 @@ const RoleManagement = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              {(pantallas
-                                .filter(p =>
-                                  !form.pantallaFiltro ||
-                                  p.nombre.toLowerCase().includes(form.pantallaFiltro.toLowerCase()) ||
-                                  (p.descripcion || "").toLowerCase().includes(form.pantallaFiltro.toLowerCase())
-                                )
-                              ).length === 0 ? (
+                              {paginatedPantallas.length === 0 ? (
                                 <tr>
                                   <td colSpan={3} className="text-center text-muted">No hay pantallas</td>
                                 </tr>
                               ) : (
-                                pantallas
-                                  .filter(p =>
-                                    !form.pantallaFiltro ||
-                                    p.nombre.toLowerCase().includes(form.pantallaFiltro.toLowerCase()) ||
-                                    (p.descripcion || "").toLowerCase().includes(form.pantallaFiltro.toLowerCase())
-                                  )
-                                  .map(p => (
-                                    <tr key={p.id}>
-                                      <td className="text-center align-middle">
-                                        <Label
-                                          for={`pantalla-${p.id}`}
-                                          className="mb-0 d-flex align-items-center justify-content-center"
-                                          style={{ width: "100%", cursor: "pointer", minHeight: 24 }}
-                                        >
-                                          <Input
-                                            type="checkbox"
-                                            checked={!!form.accesos.find(a => a.pantallaId === p.id && a.acceso === "S")}
-                                            onChange={() => handleAccesoChange(p.id)}
-                                            id={`pantalla-${p.id}`}
-                                            disabled={saving}
-                                            style={{ margin: 0 }}
-                                          />
-                                        </Label>
-                                      </td>
-                                      <td className="align-middle">
-                                        <Label
-                                          for={`pantalla-${p.id}`}
-                                          className="mb-0"
-                                          style={{ cursor: "pointer", width: "100%" }}
-                                        >
-                                          <strong>{p.nombre}</strong>
-                                        </Label>
-                                      </td>
-                                      <td className="align-middle">
-                                        <span className="text-muted" style={{ fontSize: 13 }}>{p.descripcion}</span>
-                                      </td>
-                                    </tr>
-                                  ))
-                              )}
+                                paginatedPantallas.map(p => (
+                                  <tr key={p.id}>
+                                    <td className="text-center align-middle">
+                                      <Label
+                                        for={`pantalla-${p.id}`}
+                                        className="mb-0 d-flex align-items-center justify-content-center"
+                                        style={{ width: "100%", cursor: "pointer", minHeight: 24 }}
+                                      >
+                                        <Input
+                                          type="checkbox"
+                                          checked={!!form.accesos.find(a => a.pantallaId === p.id && a.acceso === "S")}
+                                          onChange={() => handleAccesoChange(p.id)}
+                                          id={`pantalla-${p.id}`}
+                                          disabled={saving}
+                                          style={{ margin: 0 }}
+                                        />
+                                      </Label>
+                                    </td>
+                                    <td className="align-middle">
+                                      <Label
+                                        for={`pantalla-${p.id}`}
+                                        className="mb-0"
+                                        style={{ cursor: "pointer", width: "100%" }}
+                                      >
+                                        <strong>{p.nombre}</strong>
+                                      </Label>
+                                    </td>
+                                    <td className="align-middle">
+                                      <span className="text-muted" style={{ fontSize: 13 }}>{p.descripcion}</span>
+                                    </td>
+                                  </tr>
+                                ))
+                            )}
                             </tbody>
                           </Table>
+                          {totalPagesPantallas > 1 && (
+                            <Pagination className="justify-content-center mt-2">
+                              <PaginationItem disabled={currentPagePantallas === 1}>
+                                <PaginationLink first onClick={() => setCurrentPagePantallas(1)} />
+                              </PaginationItem>
+                              <PaginationItem disabled={currentPagePantallas === 1}>
+                                <PaginationLink previous onClick={() => setCurrentPagePantallas(currentPagePantallas - 1)} />
+                              </PaginationItem>
+                              {Array.from({ length: totalPagesPantallas }, (_, i) => (
+                                <PaginationItem active={currentPagePantallas === i + 1} key={i}>
+                                  <PaginationLink onClick={() => setCurrentPagePantallas(i + 1)}>
+                                    {i + 1}
+                                  </PaginationLink>
+                                </PaginationItem>
+                              ))}
+                              <PaginationItem disabled={currentPagePantallas === totalPagesPantallas}>
+                                <PaginationLink next onClick={() => setCurrentPagePantallas(currentPagePantallas + 1)} />
+                              </PaginationItem>
+                              <PaginationItem disabled={currentPagePantallas === totalPagesPantallas}>
+                                <PaginationLink last onClick={() => setCurrentPagePantallas(totalPagesPantallas)} />
+                              </PaginationItem>
+                            </Pagination>
+                          )}
                         </div>
                       </FormGroup>
                       <div className="d-flex justify-content-end">

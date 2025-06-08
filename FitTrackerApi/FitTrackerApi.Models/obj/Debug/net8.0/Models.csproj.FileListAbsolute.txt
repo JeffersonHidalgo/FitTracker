@@ -1,0 +1,12 @@
+C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Models\bin\Debug\net8.0\Models.deps.json
+C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Models\bin\Debug\net8.0\Models.dll
+C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Models\bin\Debug\net8.0\Models.pdb
+C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Models\obj\Debug\net8.0\Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Models\obj\Debug\net8.0\Models.AssemblyInfoInputs.cache
+C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Models\obj\Debug\net8.0\Models.AssemblyInfo.cs
+C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Models\obj\Debug\net8.0\Models.csproj.CoreCompileInputs.cache
+C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Models\obj\Debug\net8.0\Models.sourcelink.json
+C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Models\obj\Debug\net8.0\Models.dll
+C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Models\obj\Debug\net8.0\refint\Models.dll
+C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Models\obj\Debug\net8.0\Models.pdb
+C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Models\obj\Debug\net8.0\ref\Models.dll

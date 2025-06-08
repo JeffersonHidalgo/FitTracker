@@ -1,4 +1,6 @@
 ﻿using Models;
+using Models.Dashboard;
+using Models.Reportes;
 using MySql.Data.MySqlClient;
 using System.Data;
 using Utils;
@@ -649,8 +651,234 @@ namespace Data.Repos
 
             return historial;
         }
+        public async Task<MetricasAnalisisDto> ObtenerMetricasConAnalisisAsync(int codigoCli)
+        {
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+
+                using var cmd = new MySqlCommand("SMetricas_Con_Analisis", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("prm_codigoCli", codigoCli);
+
+                using var reader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+
+                MetricasAnalisisDto result = null;
+
+                // Primer resultset: datos de métricas + análisis
+                if (await reader.ReadAsync())
+                {
+                    result = new MetricasAnalisisDto
+                    {
+                        MetricaId = reader.GetInt32("metricaId"),
+                        CodigoCli = reader.GetInt32("codigoCli"),
+                        FechaRegistro = reader.GetDateTime("fecha_registro"),
+                        Imc = reader.GetDecimal("imc"),
+                        GrasaCorporal = reader.GetDecimal("grasa_corporal"),
+                        MasaMuscular = reader.GetDecimal("masa_muscular"),
+                        RmPress = reader.GetDecimal("rm_press"),
+                        RmSentadilla = reader.GetDecimal("rm_sentadilla"),
+                        RmPesoMuerto = reader.GetDecimal("rm_peso_muerto"),
+                        TestCooper = reader.GetDecimal("test_cooper"),
+                        FcReposo = reader.GetInt32("fc_reposo"),
+                        Flexibilidad = reader.GetDecimal("test_flexibilidad"),
+                        SaltoVertical = reader.GetDecimal("salto_vertical"),
+                        Rpe = reader.GetDecimal("rpe"),
+                        ResumenAnalisis = new Dictionary<string, string>(),
+                        Recomendaciones = new List<string>()
+                    };
+                }
+                else
+                {
+                    return null; // No encontró métricas
+                }
+
+                // Segundo resultset: análisis por sección
+                if (await reader.NextResultAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        string seccion = reader.GetString("seccion");
+                        string texto = reader.GetString("analisis");
+
+                        result.ResumenAnalisis[seccion] = texto;
+                    }
+                }
+
+                // Para cada análisis, obtener recomendaciones
+                foreach (var (seccion, texto) in result.ResumenAnalisis)
+                {
+                    using var connRec = GetConnection(); // NUEVA conexión
+                    await connRec.OpenAsync();
+
+                    using var cmdRec = new MySqlCommand("SRecomendacionesPorCondicion", connRec)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    cmdRec.Parameters.AddWithValue("prm_Seccion", seccion);
+                    cmdRec.Parameters.AddWithValue("prm_Texto", texto);
+
+                    using var readerRec = await cmdRec.ExecuteReaderAsync();
+                    while (await readerRec.ReadAsync())
+                    {
+                        result.Recomendaciones.Add(readerRec.GetString("recomendacion"));
+                    }
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerMetricasConAnalisisAsync), ex);
+                return null;
+            }
+        }
 
 
+        public async Task<DashboardSummaryDto> ObtenerResumenDashboardAsync()
+        {
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+                using var cmd = new MySqlCommand("SResumenClientes", conn) { CommandType = CommandType.StoredProcedure };
+                using var reader = await cmd.ExecuteReaderAsync();
+
+                if (!await reader.ReadAsync()) return null;
+
+                return new DashboardSummaryDto
+                {
+                    TotalClients = reader.GetInt32("totalClients"),
+                    ActiveClients = reader.GetInt32("activeClients"),
+                    InactiveClients = reader.GetInt32("inactiveClients"),
+                    ActivePercentage = reader.GetInt32("activePercentage"),
+                    InactivePercentage = reader.GetInt32("inactivePercentage"),
+                    NewLast30 = reader.GetInt32("newLast30"),
+                    NewLast7 = reader.GetInt32("newLast7")
+                };
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerResumenDashboardAsync), ex);
+                return null;
+            }
+        }
+
+        public async Task<DashboardDemografiaDto> ObtenerDemografiaDashboardAsync()
+        {
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+                using var cmd = new MySqlCommand("SDemografiaClientes", conn) { CommandType = CommandType.StoredProcedure };
+                using var reader = await cmd.ExecuteReaderAsync();
+
+                // 1º resultset: género
+                await reader.ReadAsync();
+                var dem = new DashboardDemografiaDto
+                {
+                    Female = reader.GetInt32("female"),
+                    Male = reader.GetInt32("male"),
+                    Other = reader.GetInt32("other")
+                };
+
+                // 2º resultset: edades
+                await reader.NextResultAsync();
+                await reader.ReadAsync();
+                dem.Age18_25 = reader.GetInt32("18-25");
+                dem.Age26_35 = reader.GetInt32("26-35");
+                dem.Age36_45 = reader.GetInt32("36-45");
+                dem.Age46Plus = reader.GetInt32("46+");
+                dem.AverageAge = reader.GetInt32("average");
+
+                // 3º resultset: ubicación
+                dem.Location = new List<LocationDto>();
+                await reader.NextResultAsync();
+                while (await reader.ReadAsync())
+                {
+                    dem.Location.Add(new LocationDto
+                    {
+                        City = reader.GetString("city"),
+                        Clients = reader.GetInt32("clients")
+                    });
+                }
+
+                return dem;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerDemografiaDashboardAsync), ex);
+                return null;
+            }
+        }
+
+        public async Task<DashboardSaludDto> ObtenerIndicadoresSaludAsync()
+        {
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+                using var cmd = new MySqlCommand("SIndicadoresSalud", conn) { CommandType = CommandType.StoredProcedure };
+                using var reader = await cmd.ExecuteReaderAsync();
+
+                // 1º resultset: promedios
+                await reader.ReadAsync();
+                var dto = new DashboardSaludDto
+                {
+                    Bmi = reader.GetDecimal("bmi"),
+                    BodyFat = reader.GetDecimal("bodyFat"),
+                    MuscleMass = reader.GetDecimal("muscleMass"),
+                    BmiTrend = new List<TrendDto>()
+                };
+
+                // 2º resultset: tendencia
+                await reader.NextResultAsync();
+                while (await reader.ReadAsync())
+                {
+                    dto.BmiTrend.Add(new TrendDto
+                    {
+                        Month = reader.GetString("month"),
+                        Value = reader.GetDecimal("value")
+                    });
+                }
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerIndicadoresSaludAsync), ex);
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<CumpleanosDto>> ObtenerCumpleanosProximosAsync()
+        {
+            try
+            {
+                var list = new List<CumpleanosDto>();
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+                using var cmd = new MySqlCommand("SCumpleanosProximos", conn) { CommandType = CommandType.StoredProcedure };
+                using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    list.Add(new CumpleanosDto
+                    {
+                        Name = reader.GetString("name"),
+                        Date = reader.GetString("date")
+                    });
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerCumpleanosProximosAsync), ex);
+                return Enumerable.Empty<CumpleanosDto>();
+            }
+        }
 
     }
 }

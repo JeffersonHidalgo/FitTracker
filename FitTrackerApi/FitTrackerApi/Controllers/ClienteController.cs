@@ -145,5 +145,6 @@ namespace FitTrackerApi.Controllers
             return Ok(historial);
         }
 
+
     }
 }

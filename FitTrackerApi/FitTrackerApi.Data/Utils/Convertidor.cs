@@ -26,6 +26,17 @@ namespace Utils
             return 0.0;
         }
 
+        public static float ToFloat(object? value)
+        {
+            if (value == null || value == DBNull.Value)
+                return 0f;
+
+            if (float.TryParse(value.ToString(), out float result))
+                return result;
+
+            return 0f;
+        }
+
         public static DateTime ToDateTime(object? value)
         {
             if (value == null || value == DBNull.Value)

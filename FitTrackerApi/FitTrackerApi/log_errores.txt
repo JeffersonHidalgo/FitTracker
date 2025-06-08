@@ -210,3 +210,818 @@
    at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
    at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
    at Data.Repos.RecomendacionRepository.GetRecomendacionPorIdAsync(Int32 id) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\RecomendacionRepository.cs:line 89
+[2025-06-06 21:07:41] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:08:04] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:08:28] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:08:28] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:08:56] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:08:56] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:09:06] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:09:06] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:09:12] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:09:40] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:09:40] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:09:42] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:09:42] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:14:07] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:14:08] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:14:08] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:14:08] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:14:11] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:14:11] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:25:42] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:25:42] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:25:43] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:25:43] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:25:45] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:25:45] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:25:45] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:25:45] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:25:49] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:25:49] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:27:12] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:27:12] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:33:08] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:33:08] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:33:08] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:33:08] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:35:15] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:35:16] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:35:16] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:35:16] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:35:23] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:35:23] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 737
+[2025-06-06 21:40:13] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:40:13] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:40:52] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:40:52] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:48:32] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:48:32] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:49:40] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:49:40] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:53:32] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:53:32] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:53:34] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:53:53] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:53:53] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:53:53] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:53:53] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:53:57] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:53:57] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:53:58] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:53:58] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:54:01] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:54:01] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:54:04] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:54:04] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:54:08] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 21:54:08] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:56:46] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:56:57] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:57:03] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 21:58:18] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 22:02:01] Error en ObtenerIndicadoresSaludAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'db_fittraker.registro_metricas.fecha_registro' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerIndicadoresSaludAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 750
+[2025-06-06 22:02:13] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 22:02:39] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 22:03:44] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-06 22:04:13] Error en ObtenerCumpleanosProximosAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Procedure or function 'SCumpleanosProximos' cannot be found in database '' Verify that user 'root'@'localhost' has enough privileges to execute
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcDataAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.AddNewAsync(MySqlConnection connection, String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.ProcedureCache.GetProcedureAsync(MySqlConnection conn, String spName, String cacheKey, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.GetParametersAsync(String procName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.CheckParametersAsync(String spName, Boolean execAsync)
+   at MySql.Data.MySqlClient.StoredProcedure.Resolve(Boolean preparing)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerCumpleanosProximosAsync() in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 776
+[2025-06-07 13:00:19] Error en ObtenerMetricasConAnalisisAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'cm.codigoCli' in 'field list'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerMetricasConAnalisisAsync(Int32 codigoCliente) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 667
+[2025-06-07 13:03:32] Error en ObtenerMetricasConAnalisisAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'cm.codigoCli' in 'field list'
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerMetricasConAnalisisAsync(Int32 codigoCliente) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 667
+[2025-06-07 13:11:05] Error en ObtenerMetricasConAnalisisAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): Table 'db_fittraker.cliente_metricas' doesn't exist
+   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.CloseAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.DisposeAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.Dispose(Boolean disposing)
+   at Data.Repos.ClienteRepository.ObtenerMetricasConAnalisisAsync(Int32 codigoCliente) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 715
+[2025-06-07 13:41:09] Error en ObtenerMetricasConAnalisisAsync: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Data.Repos.ClienteRepository.ObtenerMetricasConAnalisisAsync(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 701
+[2025-06-07 13:45:17] Error en ObtenerMetricasConAnalisisAsync: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Data.Repos.ClienteRepository.ObtenerMetricasConAnalisisAsync(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 701
+[2025-06-07 13:46:08] Error en ObtenerMetricasConAnalisisAsync: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Data.Repos.ClienteRepository.ObtenerMetricasConAnalisisAsync(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 701
+[2025-06-07 13:46:49] Error en ObtenerMetricasConAnalisisAsync: System.NullReferenceException: Object reference not set to an instance of an object.
+   at Data.Repos.ClienteRepository.ObtenerMetricasConAnalisisAsync(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 701
+[2025-06-07 13:59:21] Error en ObtenerMetricasConAnalisisAsync: MySql.Data.MySqlClient.MySqlException (0x80004005): There is already an open DataReader associated with this Connection which must be closed first.
+   at MySql.Data.MySqlClient.Interceptors.ExceptionInterceptor.Throw(Exception exception)
+   at MySql.Data.MySqlClient.MySqlConnection.Throw(Exception ex)
+   at MySql.Data.MySqlClient.MySqlCommand.Throw(Exception ex)
+   at MySql.Data.MySqlClient.MySqlCommand.CheckState()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Data.Repos.ClienteRepository.ObtenerMetricasConAnalisisAsync(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 721

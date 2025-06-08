@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Models;
+using Models.Dashboard;
+using Models.Reportes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
-using Models;
 
 namespace Data.Repos
 {
@@ -17,7 +19,11 @@ namespace Data.Repos
         Task<(int metricaId, Dictionary<string, string> seccionAnalisis, List<string> recomendaciones)> InsertarMetricasConAnalisisAsync(ClienteMetrica metricas);
         Task<IEnumerable<ClienteMetricasHistorial>> ObtenerHistorialMetricas(int codigoCli);
         Task<IEnumerable<ClienteMetricasHistorial>> ObtenerHistorialCompletoAsync(int codigoCli);
+        Task<MetricasAnalisisDto> ObtenerMetricasConAnalisisAsync(int codigoCli);
 
-
+        Task<DashboardSummaryDto> ObtenerResumenDashboardAsync();
+        Task<DashboardDemografiaDto> ObtenerDemografiaDashboardAsync();
+        Task<DashboardSaludDto> ObtenerIndicadoresSaludAsync();
+        Task<IEnumerable<CumpleanosDto>> ObtenerCumpleanosProximosAsync();
     }
 }

@@ -16,6 +16,46 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "FitTrackerApi.Controllers.ClienteDashboardController",
+    "Method": "GetCumpleanos",
+    "RelativePath": "api/cliente/dashboard/cumpleanos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.ClienteDashboardController",
+    "Method": "GetDemografia",
+    "RelativePath": "api/cliente/dashboard/demografia",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.ClienteDashboardController",
+    "Method": "GetSalud",
+    "RelativePath": "api/cliente/dashboard/salud",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.ClienteDashboardController",
+    "Method": "GetSummary",
+    "RelativePath": "api/cliente/dashboard/summary",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "FitTrackerApi.Controllers.ClienteController",
     "Method": "GetCliente",
     "RelativePath": "api/cliente/detalle/{id}",
@@ -25,6 +65,22 @@
     "Parameters": [
       {
         "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.ClienteController",
+    "Method": "GetHistorialCompleto",
+    "RelativePath": "api/cliente/historial-completo/{codigoCli}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoCli",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -58,6 +114,238 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "FitTrackerApi.Controllers.ClienteController",
+    "Method": "InsertarMetricas",
+    "RelativePath": "api/cliente/metricas/analizar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "metricas",
+        "Type": "Models.ClienteMetrica",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.ClienteController",
+    "Method": "ObtenerHistorialMetricas",
+    "RelativePath": "api/cliente/metricas/historial/{codigoCli}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoCli",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.ClienteController",
+    "Method": "SubirFotoCliente",
+    "RelativePath": "api/cliente/subir-foto/{clienteId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clienteId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.EmpresaController",
+    "Method": "ActualizarConfiguracion",
+    "RelativePath": "api/empresa/actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "config",
+        "Type": "Models.EmpresaConfiguracion",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.EmpresaController",
+    "Method": "GetConfiguracion",
+    "RelativePath": "api/empresa/configuracion",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.EmpresaController",
+    "Method": "SubirLogoEmpresa",
+    "RelativePath": "api/empresa/subir-logo/{empresaId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "empresaId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.RecomendacionController",
+    "Method": "UpdateRecomendacion",
+    "RelativePath": "api/recomendacion/actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Models.RecomendacionEjercicio",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.RecomendacionController",
+    "Method": "GetRecomendacion",
+    "RelativePath": "api/recomendacion/detalle/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.RecomendacionController",
+    "Method": "InsertRecomendacion",
+    "RelativePath": "api/recomendacion/insertar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Models.RecomendacionEjercicio",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.RecomendacionController",
+    "Method": "SlistaRecomendaciones",
+    "RelativePath": "api/recomendacion/lista",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.ReportesController",
+    "Method": "GenerarReporteMetricas",
+    "RelativePath": "api/reportes/reporte-metricas/{codigoCliente}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoCliente",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.RolController",
+    "Method": "UpdateRol",
+    "RelativePath": "api/rol/actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rol",
+        "Type": "Models.Rol",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.RolController",
+    "Method": "GetRol",
+    "RelativePath": "api/rol/detalle/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.RolController",
+    "Method": "InsertRol",
+    "RelativePath": "api/rol/insertar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rol",
+        "Type": "Models.Rol",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FitTrackerApi.Controllers.RolController",
+    "Method": "GetRoles",
+    "RelativePath": "api/rol/lista",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "FitTrackerApi.Controllers.UsuarioController",
     "Method": "UpdateUsuario",
     "RelativePath": "api/usuario/actualizar",
@@ -68,22 +356,6 @@
       {
         "Name": "usuario",
         "Type": "Models.Usuario",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FitTrackerApi.Controllers.UsuarioController",
-    "Method": "AsignarAcceso",
-    "RelativePath": "api/usuario/asignar-acceso",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "acceso",
-        "Type": "Models.UsuarioAcceso",
         "IsRequired": true
       }
     ],
@@ -107,27 +379,6 @@
   },
   {
     "ContainingType": "FitTrackerApi.Controllers.UsuarioController",
-    "Method": "EliminarAcceso",
-    "RelativePath": "api/usuario/eliminar-acceso",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "usuarioId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "pantallaId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FitTrackerApi.Controllers.UsuarioController",
     "Method": "InsertUsuario",
     "RelativePath": "api/usuario/insertar",
     "HttpMethod": "POST",
@@ -140,7 +391,17 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Int32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "FitTrackerApi.Controllers.UsuarioController",
@@ -161,26 +422,5 @@
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FitTrackerApi.Controllers.WeatherForecastController",
-    "Method": "Get",
-    "RelativePath": "WeatherForecast",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[FitTrackerApi.WeatherForecast, FitTrackerApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ],
-    "EndpointName": "GetWeatherForecast"
   }
 ]

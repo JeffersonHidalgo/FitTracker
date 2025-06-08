@@ -102,6 +102,477 @@
         }
       }
     },
+    "/api/cliente/subir-foto/{clienteId}": {
+      "post": {
+        "tags": [
+          "Cliente"
+        ],
+        "parameters": [
+          {
+            "name": "clienteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/cliente/metricas/analizar": {
+      "post": {
+        "tags": [
+          "Cliente"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClienteMetrica"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClienteMetrica"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClienteMetrica"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/cliente/metricas/historial/{codigoCli}": {
+      "get": {
+        "tags": [
+          "Cliente"
+        ],
+        "parameters": [
+          {
+            "name": "codigoCli",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/cliente/historial-completo/{codigoCli}": {
+      "get": {
+        "tags": [
+          "Cliente"
+        ],
+        "parameters": [
+          {
+            "name": "codigoCli",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/cliente/dashboard/summary": {
+      "get": {
+        "tags": [
+          "ClienteDashboard"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/cliente/dashboard/demografia": {
+      "get": {
+        "tags": [
+          "ClienteDashboard"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/cliente/dashboard/salud": {
+      "get": {
+        "tags": [
+          "ClienteDashboard"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/cliente/dashboard/cumpleanos": {
+      "get": {
+        "tags": [
+          "ClienteDashboard"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/empresa/configuracion": {
+      "get": {
+        "tags": [
+          "Empresa"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/empresa/actualizar": {
+      "put": {
+        "tags": [
+          "Empresa"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmpresaConfiguracion"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmpresaConfiguracion"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmpresaConfiguracion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/empresa/subir-logo/{empresaId}": {
+      "post": {
+        "tags": [
+          "Empresa"
+        ],
+        "parameters": [
+          {
+            "name": "empresaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/recomendacion/lista": {
+      "get": {
+        "tags": [
+          "Recomendacion"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/recomendacion/detalle/{id}": {
+      "get": {
+        "tags": [
+          "Recomendacion"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/recomendacion/insertar": {
+      "post": {
+        "tags": [
+          "Recomendacion"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecomendacionEjercicio"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecomendacionEjercicio"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecomendacionEjercicio"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/recomendacion/actualizar": {
+      "put": {
+        "tags": [
+          "Recomendacion"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecomendacionEjercicio"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecomendacionEjercicio"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecomendacionEjercicio"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/reportes/reporte-metricas/{codigoCliente}": {
+      "get": {
+        "tags": [
+          "Reportes"
+        ],
+        "parameters": [
+          {
+            "name": "codigoCliente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/rol/insertar": {
+      "post": {
+        "tags": [
+          "Rol"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rol"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rol"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rol"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/rol/actualizar": {
+      "put": {
+        "tags": [
+          "Rol"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rol"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rol"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rol"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/rol/detalle/{id}": {
+      "get": {
+        "tags": [
+          "Rol"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/rol/lista": {
+      "get": {
+        "tags": [
+          "Rol"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/usuario/lista": {
       "get": {
         "tags": [
@@ -163,7 +634,27 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
           }
         }
       }
@@ -199,67 +690,6 @@
         }
       }
     },
-    "/api/usuario/asignar-acceso": {
-      "post": {
-        "tags": [
-          "Usuario"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UsuarioAcceso"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UsuarioAcceso"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UsuarioAcceso"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/usuario/eliminar-acceso": {
-      "delete": {
-        "tags": [
-          "Usuario"
-        ],
-        "parameters": [
-          {
-            "name": "usuarioId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "pantallaId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/usuario/listaPantallas": {
       "get": {
         "tags": [
@@ -268,45 +698,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/WeatherForecast": {
-      "get": {
-        "tags": [
-          "WeatherForecast"
-        ],
-        "operationId": "GetWeatherForecast",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -380,6 +771,342 @@
           "usuModifica": {
             "type": "integer",
             "format": "int32"
+          },
+          "emails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClienteEmail"
+            },
+            "nullable": true
+          },
+          "telefonos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClienteTelefono"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClienteEmail": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigoCli": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "principal": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClienteMetrica": {
+        "type": "object",
+        "properties": {
+          "codigoCli": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sistemaMetrico": {
+            "type": "string",
+            "nullable": true
+          },
+          "peso": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "altura": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "imc": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "grasaCorporal": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "masaMuscular": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "cintura": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "caderas": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "brazos": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rmPress": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rmSentadilla": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rmPesoMuerto": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "repeticiones": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "velocidadEjecucion": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "testCooper": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fcReposo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "fcRecuperacion": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "duracionAerobica": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "testFlexibilidad": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rangoMovimiento": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "saltoVertical": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "velocidadSprint": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "pruebaAgilidad": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rpe": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClienteTelefono": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigoCli": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numero": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipo": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "principal": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmpresaConfiguracion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreEmpresa": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "ciudad": {
+            "type": "string",
+            "nullable": true
+          },
+          "provincia": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoPostal": {
+            "type": "string",
+            "nullable": true
+          },
+          "pais": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefonoEmpresa": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailEmpresa": {
+            "type": "string",
+            "nullable": true
+          },
+          "servidorSmtp": {
+            "type": "string",
+            "nullable": true
+          },
+          "puertoSmtp": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "usuarioSmtp": {
+            "type": "string",
+            "nullable": true
+          },
+          "passwordSmtp": {
+            "type": "string",
+            "nullable": true
+          },
+          "usarSsl": {
+            "type": "boolean"
+          },
+          "logo": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecomendacionEjercicio": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "condicion": {
+            "type": "string",
+            "nullable": true
+          },
+          "recomendacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "fechaCrea": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Rol": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "accesos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RolAcceso"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RolAcceso": {
+        "type": "object",
+        "properties": {
+          "rolId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pantallaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "acceso": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -407,58 +1134,15 @@
             "type": "string",
             "nullable": true
           },
-          "nivel": {
-            "type": "string"
+          "rolId": {
+            "type": "integer",
+            "format": "int32"
           },
           "accesos": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UsuarioAcceso"
+              "$ref": "#/components/schemas/RolAcceso"
             },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UsuarioAcceso": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "usuarioId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pantallaId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "acceso": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "WeatherForecast": {
-        "type": "object",
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "temperatureC": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "temperatureF": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "summary": {
-            "type": "string",
             "nullable": true
           }
         },

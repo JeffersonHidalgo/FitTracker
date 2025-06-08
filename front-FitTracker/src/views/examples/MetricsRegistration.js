@@ -14,6 +14,8 @@ const MetricsRegistration = () => {
     setResult(null);
   };
 
+  console.log(selectedCliente);
+
   return (
     <>
       <Header />
@@ -30,11 +32,18 @@ const MetricsRegistration = () => {
           </Row>
           <Row className="justify-content-center mt-4">
             <Col xl="10" lg="12">
-              <MetricsForm
-                codigoCli={selectedCliente?.id || selectedCliente?.codigoCli}
-                onResult={setResult}
-                result={result}
-              />
+              {selectedCliente && selectedCliente.estado === "A" ? (
+                <MetricsForm
+                  codigoCli={selectedCliente?.id || selectedCliente?.codigoCli}
+                  onResult={setResult}
+                  result={result}
+                />
+              ) : selectedCliente ? (
+                <div className="alert alert-warning text-center">
+                  El cliente seleccionado no está activo. No es posible registrar
+                  métricas.
+                </div>
+              ) : null}
             </Col>
           </Row>
           <Row className="justify-content-center mt-4">

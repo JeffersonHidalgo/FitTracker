@@ -1,0 +1,452 @@
+{
+  "provincias": [
+    {
+      "nombre": "Azua",
+      "coordenadas": {
+        "lat": 18.453189,
+        "lng": -70.734901
+      },
+      "municipios": [
+        {"nombre": "Azua de Compostela", "coordenadas": {"lat": 18.453189, "lng": -70.734901}},
+        {"nombre": "Estebanía", "coordenadas": {"lat": 18.4577, "lng": -70.6435}},
+        {"nombre": "Guayabal", "coordenadas": {"lat": 18.5986, "lng": -70.7661}},
+        {"nombre": "Las Charcas", "coordenadas": {"lat": 18.4500, "lng": -70.6167}},
+        {"nombre": "Padre Las Casas", "coordenadas": {"lat": 18.7500, "lng": -70.9500}},
+        {"nombre": "Peralta", "coordenadas": {"lat": 18.5816, "lng": -70.7703}},
+        {"nombre": "Pueblo Viejo", "coordenadas": {"lat": 18.4000, "lng": -70.7667}},
+        {"nombre": "Sabana Yegua", "coordenadas": {"lat": 18.7167, "lng": -70.9167}},
+        {"nombre": "Tábara Arriba", "coordenadas": {"lat": 18.5693, "lng": -70.8798}}
+      ]
+    },
+    {
+      "nombre": "Bahoruco",
+      "coordenadas": {
+        "lat": 18.4814,
+        "lng": -71.4196
+      },
+      "municipios": [
+        {"nombre": "Neiba", "coordenadas": {"lat": 18.4814, "lng": -71.4196}},
+        {"nombre": "Galván", "coordenadas": {"lat": 18.5022, "lng": -71.3420}},
+        {"nombre": "Los Ríos", "coordenadas": {"lat": 18.5167, "lng": -71.5833}},
+        {"nombre": "Tamayo", "coordenadas": {"lat": 18.4000, "lng": -71.1667}},
+        {"nombre": "Villa Jaragua", "coordenadas": {"lat": 18.4908, "lng": -71.4839}},
+        {"nombre": "Uvilla", "coordenadas": {"lat": 18.3625, "lng": -71.2100}}
+      ]
+    },
+    {
+      "nombre": "Barahona",
+      "coordenadas": {
+        "lat": 18.2085,
+        "lng": -71.1008
+      },
+      "municipios": [
+        {"nombre": "Santa Cruz de Barahona", "coordenadas": {"lat": 18.2085, "lng": -71.1008}},
+        {"nombre": "Cabral", "coordenadas": {"lat": 18.2542, "lng": -71.2153}},
+        {"nombre": "El Peñón", "coordenadas": {"lat": 18.3000, "lng": -71.1833}},
+        {"nombre": "Enriquillo", "coordenadas": {"lat": 17.9167, "lng": -71.2500}},
+        {"nombre": "Fundación", "coordenadas": {"lat": 18.2833, "lng": -71.1667}},
+        {"nombre": "Jaquimeyes", "coordenadas": {"lat": 18.3117, "lng": -71.1614}},
+        {"nombre": "La Ciénaga", "coordenadas": {"lat": 18.0686, "lng": -71.1067}},
+        {"nombre": "Las Salinas", "coordenadas": {"lat": 18.2833, "lng": -71.3167}},
+        {"nombre": "Paraiso", "coordenadas": {"lat": 18.0333, "lng": -71.2000}},
+        {"nombre": "Polo", "coordenadas": {"lat": 18.0783, "lng": -71.2875}},
+        {"nombre": "Vicente Noble", "coordenadas": {"lat": 18.3833, "lng": -71.1833}}
+      ]
+    },
+    {
+      "nombre": "Dajabón",
+      "coordenadas": {
+        "lat": 19.5498,
+        "lng": -71.7083
+      },
+      "municipios": [
+        {"nombre": "Dajabón", "coordenadas": {"lat": 19.5498, "lng": -71.7083}},
+        {"nombre": "El Pino", "coordenadas": {"lat": 19.4333, "lng": -71.4667}},
+        {"nombre": "Loma de Cabrera", "coordenadas": {"lat": 19.4167, "lng": -71.5833}},
+        {"nombre": "Partido", "coordenadas": {"lat": 19.4833, "lng": -71.5333}},
+        {"nombre": "Restauración", "coordenadas": {"lat": 19.3167, "lng": -71.6833}}
+      ]
+    },
+    {
+      "nombre": "Distrito Nacional",
+      "coordenadas": {
+        "lat": 18.4861,
+        "lng": -69.9312
+      },
+      "municipios": [
+        {"nombre": "Santo Domingo (Ciudad)", "coordenadas": {"lat": 18.4861, "lng": -69.9312}}
+      ]
+    },
+    {
+      "nombre": "Duarte",
+      "coordenadas": {
+        "lat": 19.3000,
+        "lng": -70.2500
+      },
+      "municipios": [
+        {"nombre": "San Francisco de Macorís", "coordenadas": {"lat": 19.3000, "lng": -70.2500}},
+        {"nombre": "Arenoso", "coordenadas": {"lat": 19.1873, "lng": -69.8593}},
+        {"nombre": "Castillo", "coordenadas": {"lat": 19.2500, "lng": -70.0833}},
+        {"nombre": "Eugenio María de Hostos", "coordenadas": {"lat": 19.1333, "lng": -70.0167}},
+        {"nombre": "Las Guáranas", "coordenadas": {"lat": 19.1931, "lng": -70.2083}},
+        {"nombre": "Pimentel", "coordenadas": {"lat": 19.1833, "lng": -70.1167}},
+        {"nombre": "Villa Riva", "coordenadas": {"lat": 19.1833, "lng": -69.8833}}
+      ]
+    },
+    {
+      "nombre": "Elías Piña",
+      "coordenadas": {
+        "lat": 18.8760,
+        "lng": -71.7070
+      },
+      "municipios": [
+        {"nombre": "Comendador", "coordenadas": {"lat": 18.8760, "lng": -71.7070}},
+        {"nombre": "Bánica", "coordenadas": {"lat": 19.0833, "lng": -71.7000}},
+        {"nombre": "El Llano", "coordenadas": {"lat": 18.8167, "lng": -71.6333}},
+        {"nombre": "Hondo Valle", "coordenadas": {"lat": 18.7167, "lng": -71.7000}},
+        {"nombre": "Juan Santiago", "coordenadas": {"lat": 18.7000, "lng": -71.5833}},
+        {"nombre": "Pedro Santana", "coordenadas": {"lat": 19.1000, "lng": -71.6833}}
+      ]
+    },
+    {
+      "nombre": "El Seibo",
+      "coordenadas": {
+        "lat": 18.7656,
+        "lng": -69.0389
+      },
+      "municipios": [
+        {"nombre": "Santa Cruz del Seibo", "coordenadas": {"lat": 18.7656, "lng": -69.0389}},
+        {"nombre": "Miches", "coordenadas": {"lat": 18.9833, "lng": -69.0500}}
+      ]
+    },
+    {
+      "nombre": "Espaillat",
+      "coordenadas": {
+        "lat": 19.3950,
+        "lng": -70.5236
+      },
+      "municipios": [
+        {"nombre": "Moca", "coordenadas": {"lat": 19.3950, "lng": -70.5236}},
+        {"nombre": "Cayetano Germosén", "coordenadas": {"lat": 19.3417, "lng": -70.4833}},
+        {"nombre": "Gaspar Hernández", "coordenadas": {"lat": 19.6167, "lng": -70.2833}},
+        {"nombre": "Jamao al Norte", "coordenadas": {"lat": 19.6333, "lng": -70.4500}}
+      ]
+    },
+    {
+      "nombre": "Hato Mayor",
+      "coordenadas": {
+        "lat": 18.7639,
+        "lng": -69.2558
+      },
+      "municipios": [
+        {"nombre": "Hato Mayor del Rey", "coordenadas": {"lat": 18.7639, "lng": -69.2558}},
+        {"nombre": "El Valle", "coordenadas": {"lat": 18.9333, "lng": -69.3833}},
+        {"nombre": "Sabana de la Mar", "coordenadas": {"lat": 19.0500, "lng": -69.4167}}
+      ]
+    },
+    {
+      "nombre": "Hermanas Mirabal",
+      "coordenadas": {
+        "lat": 19.4167,
+        "lng": -70.3833
+      },
+      "municipios": [
+        {"nombre": "Salcedo", "coordenadas": {"lat": 19.4167, "lng": -70.3833}},
+        {"nombre": "Tenares", "coordenadas": {"lat": 19.3744, "lng": -70.3508}},
+        {"nombre": "Villa Tapia", "coordenadas": {"lat": 19.3000, "lng": -70.4167}}
+      ]
+    },
+    {
+      "nombre": "Independencia",
+      "coordenadas": {
+        "lat": 18.4917,
+        "lng": -71.8500
+      },
+      "municipios": [
+        {"nombre": "Jimaní", "coordenadas": {"lat": 18.4917, "lng": -71.8500}},
+        {"nombre": "Cristóbal", "coordenadas": {"lat": 18.5000, "lng": -71.3000}},
+        {"nombre": "Duvergé", "coordenadas": {"lat": 18.3167, "lng": -71.5167}},
+        {"nombre": "La Descubierta", "coordenadas": {"lat": 18.5667, "lng": -71.7333}},
+        {"nombre": "Mella", "coordenadas": {"lat": 18.4667, "lng": -71.4167}},
+        {"nombre": "Postrer Río", "coordenadas": {"lat": 18.5500, "lng": -71.6333}}
+      ]
+    },
+    {
+      "nombre": "La Altagracia",
+      "coordenadas": {
+        "lat": 18.6167,
+        "lng": -68.7000
+      },
+      "municipios": [
+        {"nombre": "Higüey", "coordenadas": {"lat": 18.6167, "lng": -68.7000}},
+        {"nombre": "San Rafael del Yuma", "coordenadas": {"lat": 18.4000, "lng": -68.6667}},
+        {"nombre": "Bávaro", "coordenadas": {"lat": 18.7167, "lng": -68.4500}},
+        {"nombre": "Verón", "coordenadas": {"lat": 18.6500, "lng": -68.5667}},
+        {"nombre": "Punta Cana", "coordenadas": {"lat": 18.5500, "lng": -68.3667}}
+      ]
+    },
+    {
+      "nombre": "La Romana",
+      "coordenadas": {
+        "lat": 18.4273,
+        "lng": -68.9729
+      },
+      "municipios": [
+        {"nombre": "La Romana", "coordenadas": {"lat": 18.4273, "lng": -68.9729}},
+        {"nombre": "Guaymate", "coordenadas": {"lat": 18.5875, "lng": -68.9783}},
+        {"nombre": "Villa Hermosa", "coordenadas": {"lat": 18.6667, "lng": -68.9833}}
+      ]
+    },
+    {
+      "nombre": "La Vega",
+      "coordenadas": {
+        "lat": 19.2222,
+        "lng": -70.5294
+      },
+      "municipios": [
+        {"nombre": "La Vega", "coordenadas": {"lat": 19.2222, "lng": -70.5294}},
+        {"nombre": "Constanza", "coordenadas": {"lat": 18.9167, "lng": -70.7500}},
+        {"nombre": "Jarabacoa", "coordenadas": {"lat": 19.1167, "lng": -70.6333}},
+        {"nombre": "Jima Abajo", "coordenadas": {"lat": 19.1333, "lng": -70.3833}}
+      ]
+    },
+    {
+      "nombre": "María Trinidad Sánchez",
+      "coordenadas": {
+        "lat": 19.3833,
+        "lng": -69.8333
+      },
+      "municipios": [
+        {"nombre": "Nagua", "coordenadas": {"lat": 19.3833, "lng": -69.8333}},
+        {"nombre": "Cabrera", "coordenadas": {"lat": 19.6426, "lng": -69.9049}},
+        {"nombre": "El Factor", "coordenadas": {"lat": 19.3183, "lng": -69.8883}},
+        {"nombre": "Río San Juan", "coordenadas": {"lat": 19.5500, "lng": -70.0667}}
+      ]
+    },
+    {
+      "nombre": "Monseñor Nouel",
+      "coordenadas": {
+        "lat": 18.9333,
+        "lng": -70.4000
+      },
+      "municipios": [
+        {"nombre": "Bonao", "coordenadas": {"lat": 18.9333, "lng": -70.4000}},
+        {"nombre": "Maimón", "coordenadas": {"lat": 18.8833, "lng": -70.3000}},
+        {"nombre": "Piedra Blanca", "coordenadas": {"lat": 18.8443, "lng": -70.3169}}
+      ]
+    },
+    {
+      "nombre": "Monte Cristi",
+      "coordenadas": {
+        "lat": 19.8500,
+        "lng": -71.6500
+      },
+      "municipios": [
+        {"nombre": "San Fernando de Monte Cristi", "coordenadas": {"lat": 19.8500, "lng": -71.6500}},
+        {"nombre": "Castañuela", "coordenadas": {"lat": 19.8000, "lng": -71.5000}},
+        {"nombre": "Guayubín", "coordenadas": {"lat": 19.6167, "lng": -71.3333}},
+        {"nombre": "Las Matas de Santa Cruz", "coordenadas": {"lat": 19.7167, "lng": -71.5000}},
+        {"nombre": "Pepillo Salcedo", "coordenadas": {"lat": 19.7000, "lng": -71.7333}},
+        {"nombre": "Villa Vásquez", "coordenadas": {"lat": 19.7333, "lng": -71.4333}}
+      ]
+    },
+    {
+      "nombre": "Monte Plata",
+      "coordenadas": {
+        "lat": 18.8070,
+        "lng": -69.7840
+      },
+      "municipios": [
+        {"nombre": "Monte Plata", "coordenadas": {"lat": 18.8070, "lng": -69.7840}},
+        {"nombre": "Bayaguana", "coordenadas": {"lat": 18.7833, "lng": -69.6333}},
+        {"nombre": "Peralvillo", "coordenadas": {"lat": 18.9500, "lng": -69.9167}},
+        {"nombre": "Sabana Grande de Boyá", "coordenadas": {"lat": 18.9500, "lng": -69.8000}},
+        {"nombre": "Yamasá", "coordenadas": {"lat": 18.7500, "lng": -70.0167}}
+      ]
+    },
+    {
+      "nombre": "Pedernales",
+      "coordenadas": {
+        "lat": 18.0333,
+        "lng": -71.7500
+      },
+      "municipios": [
+        {"nombre": "Pedernales", "coordenadas": {"lat": 18.0333, "lng": -71.7500}},
+        {"nombre": "Oviedo", "coordenadas": {"lat": 17.8000, "lng": -71.4000}}
+      ]
+    },
+    {
+      "nombre": "Peravia",
+      "coordenadas": {
+        "lat": 18.2833,
+        "lng": -70.3333
+      },
+      "municipios": [
+        {"nombre": "Baní", "coordenadas": {"lat": 18.2833, "lng": -70.3333}},
+        {"nombre": "Nizao", "coordenadas": {"lat": 18.2500, "lng": -70.2167}},
+        {"nombre": "Matanzas", "coordenadas": {"lat": 18.2500, "lng": -70.4167}}
+      ]
+    },
+    {
+      "nombre": "Puerto Plata",
+      "coordenadas": {
+        "lat": 19.8000,
+        "lng": -70.6833
+      },
+      "municipios": [
+        {"nombre": "San Felipe de Puerto Plata", "coordenadas": {"lat": 19.8000, "lng": -70.6833}},
+        {"nombre": "Altamira", "coordenadas": {"lat": 19.6667, "lng": -70.8333}},
+        {"nombre": "Guananico", "coordenadas": {"lat": 19.7167, "lng": -70.9167}},
+        {"nombre": "Imbert", "coordenadas": {"lat": 19.7500, "lng": -70.8333}},
+        {"nombre": "Los Hidalgos", "coordenadas": {"lat": 19.7333, "lng": -71.0333}},
+        {"nombre": "Luperón", "coordenadas": {"lat": 19.8833, "lng": -70.9667}},
+        {"nombre": "Sosúa", "coordenadas": {"lat": 19.7500, "lng": -70.5167}},
+        {"nombre": "Villa Isabela", "coordenadas": {"lat": 19.8167, "lng": -71.0667}},
+        {"nombre": "Villa Montellano", "coordenadas": {"lat": 19.7333, "lng": -70.5833}}
+      ]
+    },
+    {
+      "nombre": "Samaná",
+      "coordenadas": {
+        "lat": 19.2056,
+        "lng": -69.3364
+      },
+      "municipios": [
+        {"nombre": "Santa Bárbara de Samaná", "coordenadas": {"lat": 19.2056, "lng": -69.3364}},
+        {"nombre": "Las Terrenas", "coordenadas": {"lat": 19.3167, "lng": -69.5333}},
+        {"nombre": "Sánchez", "coordenadas": {"lat": 19.2333, "lng": -69.6000}}
+      ]
+    },
+    {
+      "nombre": "San Cristóbal",
+      "coordenadas": {
+        "lat": 18.4167,
+        "lng": -70.1333
+      },
+      "municipios": [
+        {"nombre": "San Cristóbal", "coordenadas": {"lat": 18.4167, "lng": -70.1333}},
+        {"nombre": "Bajos de Haina", "coordenadas": {"lat": 18.4167, "lng": -70.0333}},
+        {"nombre": "Cambita Garabitos", "coordenadas": {"lat": 18.4500, "lng": -70.2000}},
+        {"nombre": "Los Cacaos", "coordenadas": {"lat": 18.5333, "lng": -70.3000}},
+        {"nombre": "Nigua", "coordenadas": {"lat": 18.2500, "lng": -70.0833}},
+        {"nombre": "Sabana Grande de Palenque", "coordenadas": {"lat": 18.2500, "lng": -70.2000}},
+        {"nombre": "San Gregorio de Nigua", "coordenadas": {"lat": 18.3500, "lng": -70.0833}},
+        {"nombre": "Villa Altagracia", "coordenadas": {"lat": 18.6667, "lng": -70.1667}},
+        {"nombre": "Yaguate", "coordenadas": {"lat": 18.3333, "lng": -70.1833}}
+      ]
+    },
+    {
+      "nombre": "San José de Ocoa",
+      "coordenadas": {
+        "lat": 18.5466,
+        "lng": -70.5060
+      },
+      "municipios": [
+        {"nombre": "San José de Ocoa", "coordenadas": {"lat": 18.5466, "lng": -70.5060}},
+        {"nombre": "Rancho Arriba", "coordenadas": {"lat": 18.7833, "lng": -70.5667}},
+        {"nombre": "Sabana Larga", "coordenadas": {"lat": 18.5833, "lng": -70.4167}}
+      ]
+    },
+    {
+      "nombre": "San Juan",
+      "coordenadas": {
+        "lat": 18.8059,
+        "lng": -71.2299
+      },
+      "municipios": [
+        {"nombre": "San Juan de la Maguana", "coordenadas": {"lat": 18.8059, "lng": -71.2299}},
+        {"nombre": "Bohechío", "coordenadas": {"lat": 18.7714, "lng": -71.0000}},
+        {"nombre": "El Cercado", "coordenadas": {"lat": 18.7333, "lng": -71.5167}},
+        {"nombre": "Juan de Herrera", "coordenadas": {"lat": 18.8500, "lng": -71.2333}},
+        {"nombre": "Las Matas de Farfán", "coordenadas": {"lat": 18.8667, "lng": -71.5167}},
+        {"nombre": "Vallejuelo", "coordenadas": {"lat": 18.6500, "lng": -71.3333}}
+      ]
+    },
+    {
+      "nombre": "San Pedro de Macorís",
+      "coordenadas": {
+        "lat": 18.4578,
+        "lng": -69.3082
+      },
+      "municipios": [
+        {"nombre": "San Pedro de Macorís", "coordenadas": {"lat": 18.4578, "lng": -69.3082}},
+        {"nombre": "Consuelo", "coordenadas": {"lat": 18.9167, "lng": -69.3000}},
+        {"nombre": "Guayacanes", "coordenadas": {"lat": 18.3667, "lng": -69.2333}},
+        {"nombre": "Quisqueya", "coordenadas": {"lat": 18.5556, "lng": -69.4083}},
+        {"nombre": "Ramón Santana", "coordenadas": {"lat": 18.5333, "lng": -69.1833}},
+        {"nombre": "San José de los Llanos", "coordenadas": {"lat": 18.4167, "lng": -69.5000}}
+      ]
+    },
+    {
+      "nombre": "Sánchez Ramírez",
+      "coordenadas": {
+        "lat": 19.0528,
+        "lng": -70.1494
+      },
+      "municipios": [
+        {"nombre": "Cotuí", "coordenadas": {"lat": 19.0528, "lng": -70.1494}},
+        {"nombre": "Cevicos", "coordenadas": {"lat": 19.0000, "lng": -69.9833}},
+        {"nombre": "Fantino", "coordenadas": {"lat": 19.1167, "lng": -70.3000}},
+        {"nombre": "La Mata", "coordenadas": {"lat": 19.1000, "lng": -70.1667}}
+      ]
+    },
+    {
+      "nombre": "Santiago",
+      "coordenadas": {
+        "lat": 19.4517,
+        "lng": -70.6970
+      },
+      "municipios": [
+        {"nombre": "Santiago de los Caballeros", "coordenadas": {"lat": 19.4517, "lng": -70.6970}},
+        {"nombre": "Bisonó", "coordenadas": {"lat": 19.5833, "lng": -70.8667}},
+        {"nombre": "Jánico", "coordenadas": {"lat": 19.2333, "lng": -70.8000}},
+        {"nombre": "Licey al Medio", "coordenadas": {"lat": 19.4500, "lng": -70.6000}},
+        {"nombre": "Puñal", "coordenadas": {"lat": 19.4167, "lng": -70.6333}},
+        {"nombre": "San José de las Matas", "coordenadas": {"lat": 19.3333, "lng": -70.9333}},
+        {"nombre": "Tamboril", "coordenadas": {"lat": 19.4833, "lng": -70.6167}},
+        {"nombre": "Villa Bisonó", "coordenadas": {"lat": 19.5667, "lng": -70.8667}},
+        {"nombre": "Villa González", "coordenadas": {"lat": 19.5333, "lng": -70.7833}}
+      ]
+    },
+    {
+      "nombre": "Santiago Rodríguez",
+      "coordenadas": {
+        "lat": 19.4833,
+        "lng": -71.3333
+      },
+      "municipios": [
+        {"nombre": "San Ignacio de Sabaneta", "coordenadas": {"lat": 19.4833, "lng": -71.3333}},
+        {"nombre": "Los Almácigos", "coordenadas": {"lat": 19.1667, "lng": -71.5000}},
+        {"nombre": "Monción", "coordenadas": {"lat": 19.4667, "lng": -71.1667}}
+      ]
+    },
+    {
+      "nombre": "Santo Domingo",
+      "coordenadas": {
+        "lat": 18.5000,
+        "lng": -69.9833
+      },
+      "municipios": [
+        {"nombre": "Santo Domingo Este", "coordenadas": {"lat": 18.4885, "lng": -69.8571}},
+        {"nombre": "Santo Domingo Norte", "coordenadas": {"lat": 18.5833, "lng": -69.9000}},
+        {"nombre": "Santo Domingo Oeste", "coordenadas": {"lat": 18.5000, "lng": -70.0000}},
+        {"nombre": "Boca Chica", "coordenadas": {"lat": 18.4500, "lng": -69.6000}},
+        {"nombre": "Pedro Brand", "coordenadas": {"lat": 18.5333, "lng": -70.1167}},
+        {"nombre": "Los Alcarrizos", "coordenadas": {"lat": 18.5167, "lng": -70.0167}},
+        {"nombre": "San Antonio de Guerra", "coordenadas": {"lat": 18.5833, "lng": -69.7000}}
+      ]
+    },
+    {
+      "nombre": "Valverde",
+      "coordenadas": {
+        "lat": 19.5667,
+        "lng": -71.0833
+      },
+      "municipios": [
+        {"nombre": "Santa Cruz de Mao", "coordenadas": {"lat": 19.5667, "lng": -71.0833}},
+        {"nombre": "Esperanza", "coordenadas": {"lat": 19.5833, "lng": -70.9833}},
+        {"nombre": "Laguna Salada", "coordenadas": {"lat": 19.7000, "lng": -71.1333}}
+      ]
+    }
+  ]
+}

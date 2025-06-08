@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Badge, Card, CardBody, Spinner, Nav, NavItem, NavLink, TabContent, TabPane, Button } from "reactstrap";
 import classnames from "classnames";
 import { Bar, Line } from "react-chartjs-2";
-import { obtenerHistorialMetricasCliente } from "../../services/clienteService";
+import { obtenerHistorialMetricasCliente, generarReporteMetricas } from "../../services/clienteService";
 
 // Valores promedio de referencia (puedes ajustar según tu criterio o fuentes)
 const REFERENCIAS = {
@@ -25,6 +25,7 @@ const ResultsSection = ({ result }) => {
   const [activeTab, setActiveTab] = useState("1");
   const [activeIndicadorGrupo, setActiveIndicadorGrupo] = useState(0);
   const [activeIndicadorChart, setActiveIndicadorChart] = useState(0);
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     const fetchHistorial = async () => {
@@ -45,6 +46,26 @@ const ResultsSection = ({ result }) => {
   useEffect(() => {
     setActiveIndicadorChart(0);
   }, [activeIndicadorGrupo]);
+
+  const handleImprimirReporte = async () => {
+    if (!result?.codigoCli) return;
+    setDownloading(true);
+    try {
+      const blob = await generarReporteMetricas(result.codigoCli);
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Reporte_Metricas_${result.codigoCli}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (e) {
+      alert("No se pudo generar el reporte. Intente más tarde.");
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   if (!result) return null;
 
@@ -224,6 +245,19 @@ const ResultsSection = ({ result }) => {
     <section>
       <Card>
         <CardBody>
+          <div className="d-flex justify-content-end mb-3">
+            <Button color="primary" onClick={handleImprimirReporte} disabled={downloading}>
+              {downloading ? (
+                <>
+                  <i className="fa fa-spinner fa-spin mr-2" /> Generando...
+                </>
+              ) : (
+                <>
+                  <i className="fa fa-print mr-2" /> Imprimir Reporte PDF
+                </>
+              )}
+            </Button>
+          </div>
           <Nav tabs>
             <NavItem>
               <NavLink

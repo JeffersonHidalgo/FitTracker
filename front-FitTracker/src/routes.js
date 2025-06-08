@@ -1,5 +1,5 @@
 import Index from "views/Index.js";
-import Profile from "views/examples/Profile.js";
+import EmpresaConfig from "views/examples/EmpresaConfig.js";
 import Maps from "views/examples/Maps.js";
 import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
@@ -37,10 +37,10 @@ var routes = [
     invisible: true,
   },
   {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: <Profile />,
+    path: "/empresa-config",
+    name: "Configuración de Empresa",
+    icon: "ni ni-building text-yellow",
+    component: <EmpresaConfig />,
     layout: "/admin",
   },
   {

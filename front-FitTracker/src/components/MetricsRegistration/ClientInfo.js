@@ -58,6 +58,7 @@ const ClientInfo = ({ selectedCliente, setSelectedCliente, onLimpiar }) => {
         fotoPerfil: detalle.fotoPerfil
           ? `${API_ROOT}/imagen-cliente/${detalle.fotoPerfil}`
           : null,
+        estado: detalle.estado // <-- Agrega esto
       };
       setSelectedCliente(clienteObj);
       setIsModalOpen(false);

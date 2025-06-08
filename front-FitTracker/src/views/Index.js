@@ -1,238 +1,488 @@
-/*!
-
-=========================================================
-* FitTracker - v1.0.0
-=========================================================
-
-* Product Page: https://www.fittracker.com
-* Copyright 2024 Charlie Delgado & Jefferson Hidalgo
-* Licensed under MIT (https://github.com/charliedelgado/fittracker/blob/master/LICENSE.md)
-
-* Coded by Charlie Delgado & Jefferson Hidalgo
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import { useState } from "react";
-// node.js library that concatenates classes (strings)
-import classnames from "classnames";
-// javascipt plugin for creating charts
-import Chart from "chart.js";
-// react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
-// reactstrap components
+import React, { useEffect, useState } from "react";
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
-  Table,
   Container,
   Row,
   Col,
+  Table,
+  ListGroup,
+  ListGroupItem,
+  Badge,
+  Progress
 } from "reactstrap";
-
-// core components
-import {
-  chartOptions,
-  parseOptions,
-  chartExample1,
-  chartExample2,
-} from "variables/charts.js";
-
 import Header from "components/Headers/Header.js";
-import StatsCards from "components/Stats/StatsCards.js"; // Importamos StatsCards
+import {
+  obtenerResumenClientes,
+  obtenerDemografiaClientes,
+  obtenerSaludClientes,
+  obtenerCumpleanios
+} from "services/dashboardService";
+import { Bar, Pie } from "react-chartjs-2";
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import coorData from "assets/coor.json";
 
-const Index = (props) => {
-  const [activeNav, setActiveNav] = useState(1);
-
-  // Datos para StatsCards
-  const statsData = {
-    totalClients: 165,
-    maleClients: 90,
-    femaleClients: 75,
-    avgWeight: "72 kg",
-    avgBodyFat: "20%",
-    avgMuscleMass: "35%",
+const Index = () => {
+  // Estructuras por defecto según los JSON reales
+  const defaultSummary = {
+    totalClients: 0,
+    activeClients: 0,
+    inactiveClients: 0,
+    activePercentage: 0,
+    inactivePercentage: 0,
+    newLast30: 0,
+    newLast7: 0
+  };
+  const defaultDemography = {
+    female: 0,
+    male: 0,
+    other: 0,
+    age18_25: 0,
+    age26_35: 0,
+    age36_45: 0,
+    age46Plus: 0,
+    averageAge: 0,
+    location: []
+  };
+  const defaultHealth = {
+    bmi: 0,
+    bodyFat: 0,
+    muscleMass: 0,
+    bmiTrend: []
   };
 
-  if (window.Chart) {
-    parseOptions(Chart, chartOptions());
-  }
+  const [summaryData, setSummaryData] = useState(defaultSummary);
+  const [demographicData, setDemographicData] = useState(defaultDemography);
+  const [healthData, setHealthData] = useState(defaultHealth);
+  const [birthdays, setBirthdays] = useState([]);
 
-  const toggleNavs = (e, index) => {
-    e.preventDefault();
-    setActiveNav(index);
+  useEffect(() => {
+    const cargarDashboard = async () => {
+      try {
+        const [resumen, demografia, salud, cumple] = await Promise.all([
+          obtenerResumenClientes(),
+          obtenerDemografiaClientes(),
+          obtenerSaludClientes(),
+          obtenerCumpleanios()
+        ]);
+
+        setSummaryData({
+          totalClients: resumen.totalClients ?? 0,
+          activeClients: resumen.activeClients ?? 0,
+          inactiveClients: resumen.inactiveClients ?? 0,
+          activePercentage: resumen.activePercentage ?? 0,
+          inactivePercentage: resumen.inactivePercentage ?? 0,
+          newLast30: resumen.newLast30 ?? 0,
+          newLast7: resumen.newLast7 ?? 0
+        });
+
+        setDemographicData({
+          female: demografia.female ?? 0,
+          male: demografia.male ?? 0,
+          other: demografia.other ?? 0,
+          age18_25: demografia.age18_25 ?? 0,
+          age26_35: demografia.age26_35 ?? 0,
+          age36_45: demografia.age36_45 ?? 0,
+          age46Plus: demografia.age46Plus ?? 0,
+          averageAge: demografia.averageAge ?? 0,
+          location: Array.isArray(demografia.location) ? demografia.location : []
+        });
+
+        setHealthData({
+          bmi: salud.bmi ?? 0,
+          bodyFat: salud.bodyFat ?? 0,
+          muscleMass: salud.muscleMass ?? 0,
+          bmiTrend: Array.isArray(salud.bmiTrend) ? salud.bmiTrend : []
+        });
+
+        setBirthdays(Array.isArray(cumple) ? cumple : []);
+      } catch (error) {
+        console.error("Error al cargar el dashboard:", error);
+      }
+    };
+    cargarDashboard();
+  }, []);
+
+  // Calcular porcentajes para barras y evitar división por cero
+  const totalClients = summaryData.totalClients || 1;
+  const percent = (value) => Math.round((value / totalClients) * 100);
+
+  // Gráfico de Distribución por Género (Pie, colores suaves)
+  const generoPieData = {
+    labels: ["Mujeres", "Hombres", "Otro"],
+    datasets: [
+      {
+        data: [
+          demographicData.female,
+          demographicData.male,
+          demographicData.other,
+        ],
+        backgroundColor: ["#FFB6C1", "#B3E5FC", "#E0E0E0"], // colores suaves
+        borderColor: "#fff",
+        borderWidth: 2,
+      },
+    ],
   };
+
+  const generoPieOptions = {
+    legend: { display: false },
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: {
+      animateScale: true,
+      animateRotate: true,
+    },
+  };
+
+  // Datos para gráfico de barras de salud
+  const saludBarDataChart = {
+    labels: ["IMC", "% Grasa", "Masa Muscular"],
+    datasets: [
+      {
+        label: "Promedio",
+        data: [healthData.bmi, healthData.bodyFat, healthData.muscleMass],
+        backgroundColor: ["#ffd600", "#fb6340", "#11cdef"],
+      },
+    ],
+  };
+
+  const saludBarOptions = {
+    legend: { display: false },
+    scales: {
+      yAxes: [
+        {
+          ticks: { beginAtZero: true },
+        },
+      ],
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+  };
+
+  // Configuración del mapa
+  const mapContainerStyle = {
+    width: '100%',
+    height: '350px',
+    borderRadius: '8px'
+  };
+  const center = { lat: 19.0, lng: -70.5 }; // Centro de República Dominicana
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: "TU_API_KEY_AQUI" // Reemplaza con tu API Key real
+  });
+
+  // Relaciona ciudades de demographicData.location con coordenadas de coor.json
+  const locationsWithCoords = demographicData.location.map(loc => {
+    const provincia = coorData.provincias.find(
+      p => p.nombre && p.nombre.toLowerCase() === loc.city?.toLowerCase()
+    );
+    return provincia && provincia.coordenadas
+      ? { ...loc, lat: provincia.coordenadas.lat, lng: provincia.coordenadas.lng }
+      : null;
+  }).filter(Boolean);
 
   return (
     <>
       <Header />
       <div className="main-content">
         <Container fluid>
-          <div className="mb-4">
-            <StatsCards data={statsData} /> {/* Pasamos datos a StatsCards */}
-          </div>
-          <Row>
-            <Col className="mb-5 mb-xl-0" xl="8">
-              <Card className="shadow">
+          {/* 1. Resumen General de Clientes */}
+          <Row className="mt-4">
+            {/* ... (los tres primeros Col md="4" iguales) ... */}
+            <Col md="4">
+              <Card className="shadow-sm mb-4">
                 <CardHeader className="bg-transparent">
-                  <Row className="align-items-center">
-                    <div className="col">
-                      <h6 className="text-uppercase text-muted ls-1 mb-1">
-                        Demografía
-                      </h6>
-                      <h2 className="mb-0">Distribución de Clientes</h2>
+                  <div className="d-flex align-items-center">
+                    <div className="icon icon-shape bg-gradient-primary text-white rounded-circle shadow mr-3">
+                      <i className="ni ni-badge"></i>
                     </div>
-                  </Row>
+                    <h5 className="mb-0">Total de Clientes Registrados</h5>
+                  </div>
                 </CardHeader>
                 <CardBody>
-                  {/* Gráfico */}
-                  <div className="chart">
-                    <Bar
-                      data={{
-                        labels: ["Hombres", "Mujeres"],
-                        datasets: [
-                          {
-                            label: "Clientes",
-                            data: [90, 75],
-                            backgroundColor: ["#5e72e4", "#f5365c"],
-                          },
-                        ],
-                      }}
-                      options={{
-                        scales: {
-                          y: { beginAtZero: true },
-                        },
-                      }}
-                    />
+                  <div className="text-center">
+                    <h2 className="display-3">{summaryData.totalClients}</h2>
+                    <p className="text-muted">clientes registrados</p>
                   </div>
                 </CardBody>
               </Card>
             </Col>
-            <Col xl="4">
-              <Card className="shadow">
+            <Col md="4">
+              <Card className="shadow-sm mb-4">
                 <CardHeader className="bg-transparent">
-                  <Row className="align-items-center">
-                    <div className="col">
-                      <h6 className="text-uppercase text-muted ls-1 mb-1">
-                        Compromiso
-                      </h6>
-                      <h2 className="mb-0">Frecuencia de Actualización</h2>
+                  <div className="d-flex align-items-center">
+                    <div className="icon icon-shape bg-gradient-success text-white rounded-circle shadow mr-3">
+                      <i className="ni ni-active-40"></i>
                     </div>
-                  </Row>
+                    <h5 className="mb-0">Clientes Activos vs. Inactivos</h5>
+                  </div>
                 </CardHeader>
                 <CardBody>
-                  <div className="chart">
-                    <Bar
-                      data={{
-                        labels: ["Actualizaciones Regulares", "Sin Actualizaciones"],
-                        datasets: [
-                          {
-                            label: "Clientes",
-                            data: [120, 45],
-                            backgroundColor: ["#2dce89", "#f5365c"],
-                          },
-                        ],
-                      }}
-                      options={{
-                        scales: {
-                          y: { beginAtZero: true },
-                        },
-                      }}
+                  <div className="d-flex justify-content-between mb-2">
+                    <span>Activos:</span>
+                    <strong>
+                      {summaryData.activeClients} ({summaryData.activePercentage}%)
+                    </strong>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <span>Inactivos:</span>
+                    <strong>
+                      {summaryData.inactiveClients} ({summaryData.inactivePercentage}%)
+                    </strong>
+                  </div>
+                  <Progress multi className="mt-3" style={{ height: "10px" }}>
+                    <Progress
+                      bar
+                      value={summaryData.activePercentage}
+                      color="success"
                     />
+                    <Progress
+                      bar
+                      value={summaryData.inactivePercentage}
+                      color="danger"
+                    />
+                  </Progress>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col md="4">
+              <Card className="shadow-sm mb-4">
+                <CardHeader className="bg-transparent">
+                  <div className="d-flex align-items-center">
+                    <div className="icon icon-shape bg-gradient-info text-white rounded-circle shadow mr-3">
+                      <i className="ni ni-satisfied"></i>
+                    </div>
+                    <h5 className="mb-0">Nuevos Clientes</h5>
+                  </div>
+                </CardHeader>
+                <CardBody>
+                  <div className="d-flex justify-content-between mb-2">
+                    <span>Últimos 30 días:</span>
+                    <strong>{summaryData.newLast30}</strong>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <span>Últimos 7 días:</span>
+                    <strong>{summaryData.newLast7}</strong>
+                  </div>
+                  <div className="mt-3 text-center">
+                    <Badge color="info" pill className="px-3 py-2">
+                      <i className="ni ni-chart-bar-32 mr-1"></i> Tasa de crecimiento: +12%
+                    </Badge>
                   </div>
                 </CardBody>
               </Card>
             </Col>
           </Row>
-          <Row className="mt-5">
-            <Col className="mb-5 mb-xl-0" xl="8">
-              <Card className="shadow">
-                <CardHeader className="border-0">
-                  <Row className="align-items-center">
-                    <div className="col">
-                      <h3 className="mb-0">Tendencias de Progreso</h3>
+
+          {/* 2. Demografía y Datos Personales */}
+          <Row className="mt-4">
+            <Col md="6">
+              <Card className="shadow-sm mb-4">
+                <CardHeader className="bg-transparent">
+                  <div className="d-flex align-items-center">
+                    <div className="icon icon-shape bg-gradient-orange text-white rounded-circle shadow mr-3">
+                      <i className="ni ni-single-02"></i>
                     </div>
-                  </Row>
+                    <h5 className="mb-0">Distribución por Género</h5>
+                  </div>
                 </CardHeader>
                 <CardBody>
-                  <div className="chart">
-                    <Line
-                      data={{
-                        labels: ["Enero", "Febrero", "Marzo", "Abril"],
-                        datasets: [
-                          {
-                            label: "Fuerza",
-                            data: [50, 60, 70, 80],
-                            borderColor: "#5e72e4",
-                            backgroundColor: "rgba(94, 114, 228, 0.2)",
-                          },
-                          {
-                            label: "Resistencia",
-                            data: [40, 50, 65, 75],
-                            borderColor: "#2dce89",
-                            backgroundColor: "rgba(45, 206, 137, 0.2)",
-                          },
-                          {
-                            label: "Capacidad Aeróbica",
-                            data: [30, 40, 55, 70],
-                            borderColor: "#f5365c",
-                            backgroundColor: "rgba(245, 54, 92, 0.2)",
-                          },
-                        ],
-                      }}
-                      options={{
-                        scales: {
-                          y: { beginAtZero: true },
-                        },
-                      }}
-                    />
+                  <Row>
+                    <Col md="6">
+                      <div className="d-flex justify-content-between mb-2">
+                        <span><i className="ni ni-single-02 text-pink mr-1"></i> Mujeres:</span>
+                        <strong>
+                          {demographicData.female} ({percent(demographicData.female)}%)
+                        </strong>
+                      </div>
+                      <div className="d-flex justify-content-between">
+                        <span><i className="ni ni-single-02 text-info mr-1"></i> Hombres:</span>
+                        <strong>
+                          {demographicData.male} ({percent(demographicData.male)}%)
+                        </strong>
+                      </div>
+                      <div className="d-flex justify-content-between mt-2">
+                        <span><i className="ni ni-single-02 text-secondary mr-1"></i> Otro:</span>
+                        <strong>
+                          {demographicData.other} ({percent(demographicData.other)}%)
+                        </strong>
+                      </div>
+                    </Col>
+                    <Col md="6">
+                      <div className="d-flex justify-content-center align-items-center" style={{ height: "140px" }}>
+                        <Pie
+                          data={generoPieData}
+                          options={generoPieOptions}
+                          height={140}
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col md="6">
+              <Card className="shadow-sm mb-4">
+                <CardHeader className="bg-transparent">
+                  <div className="d-flex align-items-center">
+                    <div className="icon icon-shape bg-gradient-purple text-white rounded-circle shadow mr-3">
+                      <i className="ni ni-calendar-grid-58"></i>
+                    </div>
+                    <h5 className="mb-0">Distribución por Edad</h5>
+                  </div>
+                </CardHeader>
+                <CardBody>
+                  <div className="mb-3">
+                    <h6><i className="ni ni-watch-time mr-1"></i> Edad Promedio: <strong>{demographicData.averageAge} años</strong></h6>
+                  </div>
+                  <Table borderless size="sm">
+                    <tbody>
+                      <tr>
+                        <td><i className="ni ni-bold-right mr-1"></i> 18-25 años:</td>
+                        <td><strong>{demographicData.age18_25} clientes</strong></td>
+                        <td width="70%">
+                          <Progress value={percent(demographicData.age18_25)} />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><i className="ni ni-bold-right mr-1"></i> 26-35 años:</td>
+                        <td><strong>{demographicData.age26_35} clientes</strong></td>
+                        <td>
+                          <Progress value={percent(demographicData.age26_35)} color="success" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><i className="ni ni-bold-right mr-1"></i> 36-45 años:</td>
+                        <td><strong>{demographicData.age36_45} clientes</strong></td>
+                        <td>
+                          <Progress value={percent(demographicData.age36_45)} color="info" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><i className="ni ni-bold-right mr-1"></i> 46+ años:</td>
+                        <td><strong>{demographicData.age46Plus} clientes</strong></td>
+                        <td>
+                          <Progress value={percent(demographicData.age46Plus)} color="warning" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col md="12">
+              <Card className="shadow-sm mb-4">
+                <CardHeader className="bg-transparent">
+                  <div className="d-flex align-items-center">
+                    <div className="icon icon-shape bg-gradient-blue text-white rounded-circle shadow mr-3">
+                      <i className="ni ni-pin-3"></i>
+                    </div>
+                    <h5 className="mb-0">Ubicación Geográfica</h5>
+                  </div>
+                </CardHeader>
+                <CardBody>
+                  {/* Mapa OpenStreetMap */}
+                  <div style={{ width: "100%", height: 350, borderRadius: 8, overflow: "hidden", marginBottom: 24 }}>
+                    <iframe
+                      title="OpenStreetMap"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      src="https://www.openstreetmap.org/export/embed.html?bbox=-72.0%2C17.5%2C-68.0%2C20.5&amp;layer=mapnik"
+                      allowFullScreen=""
+                      loading="lazy"
+                    ></iframe>
+                  </div>
+                  {/* Tabla de ubicaciones */}
+                  <Table hover>
+                    <thead>
+                      <tr>
+                        <th><i className="ni ni-square-pin mr-1"></i> Ciudad</th>
+                        <th className="text-right">Clientes</th>
+                        <th>Porcentaje</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {demographicData.location.map((loc, index) => (
+                        <tr key={index}>
+                          <td><i className="ni ni-pin-3 mr-1"></i> {loc.city}</td>
+                          <td className="text-right">{loc.clients}</td>
+                          <td>
+                            <Progress
+                              value={percent(loc.clients)}
+                              color={index % 2 === 0 ? "primary" : "info"}
+                              style={{ height: "8px" }}
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+
+          {/* 3. Indicadores de Salud Promedio */}
+          <Row className="mt-4">
+            <Col md="12">
+              <Card className="shadow-sm mb-4">
+                <CardHeader className="bg-transparent">
+                  <div className="d-flex align-items-center">
+                    <div className="icon icon-shape bg-gradient-green text-white rounded-circle shadow mr-3">
+                      <i className="ni ni-chart-bar-32"></i>
+                    </div>
+                    <h5 className="mb-0">Indicadores de Salud Promedio</h5>
+                  </div>
+                </CardHeader>
+                <CardBody>
+                  <div className="d-flex justify-content-center" style={{ width: "100%", height: 220 }}>
+                    <Bar data={saludBarDataChart} options={saludBarOptions} />
                   </div>
                 </CardBody>
               </Card>
             </Col>
-            <Col xl="4">
-              <Card className="shadow">
-                <CardHeader className="border-0">
-                  <Row className="align-items-center">
-                    <div className="col">
-                      <h3 className="mb-0">Comparativa de Desempeño</h3>
+          </Row>
+
+          {/* 4. Cumpleaños próximos */}
+          <Row className="mt-4">
+            <Col md="12">
+              <Card className="shadow-sm mb-4">
+                <CardHeader className="bg-transparent">
+                  <div className="d-flex align-items-center">
+                    <div className="icon icon-shape bg-gradient-primary text-white rounded-circle shadow mr-3">
+                      <i className="ni ni-calendar-grid-58"></i>
                     </div>
-                  </Row>
+                    <h5 className="mb-0">Cumpleaños próximos</h5>
+                  </div>
                 </CardHeader>
-                <Table className="align-items-center table-flush" responsive>
-                  <thead className="thead-light">
-                    <tr>
-                      <th scope="col">Métrica</th>
-                      <th scope="col">Logrado</th>
-                      <th scope="col">Objetivo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">Fuerza</th>
-                      <td>80%</td> {/* Fixed closing tag */}
-                      <td>90%</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Resistencia</th>
-                      <td>75%</td>
-                      <td>85%</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Capacidad Aeróbica</th>
-                      <td>70%</td>
-                      <td>80%</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                <CardBody>
+                  <ListGroup flush>
+                    {birthdays.length > 0 ? (
+                      birthdays.map((bday, index) => (
+                        <ListGroupItem key={index} className="d-flex justify-content-between align-items-center">
+                          <div>
+                            <i className="ni ni-circle-08 text-primary mr-2"></i>
+                            <strong>{bday.name}</strong>
+                            <span className="text-muted small ml-3">
+                              Cumpleaños: <strong>{bday.date}</strong>
+                            </span>
+                          </div>
+                          <div>
+                            <Badge color="info" pill>
+                              {bday.age ? `Cumple ${bday.age} años` : "🎉"}
+                            </Badge>
+                          </div>
+                        </ListGroupItem>
+                      ))
+                    ) : (
+                      <ListGroupItem className="text-center text-muted">
+                        <i className="ni ni-fat-remove mr-2"></i> No hay cumpleaños en los próximos 7 días
+                      </ListGroupItem>
+                    )}
+                  </ListGroup>
+                </CardBody>
               </Card>
             </Col>
           </Row>
@@ -240,6 +490,6 @@ const Index = (props) => {
       </div>
     </>
   );
-};
+}
 
 export default Index;

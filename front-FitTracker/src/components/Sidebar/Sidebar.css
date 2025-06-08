@@ -1,0 +1,52 @@
+/* Sidebar colapsado: ancho reducido */
+.sidebar-collapsed {
+  width: 60px !important;
+  min-width: 60px !important;
+  transition: width 0.2s;
+}
+.navbar-vertical {
+  transition: width 0.2s;
+}
+
+/* Oculta el texto del logo cuando está colapsado */
+.sidebar-collapsed .fittracker-text {
+  display: none !important;
+}
+
+/* Oculta el texto de los menús cuando está colapsado */
+.sidebar-collapsed .nav-link span {
+  display: none !important;
+}
+
+/* Centra los íconos cuando está colapsado */
+.sidebar-collapsed .nav-link {
+  justify-content: center !important;
+  text-align: center;
+  padding-left: 0.75rem !important;
+}
+
+/* Botón de colapso lateral */
+.sidebar-collapse-btn {
+  position: absolute;
+  top: 20px;
+  right: -18px;
+  background: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  z-index: 2000;
+  transition: right 0.2s;
+  cursor: pointer;
+}
+
+/* Ajuste para que el botón no se superponga en móvil */
+@media (max-width: 767.98px) {
+  .sidebar-collapse-btn {
+    display: none !important;
+  }
+}

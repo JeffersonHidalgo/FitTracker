@@ -41,3 +41,10 @@ export const obtenerHistorialMetricasCliente = (codigoCli) =>
 // Obtener historial completo de métricas de un cliente (nuevo endpoint)
 export const obtenerHistorialCompletoCliente = (codigoCli) =>
   request("get", `cliente/historial-completo/${codigoCli}`);
+
+// Generar reporte de métricas en PDF para un cliente
+export const generarReporteMetricas = (clienteId) =>
+  request("get", `reportes/reporte-metricas/${clienteId}`, null, {
+    responseType: "blob",
+    headers: { Accept: "application/pdf" }
+  });

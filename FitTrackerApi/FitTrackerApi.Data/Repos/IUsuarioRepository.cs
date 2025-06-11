@@ -14,6 +14,6 @@ namespace Data.Repos
         Task<int> InsertUsuario(Usuario usuario);
         Task<int> UpdateUsuario(Usuario usuario);
         Task<IEnumerable<Pantalla>> SlistaPantallas();
-
+        Task<Usuario> ValidarCredenciales(string username, string password);
     }
 }

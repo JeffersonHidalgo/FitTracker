@@ -214,5 +214,41 @@ namespace Data.Repos
                 return Enumerable.Empty<Pantalla>();
             }
         }
+
+        public async Task<Usuario> ValidarCredenciales(string username, string password)
+        {
+            try
+            {
+                int? userId = null;
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+
+                // Validar credenciales y obtener el ID del usuario usando procedimiento almacenado
+                using (var cmdLogin = new MySqlCommand("ValidarUsuario", conn) { CommandType = CommandType.StoredProcedure })
+                {
+                    cmdLogin.Parameters.AddWithValue("p_username", username);
+                    cmdLogin.Parameters.AddWithValue("p_password", password);
+                    
+                    var result = await cmdLogin.ExecuteScalarAsync();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        userId = Convert.ToInt32(result);
+                    }
+                }
+
+                // Si encontramos un usuario válido, obtener sus datos completos con accesos
+                if (userId.HasValue)
+                {
+                    return await GetUsuarioConAccesos(userId.Value);
+                }
+
+                return null; // Credenciales inválidas
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ValidarCredenciales), ex);
+                return null;
+            }
+        }
     }
 }

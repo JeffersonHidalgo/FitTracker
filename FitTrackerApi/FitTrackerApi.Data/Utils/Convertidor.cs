@@ -67,5 +67,16 @@ namespace Utils
 
             return false;
         }
+
+        public static decimal? ToDecimal(object? value)
+        {
+            if (value == null || value == DBNull.Value)
+                return 0;
+
+            if (decimal.TryParse(value.ToString(), out decimal result))
+                return result;
+
+            return 0;
+        }
     }
 }

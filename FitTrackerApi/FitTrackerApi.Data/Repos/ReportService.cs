@@ -212,4 +212,239 @@ public class ReportService : IReportService
         
         return plt.GetSvgXml((int)size.Width, (int)size.Height);
     }
+
+    public async Task<byte[]> GenerarReporteHistorialDetalladoAsync(int codigoCliente)
+    {
+        var historial = await _clienteRepository.ObtenerHistorialCompletoAsync(codigoCliente);
+        if (historial == null || !historial.Any())
+            throw new Exception("No se encontró historial de métricas para este cliente.");
+
+        var clienteInfo = await _clienteRepository.GetCliente(codigoCliente);
+        var empresa = await _empresaRepository.ObtenerConfiguracionAsync();
+        
+        using var stream = new MemoryStream();
+
+        Document.Create(doc =>
+        {
+            doc.Page(page =>
+            {
+                page.Margin(30);
+                page.Size(PageSizes.A4);
+
+                // Encabezado con datos de empresa
+                page.Header().Row(row =>
+                {
+                    // Logo con espacio a la derecha
+                    if (!string.IsNullOrEmpty(empresa.Logo))
+                    {
+                        row.ConstantItem(60).Height(60).Image(empresa.Logo);
+                    }
+                    else
+                    {
+                        row.ConstantItem(60).Height(60);
+                    }
+
+                    // Espacio entre logo y texto
+                    row.ConstantItem(15).Height(60);
+
+                    // Resto del encabezado
+                    row.RelativeItem()
+                        .Column(col =>
+                        {
+                            col.Item().Text(empresa.NombreEmpresa)
+                                .FontSize(18).Bold().FontColor(QuestPDF.Helpers.Colors.Blue.Medium);
+                            col.Item().Text($"{empresa.Direccion}, {empresa.Ciudad}, {empresa.Provincia}")
+                                .FontSize(10).FontColor(QuestPDF.Helpers.Colors.Grey.Darken2);
+                            col.Item().Text($"Tel: {empresa.TelefonoEmpresa} | Email: {empresa.EmailEmpresa}")
+                                .FontSize(10).FontColor(QuestPDF.Helpers.Colors.Grey.Darken2);
+                        });
+                    row.ConstantItem(140)
+                        .Column(col =>
+                        {
+                            col.Item().Text($"Cliente: {clienteInfo.NombreCompleto}")
+                                .FontSize(13).Bold();
+                            var edad = DateTime.Today.Year - clienteInfo.FechaNacimiento.Year;
+                            col.Item().Text($"Edad: {edad} años")
+                                .FontSize(11);
+                        });
+                });
+
+                page.Content().Column(col =>
+                {
+                    col.Spacing(15);
+
+                    // Título principal
+                    col.Item().Text("Historial Completo de Métricas")
+                        .FontSize(18).Bold().FontColor(QuestPDF.Helpers.Colors.Blue.Darken2).Underline();
+
+                    // Para cada registro en el historial (ordenado por fecha descendente)
+                    foreach (var registro in historial.OrderByDescending(h => h.FechaRegistro))
+                    {
+                        col.Item().Background(QuestPDF.Helpers.Colors.Grey.Lighten4).Padding(10).Column(entryCol =>
+                        {
+                            // Fecha de registro como encabezado
+                            entryCol.Item().Text($"Registro: {registro.FechaRegistro.ToString("dd/MM/yyyy HH:mm")}")
+                                .FontSize(14).Bold().FontColor(QuestPDF.Helpers.Colors.Blue.Medium);
+                            
+                            entryCol.Item().LineHorizontal(1).LineColor(QuestPDF.Helpers.Colors.Grey.Lighten2);
+                            
+                            // Métricas en 2 columnas
+                            entryCol.Item().Row(row =>
+                            {
+                                // Columna izquierda
+                                row.RelativeItem().Column(left =>
+                                {
+                                    left.Item().Text("Datos Antropométricos").FontSize(12).Bold().FontColor(QuestPDF.Helpers.Colors.Blue.Darken1);
+                                    left.Item().Text($"IMC: {registro.IMC?.ToString("0.00") ?? "N/A"}").FontSize(10);
+                                    left.Item().Text($"Grasa Corporal: {registro.GrasaCorporal?.ToString("0.0") ?? "N/A"}%").FontSize(10);
+                                    left.Item().Text($"Masa Muscular: {registro.MasaMuscular?.ToString("0.0") ?? "N/A"}%").FontSize(10);
+                                    
+                                    left.Item().PaddingTop(8).Text("Cardio").FontSize(12).Bold().FontColor(QuestPDF.Helpers.Colors.Blue.Darken1);
+                                    left.Item().Text($"Test Cooper: {registro.TestCooper?.ToString("0") ?? "N/A"} m").FontSize(10);
+                                    left.Item().Text($"FC Reposo: {registro.FcReposo?.ToString("0") ?? "N/A"} lpm").FontSize(10);
+                                });
+                                
+                                // Columna derecha
+                                row.RelativeItem().Column(right =>
+                                {
+                                    right.Item().Text("Fuerza y Resistencia").FontSize(12).Bold().FontColor(QuestPDF.Helpers.Colors.Blue.Darken1);
+                                    right.Item().Text($"RM Press Banca: {registro.RmPress?.ToString("0") ?? "N/A"} kg").FontSize(10);
+                                    right.Item().Text($"RM Sentadilla: {registro.RmSentadilla?.ToString("0") ?? "N/A"} kg").FontSize(10);
+                                    right.Item().Text($"RM Peso Muerto: {registro.RmPesoMuerto?.ToString("0") ?? "N/A"} kg").FontSize(10);
+                                    
+                                    right.Item().PaddingTop(8).Text("Otros Indicadores").FontSize(12).Bold().FontColor(QuestPDF.Helpers.Colors.Blue.Darken1);
+                                    right.Item().Text($"Flexibilidad: {registro.TestFlexibilidad?.ToString("0") ?? "N/A"} cm").FontSize(10);
+                                    right.Item().Text($"Salto Vertical: {registro.SaltoVertical?.ToString("0") ?? "N/A"} cm").FontSize(10);
+                                    right.Item().Text($"RPE: {registro.Rpe?.ToString("0") ?? "N/A"}/10").FontSize(10);
+                                });
+                            });
+
+                            // Resumen por sección (si existe)
+                            if (registro.ResumenPorSeccion != null && registro.ResumenPorSeccion.Any())
+                            {
+                                entryCol.Item().PaddingTop(8).Text("Análisis por Sección")
+                                    .FontSize(12).Bold().FontColor(QuestPDF.Helpers.Colors.Blue.Darken1);
+                                
+                                entryCol.Item().PaddingTop(2).Table(table =>
+                                {
+                                    table.ColumnsDefinition(cols =>
+                                    {
+                                        cols.RelativeColumn();
+                                        cols.RelativeColumn(2);
+                                    });
+
+                                    foreach (var seccion in registro.ResumenPorSeccion)
+                                    {
+                                        if (!string.IsNullOrEmpty(seccion.Value))
+                                        {
+                                            table.Cell().Background(QuestPDF.Helpers.Colors.Grey.Lighten3)
+                                                .Padding(5).Text(seccion.Key).FontSize(9).Bold();
+                                            
+                                            table.Cell().Padding(5).Text(seccion.Value).FontSize(9);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                        
+                        // Pequeño espacio entre registros
+                        col.Item().Height(10);
+                    }
+
+                    // Gráficos de evolución
+                    col.Item().PaddingTop(10).Text("Gráficos de Evolución")
+                        .FontSize(16).Bold().FontColor(QuestPDF.Helpers.Colors.Blue.Darken2).Underline();
+
+                    void AddLineChart(string title, IEnumerable<(DateTime Fecha, double? Valor)> puntos)
+                    {
+                        col.Item().PaddingTop(5).Text(title).FontSize(12).Bold();
+
+                        col.Item().AspectRatio(2).Svg(size =>
+                        {
+                            var plt = new ScottPlot.Plot();
+                            // Ordenar puntos por fecha y tomar solo el último valor para cada fecha
+                            var puntosValidos = puntos
+                                .Where(p => p.Valor.HasValue)
+                                .GroupBy(p => p.Fecha.Date) // Agrupar por fecha (sin hora)
+                                .Select(g => g.OrderByDescending(x => x.Fecha).First()) // Tomar el registro más reciente de cada día
+                                .OrderBy(p => p.Fecha)
+                                .ToList();
+
+                            if (puntosValidos.Any())
+                            {
+                                var xs = puntosValidos.Select(p => p.Fecha.ToOADate()).ToArray();
+                                var ys = puntosValidos.Select(p => p.Valor.Value).ToArray();
+
+                                var scatter = plt.Add.Scatter(xs, ys);
+                                scatter.LineWidth = 2;
+                                scatter.LineColor = ScottPlot.Colors.Blue;
+                                scatter.MarkerSize = 5;
+
+                                // Limitar número de etiquetas para evitar solapamiento
+                                int maxTicks = Math.Min(7, puntosValidos.Count);
+                                if (puntosValidos.Count > 0)
+                                {
+                                    var step = puntosValidos.Count <= maxTicks ? 1 : puntosValidos.Count / maxTicks;
+                                    var selectedDates = new List<ScottPlot.Tick>();
+                                    
+                                    // Siempre incluir la primera y última fecha
+                                    selectedDates.Add(new ScottPlot.Tick(
+                                        puntosValidos.First().Fecha.ToOADate(),
+                                        puntosValidos.First().Fecha.ToString("dd/MM")));
+                                    
+                                    // Añadir fechas intermedias espaciadas uniformemente
+                                    for (int i = step; i < puntosValidos.Count - 1; i += step)
+                                    {
+                                        if (selectedDates.Count < maxTicks - 1) // Reservar espacio para la última fecha
+                                        {
+                                            selectedDates.Add(new ScottPlot.Tick(
+                                                puntosValidos[i].Fecha.ToOADate(),
+                                                puntosValidos[i].Fecha.ToString("dd/MM")));
+                                        }
+                                    }
+                                    
+                                    // Añadir la última fecha si no es la misma que la primera
+                                    if (puntosValidos.Count > 1)
+                                    {
+                                        selectedDates.Add(new ScottPlot.Tick(
+                                            puntosValidos.Last().Fecha.ToOADate(),
+                                            puntosValidos.Last().Fecha.ToString("dd/MM")));
+                                    }
+                                    
+                                    plt.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(selectedDates.ToArray());
+                                }
+
+                                plt.Title(title);
+                                plt.Axes.Left.Label.Text = "Valor";
+                            }
+                            else
+                            {
+                                plt.Title($"{title} - Sin datos");
+                            }
+
+                            return plt.GetSvgXml((int)size.Width, (int)size.Height);
+                        });
+                    }
+
+                    // Gráficos seleccionados
+                    AddLineChart("IMC", historial.Select(h => (h.FechaRegistro, (double?)h.IMC)));
+                    AddLineChart("% Grasa Corporal", historial.Select(h => (h.FechaRegistro, (double?)h.GrasaCorporal)));
+                    AddLineChart("RM Press Banca", historial.Select(h => (h.FechaRegistro, (double?)h.RmPress)));
+                    AddLineChart("Test Cooper", historial.Select(h => (h.FechaRegistro, (double?)h.TestCooper)));
+                });
+
+                page.Footer().AlignCenter().Text(txt =>
+                {
+                    txt.Span("Página ").FontSize(9);
+                    txt.CurrentPageNumber().FontSize(9);
+                    txt.Span(" de ").FontSize(9);
+                    txt.TotalPages().FontSize(9);
+                });
+            });
+        })
+        .GeneratePdf(stream);
+
+        return stream.ToArray();
+    }
+
 }

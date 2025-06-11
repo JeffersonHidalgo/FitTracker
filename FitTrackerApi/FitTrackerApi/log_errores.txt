@@ -1025,3 +1025,40 @@
    at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
    at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
    at Data.Repos.ClienteRepository.ObtenerMetricasConAnalisisAsync(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 721
+[2025-06-07 22:51:18] Error en ObtenerHistorialMetricas: System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at MySql.Data.MySqlClient.MySqlDataReader.GetFieldValue(Int32 index, Boolean checkNull)
+   at MySql.Data.MySqlClient.MySqlDataReader.GetDecimal(Int32 i)
+   at Data.Repos.ClienteRepository.ObtenerHistorialMetricas(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 551
+[2025-06-07 22:58:37] Error en ObtenerHistorialMetricas: System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at MySql.Data.MySqlClient.MySqlDataReader.GetFieldValue(Int32 index, Boolean checkNull)
+   at MySql.Data.MySqlClient.MySqlDataReader.GetDecimal(Int32 i)
+   at Data.Repos.ClienteRepository.ObtenerHistorialMetricas(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 551
+[2025-06-07 23:08:54] Error en ObtenerHistorialMetricas: System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at MySql.Data.MySqlClient.MySqlDataReader.GetFieldValue(Int32 index, Boolean checkNull)
+   at MySql.Data.MySqlClient.MySqlDataReader.GetDecimal(Int32 i)
+   at Data.Repos.ClienteRepository.ObtenerHistorialMetricas(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 551
+[2025-06-07 23:09:53] Error en ObtenerMetricasConAnalisisAsync: System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at MySql.Data.MySqlClient.MySqlDataReader.GetFieldValue(Int32 index, Boolean checkNull)
+   at MySql.Data.MySqlClient.MySqlDataReader.GetDecimal(Int32 i)
+   at MySql.Data.MySqlClient.MySqlDataReader.GetDecimal(String column)
+   at Data.Repos.ClienteRepository.ObtenerMetricasConAnalisisAsync(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 674
+[2025-06-07 23:11:16] Error en ObtenerHistorialMetricas: System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at MySql.Data.MySqlClient.MySqlDataReader.GetFieldValue(Int32 index, Boolean checkNull)
+   at MySql.Data.MySqlClient.MySqlDataReader.GetDecimal(Int32 i)
+   at Data.Repos.ClienteRepository.ObtenerHistorialMetricas(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 551
+[2025-06-07 23:12:21] Error en ObtenerHistorialMetricas: System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at MySql.Data.MySqlClient.MySqlDataReader.GetFieldValue(Int32 index, Boolean checkNull)
+   at MySql.Data.MySqlClient.MySqlDataReader.GetDecimal(Int32 i)
+   at Data.Repos.ClienteRepository.ObtenerHistorialMetricas(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 551
+[2025-06-07 23:25:34] Error en ObtenerHistorialMetricas: System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at MySql.Data.MySqlClient.MySqlDataReader.GetFieldValue(Int32 index, Boolean checkNull)
+   at MySql.Data.MySqlClient.MySqlDataReader.GetDecimal(Int32 i)
+   at Data.Repos.ClienteRepository.ObtenerHistorialMetricas(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 551
+[2025-06-07 23:28:13] Error en ObtenerHistorialMetricas: System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at MySql.Data.MySqlClient.MySqlDataReader.GetFieldValue(Int32 index, Boolean checkNull)
+   at MySql.Data.MySqlClient.MySqlDataReader.GetDecimal(Int32 i)
+   at Data.Repos.ClienteRepository.ObtenerHistorialMetricas(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 551
+[2025-06-07 23:28:17] Error en ObtenerHistorialMetricas: System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at MySql.Data.MySqlClient.MySqlDataReader.GetFieldValue(Int32 index, Boolean checkNull)
+   at MySql.Data.MySqlClient.MySqlDataReader.GetDecimal(Int32 i)
+   at Data.Repos.ClienteRepository.ObtenerHistorialMetricas(Int32 codigoCli) in C:\Users\charl\OneDrive\Escritorio\FitTracker\FitTrackerApi\FitTrackerApi.Data\Repos\ClienteRepository.cs:line 551

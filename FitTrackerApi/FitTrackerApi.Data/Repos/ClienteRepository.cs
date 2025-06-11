@@ -550,19 +550,19 @@ namespace Data.Repos
                 {
                     historial.Add(new ClienteMetricasHistorial
                     {
-                        MetricaId = reader.GetInt32("id"),
-                        FechaRegistro = reader.GetDateTime("fecha_registro"),
-                        IMC = reader.GetDecimal("imc"),
-                        GrasaCorporal = reader.GetDecimal("grasa_corporal"),
-                        MasaMuscular = reader.GetDecimal("masa_muscular"),
-                        RmPress = reader.GetDecimal("rm_press"),
-                        RmSentadilla = reader.GetDecimal("rm_sentadilla"),
-                        RmPesoMuerto = reader.GetDecimal("rm_peso_muerto"),
-                        TestCooper = reader.GetDecimal("test_cooper"),
+                        MetricaId =  reader.GetInt32("id"),
+                        FechaRegistro =  reader.GetDateTime("fecha_registro"),
+                        IMC = Convertidor.ToDecimal(reader.GetDecimal("imc")),
+                        GrasaCorporal = Convertidor.ToDecimal(reader.GetDecimal("grasa_corporal")),
+                        MasaMuscular = Convertidor.ToDecimal(reader.GetDecimal("masa_muscular")),
+                        RmPress = Convertidor.ToDecimal(reader.GetDecimal("rm_press")),
+                        RmSentadilla = Convertidor.ToDecimal(reader.GetDecimal("rm_sentadilla")),
+                        RmPesoMuerto = Convertidor.ToDecimal(reader.GetDecimal("rm_peso_muerto")),
+                        TestCooper = Convertidor.ToDecimal(reader.GetDecimal("test_cooper")),
                         FcReposo = reader.GetInt32("fc_reposo"),
-                        TestFlexibilidad = reader.GetDecimal("test_flexibilidad"),
-                        SaltoVertical = reader.GetDecimal("salto_vertical"),
-                        Rpe = reader.GetDecimal("rpe")
+                        TestFlexibilidad = Convertidor.ToDecimal(reader.GetDecimal("test_flexibilidad")),
+                        SaltoVertical = Convertidor.ToDecimal(reader.GetDecimal("salto_vertical")),
+                        Rpe = Convertidor.ToDecimal(reader.GetDecimal("rpe"))
                     });
                 }
             }

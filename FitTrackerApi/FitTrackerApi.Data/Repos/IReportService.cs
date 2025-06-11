@@ -11,5 +11,6 @@ namespace Data.Repos
     public interface IReportService
     {
         Task<byte[]> GenerarReporteMetricasConGraficos(int codigoCliente);
+        Task<byte[]> GenerarReporteHistorialDetalladoAsync(int codigoCliente);
     }
 }

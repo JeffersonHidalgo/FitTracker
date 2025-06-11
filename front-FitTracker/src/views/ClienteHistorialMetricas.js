@@ -5,7 +5,13 @@ import {
 } from "reactstrap";
 import Header from "components/Headers/Header";
 import ClientInfo from "components/MetricsRegistration/ClientInfo";
-import { obtenerHistorialCompletoCliente } from "services/clienteService";
+import { 
+  obtenerHistorialCompletoCliente,
+} from "services/clienteService";
+import {
+  generarReorteHistorial,
+  enviarHistorial
+} from "services/reporteService";
 import { Line } from "react-chartjs-2";
 import Loading from "components/Loading";
 import CustomAlert from "components/CustomAlert";
@@ -88,6 +94,8 @@ const ClienteHistorialMetricas = () => {
   const [animatingMetricCat, setAnimatingMetricCat] = useState(false);
   const [activeHist, setActiveHist] = useState(0);
   const [animatingHist, setAnimatingHist] = useState(false);
+  const [downloadingReport, setDownloadingReport] = useState(false);
+  const [sendingEmail, setSendingEmail] = useState(false);
 
   // Cuando cambia el cliente, consulta el historial
   useEffect(() => {
@@ -293,6 +301,55 @@ const ClienteHistorialMetricas = () => {
     setActiveHist(idx);
   };
 
+  const handleImprimirHistorial = async () => {
+    if (!cliente?.id) return;
+    
+    setDownloadingReport(true);
+    try {
+      const blob = await generarReorteHistorial(cliente.id);
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Historial_Metricas_${cliente.name || cliente.id}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error("Error al generar reporte:", e);
+      setAlert({
+        isOpen: true,
+        color: "danger",
+        message: "No se pudo generar el reporte. Intente más tarde."
+      });
+    } finally {
+      setDownloadingReport(false);
+    }
+  };
+
+  const handleEnviarHistorialEmail = async () => {
+    if (!cliente?.id) return;
+    
+    setSendingEmail(true);
+    try {
+      await enviarHistorial(cliente.id);
+      setAlert({
+        isOpen: true,
+        color: "success",
+        message: "El historial ha sido enviado por correo electrónico correctamente."
+      });
+    } catch (e) {
+      console.error("Error al enviar historial por email:", e);
+      setAlert({
+        isOpen: true,
+        color: "danger",
+        message: "No se pudo enviar el historial por correo. Intente más tarde."
+      });
+    } finally {
+      setSendingEmail(false);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -330,47 +387,87 @@ const ClienteHistorialMetricas = () => {
                 <Col xl="10" lg="10" md="12">
                   <Card>
                     <CardBody>
-                      <Form inline>
-                        <FormGroup className="mr-2 mb-2">
-                          <label className="mr-2 mb-0" style={{ fontSize: 14 }}>Desde</label>
-                          <Input
-                            type="date"
-                            bsSize="sm"
-                            style={{ width: 140, fontSize: 14 }}
-                            value={dateFilter.from}
-                            onChange={e => setDateFilter(f => ({ ...f, from: e.target.value }))}
-                          />
-                        </FormGroup>
-                        <FormGroup className="mr-2 mb-2">
-                          <label className="mr-2 mb-0" style={{ fontSize: 14 }}>Hasta</label>
-                          <Input
-                            type="date"
-                            bsSize="sm"
-                            style={{ width: 140, fontSize: 14 }}
-                            value={dateFilter.to}
-                            onChange={e => setDateFilter(f => ({ ...f, to: e.target.value }))}
-                          />
-                        </FormGroup>
-                        <Button
-                          color="primary"
-                          className="mb-2"
-                          size="sm"
-                          style={{ fontSize: 14, padding: "2px 12px" }}
-                          onClick={() => setDateFilter({ from: "", to: "" })}
-                          outline
-                        >
-                          Limpiar Filtro
-                        </Button>
-                        <Button
-                          color="info"
-                          className="mb-2 ml-2"
-                          size="sm"
-                          style={{ fontSize: 14, padding: "2px 18px" }}
-                          onClick={() => navigate("/admin/metrics-registration")}
-                        >
-                          Registrar Métricas
-                        </Button>
-                      </Form>
+                      <div className="d-flex justify-content-between align-items-center flex-wrap">
+                        <Form inline className="d-flex flex-wrap">
+                          <FormGroup className="mr-2 mb-2">
+                            <label className="mr-2 mb-0" style={{ fontSize: 14 }}>Desde</label>
+                            <Input
+                              type="date"
+                              bsSize="sm"
+                              style={{ width: 140, fontSize: 14 }}
+                              value={dateFilter.from}
+                              onChange={e => setDateFilter(f => ({ ...f, from: e.target.value }))}
+                            />
+                          </FormGroup>
+                          <FormGroup className="mr-2 mb-2">
+                            <label className="mr-2 mb-0" style={{ fontSize: 14 }}>Hasta</label>
+                            <Input
+                              type="date"
+                              bsSize="sm"
+                              style={{ width: 140, fontSize: 14 }}
+                              value={dateFilter.to}
+                              onChange={e => setDateFilter(f => ({ ...f, to: e.target.value }))}
+                            />
+                          </FormGroup>
+                          <Button
+                            color="primary"
+                            className="mb-2"
+                            size="sm"
+                            style={{ fontSize: 14, padding: "2px 12px" }}
+                            onClick={() => setDateFilter({ from: "", to: "" })}
+                            outline
+                          >
+                            Limpiar Filtro
+                          </Button>
+                        </Form>
+                        <div>
+                          <Button
+                            color="info"
+                            className="mb-2 mr-2"
+                            size="sm"
+                            style={{ fontSize: 14, padding: "2px 18px" }}
+                            onClick={() => navigate("/admin/metrics-registration")}
+                          >
+                            Registrar Métricas
+                          </Button>
+                          <Button
+                            color="secondary"
+                            className="mb-2 mr-2"
+                            size="sm"
+                            style={{ fontSize: 14, padding: "2px 18px" }}
+                            onClick={handleEnviarHistorialEmail}
+                            disabled={sendingEmail || historial.length === 0}
+                          >
+                            {sendingEmail ? (
+                              <>
+                                <i className="fa fa-spinner fa-spin mr-1" /> Enviando...
+                              </>
+                            ) : (
+                              <>
+                                <i className="fa fa-envelope mr-1" /> Enviar por Email
+                              </>
+                            )}
+                          </Button>
+                          <Button
+                            color="primary"
+                            className="mb-2"
+                            size="sm"
+                            style={{ fontSize: 14, padding: "2px 18px" }}
+                            onClick={handleImprimirHistorial}
+                            disabled={downloadingReport || historial.length === 0}
+                          >
+                            {downloadingReport ? (
+                              <>
+                                <i className="fa fa-spinner fa-spin mr-1" /> Generando...
+                              </>
+                            ) : (
+                              <>
+                                <i className="fa fa-print mr-1" /> Imprimir Historial
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      </div>
                     </CardBody>
                   </Card>
                 </Col>

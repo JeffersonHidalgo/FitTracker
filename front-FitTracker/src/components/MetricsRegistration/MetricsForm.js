@@ -90,6 +90,12 @@ const MetricsForm = ({ codigoCli, onResult, result }) => {
   const safeInt = v => v === "" || v === undefined || isNaN(Number(v)) ? null : parseInt(v, 10);
 
   const handleAnalizar = async () => {
+    // Si ya hay un resultado, no permitas analizar de nuevo
+    if (result?.codigoCli) {
+      showAlert("info", "Ya se realizó un análisis. Pulse 'Nuevo análisis' para realizar otro.");
+      return;
+    }
+    
     setLoading(true);
     try {
       const data = {
@@ -119,12 +125,26 @@ const MetricsForm = ({ codigoCli, onResult, result }) => {
         pruebaAgilidad: safeDecimal(agilityTest),
         rpe: safeDecimal(rpe)
       };
-      // console.log("JSON enviado:", data);
-      const result = await request("post", "cliente/metricas/analizar", data);
+      
+      // Calcula el IMC localmente (como respaldo)
+      const pesoEnKg = safeDecimal(toMetric(weight, "kg"));
+      const alturaEnM = safeDecimal(toMetric(height, "cm")) / 100;
+      const imcCalculado = (pesoEnKg && alturaEnM) ? (pesoEnKg / (alturaEnM * alturaEnM)).toFixed(2) : null;
+      
+      // Actualiza el IMC localmente antes de la llamada
+      if (imcCalculado) {
+        setBmi(imcCalculado);
+      }
 
-      // Si la API devuelve el IMC calculado, actualiza el campo en el formulario
-      if (result && result.metricas && result.metricas.imc !== undefined && result.metricas.imc !== null) {
+      // Llamada al backend
+      const result = await request("post", "cliente/metricas/analizar", data);
+      console.log("Respuesta del análisis:", result); // Para depuración
+
+      // Intenta actualizar con el IMC del backend
+      if (result?.metricas?.imc) {
         setBmi(result.metricas.imc.toFixed(2));
+      } else if (result?.imc) {
+        setBmi(result.imc.toFixed(2));
       }
 
       if (onResult) onResult(result);
@@ -186,21 +206,12 @@ const MetricsForm = ({ codigoCli, onResult, result }) => {
 
   // Define los campos obligatorios principales
   const REQUIRED_FIELDS = [
-    "weight",
-    "height",
+    "weight", 
+    "height", 
     "bodyFat",
-    "muscleMass",
-    "waist",
-    "hip",
-    "arms",
     "rmPress",
-    "rmSquat",
-    "rmDeadlift",
-    "cooperTest",
-    "restingHeartRate",
-    "flexibilityTest",
-    "verticalJump",
-    "rpe"
+    "rmSquat", 
+    "rmDeadlift"
   ];
 
   // Función para validar campos requeridos
@@ -225,6 +236,19 @@ const MetricsForm = ({ codigoCli, onResult, result }) => {
       }[field];
       return value !== "" && value !== undefined && !isNaN(Number(value));
     });
+  };
+
+  // Utilidad para mostrar campos faltantes
+  const getMissingFields = () => {
+    const missing = REQUIRED_FIELDS.filter(field => {
+      const value = {
+        weight, height, bodyFat, muscleMass, waist, hip, arms,
+        rmPress, rmSquat, rmDeadlift, cooperTest, restingHeartRate,
+        flexibilityTest, verticalJump, rpe
+      }[field];
+      return value === "" || value === undefined || isNaN(Number(value));
+    });
+    return missing;
   };
 
   // Actualiza el IMC si cambia el resultado externo (por ejemplo, al consultar un cliente)
@@ -1012,14 +1036,42 @@ const MetricsForm = ({ codigoCli, onResult, result }) => {
               </Form>
             </TabPane>
           </TabContent>
+          {/* Mensaje de campos requeridos faltantes */}
+          {!isRequiredFieldsFilled() && (
+            <div className="text-center mt-3 mb-2">
+              <small className="text-danger">
+                Por favor complete los siguientes campos requeridos:
+                {getMissingFields().map(field => {
+                  const labels = {
+                    weight: "Peso", height: "Altura", bodyFat: "% Grasa",
+                    rmPress: "Press Banca", rmSquat: "Sentadilla", rmDeadlift: "Peso Muerto"
+                  };
+                  return ` ${labels[field]},`;
+                })}
+              </small>
+            </div>
+          )}
           <div className="text-center mt-4">
             <Button
               color="primary"
               onClick={handleAnalizar}
-              disabled={loading || !isRequiredFieldsFilled()}
+              disabled={loading || !isRequiredFieldsFilled() || result?.codigoCli}
             >
-              {loading ? "Analizando..." : "Analizar"}
+              {loading ? "Analizando..." : result?.codigoCli ? "Análisis completado" : "Analizar"}
             </Button>
+            
+            {result?.codigoCli && (
+              <Button
+                color="info"
+                className="ml-2"
+                onClick={() => {
+                  if (onResult) onResult(null);
+                  showAlert("info", "Puede realizar un nuevo análisis");
+                }}
+              >
+                <i className="ni ni-refresh-01 mr-1"></i> Nuevo análisis
+              </Button>
+            )}
           </div>
         </CardBody>
       </Card>

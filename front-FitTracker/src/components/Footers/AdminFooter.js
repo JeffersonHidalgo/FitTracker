@@ -28,7 +28,7 @@ const Footer = () => {
                 href="https://www.fittracker.com/about"
                 target="_blank"
               >
-                About Us
+                Nosotros
               </NavLink>
             </NavItem>
 
@@ -37,7 +37,7 @@ const Footer = () => {
                 href="https://www.fittracker.com/blog"
                 target="_blank"
               >
-                Blog
+                Blogs
               </NavLink>
             </NavItem>
 
@@ -46,7 +46,7 @@ const Footer = () => {
                 href="https://www.fittracker.com/contact"
                 target="_blank"
               >
-                Contact
+                Contacto
               </NavLink>
             </NavItem>
           </Nav>

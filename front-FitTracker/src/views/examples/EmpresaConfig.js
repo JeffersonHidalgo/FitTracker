@@ -288,7 +288,7 @@ const EmpresaConfig = () => {
                         <Row>
                           <Col md="12">
                             <FormGroup>
-                              <Label>Nombre de la Empresa *</Label>
+                              <Label>Nombre de la Empresa <span style={{ color: 'red' }}>*</span></Label>
                               <Input
                                 type="text"
                                 value={form.nombreEmpresa}
@@ -303,7 +303,7 @@ const EmpresaConfig = () => {
                         <Row>
                           <Col md="6">
                             <FormGroup>
-                              <Label>Dirección *</Label>
+                              <Label>Dirección <span style={{ color: 'red' }}>*</span></Label>
                               <Input
                                 type="text"
                                 value={form.direccion}
@@ -316,7 +316,7 @@ const EmpresaConfig = () => {
                           </Col>
                           <Col md="6">
                             <FormGroup>
-                              <Label>Ciudad *</Label>
+                              <Label>Ciudad <span style={{ color: 'red' }}>*</span></Label>
                               <Input
                                 type="text"
                                 value={form.ciudad}
@@ -331,7 +331,7 @@ const EmpresaConfig = () => {
                         <Row>
                           <Col md="4">
                             <FormGroup>
-                              <Label>Provincia *</Label>
+                              <Label>Provincia <span style={{ color: 'red' }}>*</span></Label>
                               <Input
                                 type="text"
                                 value={form.provincia}
@@ -344,7 +344,7 @@ const EmpresaConfig = () => {
                           </Col>
                           <Col md="4">
                             <FormGroup>
-                              <Label>Código Postal *</Label>
+                              <Label>Código Postal <span style={{ color: 'red' }}>*</span></Label>
                               <Input
                                 type="text"
                                 value={form.codigoPostal}
@@ -357,7 +357,7 @@ const EmpresaConfig = () => {
                           </Col>
                           <Col md="4">
                             <FormGroup>
-                              <Label>País *</Label>
+                              <Label>País <span style={{ color: 'red' }}>*</span></Label>
                               <Input
                                 type="text"
                                 value={form.pais}
@@ -372,7 +372,7 @@ const EmpresaConfig = () => {
                         <Row>
                           <Col md="6">
                             <FormGroup>
-                              <Label>Teléfono *</Label>
+                              <Label>Teléfono <span style={{ color: 'red' }}>*</span></Label>
                               <Input
                                 type="text"
                                 value={form.telefono}
@@ -385,7 +385,7 @@ const EmpresaConfig = () => {
                           </Col>
                           <Col md="6">
                             <FormGroup>
-                              <Label>Email *</Label>
+                              <Label>Email <span style={{ color: 'red' }}>*</span></Label>
                               <Input
                                 type="email"
                                 value={form.email}
@@ -407,7 +407,7 @@ const EmpresaConfig = () => {
                     <Row>
                       <Col md="6">
                         <FormGroup>
-                          <Label>Servidor SMTP *</Label>
+                          <Label>Servidor SMTP <span style={{ color: 'red' }}>*</span></Label>
                           <Input
                             type="text"
                             value={form.smtpServidor}
@@ -420,7 +420,7 @@ const EmpresaConfig = () => {
                       </Col>
                       <Col md="3">
                         <FormGroup>
-                          <Label>Puerto *</Label>
+                          <Label>Puerto <span style={{ color: 'red' }}>*</span></Label>
                           <Input
                             type="number"
                             value={form.smtpPuerto}
@@ -449,7 +449,7 @@ const EmpresaConfig = () => {
                     <Row>
                       <Col md="6">
                         <FormGroup>
-                          <Label>Usuario SMTP *</Label>
+                          <Label>Usuario SMTP <span style={{ color: 'red' }}>*</span></Label>
                           <Input
                             type="text"
                             value={form.smtpUsuario}
@@ -462,7 +462,7 @@ const EmpresaConfig = () => {
                       </Col>
                       <Col md="6">
                         <FormGroup>
-                          <Label>Contraseña SMTP *</Label>
+                          <Label>Contraseña SMTP <span style={{ color: 'red' }}>*</span></Label>
                           <Input
                             type="password"
                             value={form.smtpPassword}

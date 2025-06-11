@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Badge, Card, CardBody, Spinner, Nav, NavItem, NavLink, TabContent, TabPane, Button } from "reactstrap";
 import classnames from "classnames";
 import { Bar, Line } from "react-chartjs-2";
-import { obtenerHistorialMetricasCliente, generarReporteMetricas } from "../../services/clienteService";
+import { obtenerHistorialMetricasCliente } from "../../services/clienteService";
+import { generarReporteMetricas, enviarEmailMetricas } from "../../services/reporteService";
+import CustomAlert from "../../components/CustomAlert"; // Agrega esta importación
 
 // Valores promedio de referencia (puedes ajustar según tu criterio o fuentes)
 const REFERENCIAS = {
@@ -26,6 +28,19 @@ const ResultsSection = ({ result }) => {
   const [activeIndicadorGrupo, setActiveIndicadorGrupo] = useState(0);
   const [activeIndicadorChart, setActiveIndicadorChart] = useState(0);
   const [downloading, setDownloading] = useState(false);
+  const [sendingEmail, setSendingEmail] = useState(false);
+  
+  // Estado para alertas
+  const [alert, setAlert] = useState({
+    isOpen: false,
+    message: "",
+    color: "success"
+  });
+  
+  // Función para cerrar alerta
+  const closeAlert = () => {
+    setAlert({ ...alert, isOpen: false });
+  };
 
   useEffect(() => {
     const fetchHistorial = async () => {
@@ -61,9 +76,34 @@ const ResultsSection = ({ result }) => {
       a.remove();
       window.URL.revokeObjectURL(url);
     } catch (e) {
-      alert("No se pudo generar el reporte. Intente más tarde.");
+      setAlert({
+        isOpen: true,
+        message: "No se pudo generar el reporte. Intente más tarde.",
+        color: "danger"
+      });
     } finally {
       setDownloading(false);
+    }
+  };
+
+  const handleEnviarEmail = async () => {
+    if (!result?.codigoCli) return;
+    setSendingEmail(true);
+    try {
+      await enviarEmailMetricas(result.codigoCli);
+      setAlert({
+        isOpen: true,
+        message: "Reporte enviado por correo electrónico correctamente",
+        color: "success"
+      });
+    } catch (e) {
+      setAlert({
+        isOpen: true,
+        message: "No se pudo enviar el reporte por correo. Intente más tarde.",
+        color: "danger"
+      });
+    } finally {
+      setSendingEmail(false);
     }
   };
 
@@ -245,7 +285,33 @@ const ResultsSection = ({ result }) => {
     <section>
       <Card>
         <CardBody>
+          {/* Alerta personalizada */}
+          {alert.isOpen && (
+            <CustomAlert
+              type={alert.color}
+              message={alert.message}
+              onClose={closeAlert}
+              dismissible
+            />
+          )}
+          
           <div className="d-flex justify-content-end mb-3">
+            <Button 
+              color="info" 
+              onClick={handleEnviarEmail} 
+              disabled={sendingEmail || !result?.codigoCli}
+              className="mr-2"
+            >
+              {sendingEmail ? (
+                <>
+                  <i className="fa fa-spinner fa-spin mr-2" /> Enviando...
+                </>
+              ) : (
+                <>
+                  <i className="fa fa-envelope mr-2" /> Enviar por Email
+                </>
+              )}
+            </Button>
             <Button color="primary" onClick={handleImprimirReporte} disabled={downloading}>
               {downloading ? (
                 <>

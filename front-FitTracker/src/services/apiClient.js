@@ -23,6 +23,7 @@ export const request = async (method, endpoint, data = {}, config = {}) => {
     return response.data;
   } catch (error) {
     console.error(`API ${method.toUpperCase()} ${endpoint} error:`, error);
-    throw error.response || error;
+    // Lanzar el error original, no solo la respuesta
+    throw error; // Cambiado de "throw error.response || error"
   }
 };

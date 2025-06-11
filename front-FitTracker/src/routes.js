@@ -1,10 +1,6 @@
 import Index from "views/Index.js";
 import EmpresaConfig from "views/examples/EmpresaConfig.js";
-import Maps from "views/examples/Maps.js";
-import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
-import Tables from "views/examples/Tables.js";
-import Icons from "views/examples/Icons.js";
 import UserPermissionsNew from "views/user-permissons.js";
 import ClientForm from "views/ClientForm.js";
 import MetricsRegistration from "views/examples/MetricsRegistration.js";
@@ -19,22 +15,7 @@ var routes = [
     icon: "ni ni-tv-2 text-primary",
     component: <Index />,
     layout: "/admin",
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: <Icons />,
-    layout: "/admin",
-    invisible: true,
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: <Maps />,
-    layout: "/admin",
-    invisible: true,
+    description: "Panel principal con estadísticas, gráficos e indicadores de rendimiento del sistema",
   },
   {
     path: "/empresa-config",
@@ -44,27 +25,11 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <Tables />,
-    layout: "/admin",
-    invisible: true,
-  },
-  {
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
     component: <Login />,
     layout: "/auth",
-  },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: <Register />,
-    layout: "/auth",
-    invisible: true,
   },
   {
     path: "/user-permissions",
@@ -75,17 +40,19 @@ var routes = [
   },
   {
     path: "/client-form",
-    name: "Gestión de Cliente",
+    name: "Gestión de Clientes",
     icon: "ni ni-single-02 text-green",
     component: <ClientForm />,
     layout: "/admin",
+    description: "Administración completa de perfiles de clientes, datos personales y seguimiento",
   },
   {
     path: "/metrics-registration",
-    name: "Metrics Registration",
+    name: "Registro de Métricas",
     icon: "ni ni-ruler-pencil text-green",
     component: <MetricsRegistration />,
     layout: "/admin",
+    description: "Captura y análisis de mediciones físicas, rendimiento y progreso del cliente",
   },
   {
     path: "/clientes/historial-metricas",

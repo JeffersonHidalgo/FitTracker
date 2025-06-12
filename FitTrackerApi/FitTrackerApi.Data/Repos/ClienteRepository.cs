@@ -401,7 +401,6 @@ namespace Data.Repos
                 if (metricas.Peso.HasValue && metricas.Altura.HasValue && metricas.Altura > 0)
                 {
                     decimal alturaEnMetros = metricas.Altura.Value / 100.0m;
-
                     metricas.IMC = Math.Round(metricas.Peso.Value / (alturaEnMetros * alturaEnMetros), 2);
                 }
                 else
@@ -413,30 +412,30 @@ namespace Data.Repos
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("prm_CodigoCli", metricas.CodigoCli);
-                    cmd.Parameters.AddWithValue("prm_SistemaMetrico", metricas.SistemaMetrico);
-                    cmd.Parameters.AddWithValue("prm_Peso", metricas.Peso);
-                    cmd.Parameters.AddWithValue("prm_Altura", metricas.Altura);
-                    cmd.Parameters.AddWithValue("prm_Imc", metricas.IMC);
-                    cmd.Parameters.AddWithValue("prm_GrasaCorporal", metricas.GrasaCorporal);
-                    cmd.Parameters.AddWithValue("prm_MasaMuscular", metricas.MasaMuscular);
-                    cmd.Parameters.AddWithValue("prm_Cintura", metricas.Cintura);
-                    cmd.Parameters.AddWithValue("prm_Caderas", metricas.Caderas);
-                    cmd.Parameters.AddWithValue("prm_Brazos", metricas.Brazos);
-                    cmd.Parameters.AddWithValue("prm_RmPress", metricas.RmPress);
-                    cmd.Parameters.AddWithValue("prm_RmSentadilla", metricas.RmSentadilla);
-                    cmd.Parameters.AddWithValue("prm_RmPesoMuerto", metricas.RmPesoMuerto);
-                    cmd.Parameters.AddWithValue("prm_Repeticiones", metricas.Repeticiones);
-                    cmd.Parameters.AddWithValue("prm_VelocidadEjecucion", metricas.VelocidadEjecucion);
-                    cmd.Parameters.AddWithValue("prm_TestCooper", metricas.TestCooper);
-                    cmd.Parameters.AddWithValue("prm_FcReposo", metricas.FcReposo);
-                    cmd.Parameters.AddWithValue("prm_FcRecuperacion", metricas.FcRecuperacion);
-                    cmd.Parameters.AddWithValue("prm_DuracionAerobica", metricas.DuracionAerobica);
-                    cmd.Parameters.AddWithValue("prm_TestFlexibilidad", metricas.TestFlexibilidad);
-                    cmd.Parameters.AddWithValue("prm_RangoMovimiento", metricas.RangoMovimiento);
-                    cmd.Parameters.AddWithValue("prm_SaltoVertical", metricas.SaltoVertical);
-                    cmd.Parameters.AddWithValue("prm_VelocidadSprint", metricas.VelocidadSprint);
-                    cmd.Parameters.AddWithValue("prm_PruebaAgilidad", metricas.PruebaAgilidad);
-                    cmd.Parameters.AddWithValue("prm_Rpe", metricas.Rpe);
+                    cmd.Parameters.AddWithValue("prm_SistemaMetrico", metricas.SistemaMetrico ?? "M"); // Default a métrico si es null
+                    cmd.Parameters.AddWithValue("prm_Peso", metricas.Peso ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_Altura", metricas.Altura ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_Imc", metricas.IMC ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_GrasaCorporal", metricas.GrasaCorporal ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_MasaMuscular", metricas.MasaMuscular ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_Cintura", metricas.Cintura ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_Caderas", metricas.Caderas ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_Brazos", metricas.Brazos ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_RmPress", metricas.RmPress ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_RmSentadilla", metricas.RmSentadilla ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_RmPesoMuerto", metricas.RmPesoMuerto ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_Repeticiones", metricas.Repeticiones ?? 0);
+                    cmd.Parameters.AddWithValue("prm_VelocidadEjecucion", metricas.VelocidadEjecucion ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_TestCooper", metricas.TestCooper ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_FcReposo", metricas.FcReposo ?? 0);
+                    cmd.Parameters.AddWithValue("prm_FcRecuperacion", metricas.FcRecuperacion ?? 0);
+                    cmd.Parameters.AddWithValue("prm_DuracionAerobica", metricas.DuracionAerobica ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_TestFlexibilidad", metricas.TestFlexibilidad ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_RangoMovimiento", metricas.RangoMovimiento ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_SaltoVertical", metricas.SaltoVertical ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_VelocidadSprint", metricas.VelocidadSprint ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_PruebaAgilidad", metricas.PruebaAgilidad ?? 0m);
+                    cmd.Parameters.AddWithValue("prm_Rpe", metricas.Rpe ?? 0m);
 
                     using var reader = await cmd.ExecuteReaderAsync();
                     if (await reader.ReadAsync())
@@ -450,12 +449,20 @@ namespace Data.Repos
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("prm_CodigoCli", metricas.CodigoCli);
                     cmd.Parameters.AddWithValue("prm_MetricaId", metricaId);
-                    cmd.Parameters.AddWithValue("prm_Antropometria", seccionAnalisis.GetValueOrDefault("Antropometria"));
-                    cmd.Parameters.AddWithValue("prm_FuerzaResistencia", seccionAnalisis.GetValueOrDefault("FuerzaResistencia"));
-                    cmd.Parameters.AddWithValue("prm_Cardio", seccionAnalisis.GetValueOrDefault("Cardio"));
-                    cmd.Parameters.AddWithValue("prm_Flexibilidad", seccionAnalisis.GetValueOrDefault("Flexibilidad"));
-                    cmd.Parameters.AddWithValue("prm_PotenciaAgilidad", seccionAnalisis.GetValueOrDefault("PotenciaAgilidad"));
-                    cmd.Parameters.AddWithValue("prm_EsfuerzoPercibido", seccionAnalisis.GetValueOrDefault("EsfuerzoPercibido"));
+                    
+                    // Evitar valores nulos usando string vacío como valor por defecto
+                    cmd.Parameters.AddWithValue("prm_Antropometria", 
+                        seccionAnalisis.GetValueOrDefault("Antropometria") ?? string.Empty);
+                    cmd.Parameters.AddWithValue("prm_FuerzaResistencia", 
+                        seccionAnalisis.GetValueOrDefault("FuerzaResistencia") ?? string.Empty);
+                    cmd.Parameters.AddWithValue("prm_Cardio", 
+                        seccionAnalisis.GetValueOrDefault("Cardio") ?? string.Empty);
+                    cmd.Parameters.AddWithValue("prm_Flexibilidad", 
+                        seccionAnalisis.GetValueOrDefault("Flexibilidad") ?? string.Empty);
+                    cmd.Parameters.AddWithValue("prm_PotenciaAgilidad", 
+                        seccionAnalisis.GetValueOrDefault("PotenciaAgilidad") ?? string.Empty);
+                    cmd.Parameters.AddWithValue("prm_EsfuerzoPercibido", 
+                        seccionAnalisis.GetValueOrDefault("EsfuerzoPercibido") ?? string.Empty);
 
                     await cmd.ExecuteNonQueryAsync();
                 }

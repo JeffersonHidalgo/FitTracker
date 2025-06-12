@@ -26,6 +26,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
   
   // Construir la URL del logo
@@ -33,6 +34,7 @@ const Login = () => {
     ? `${API_ROOT}/${empresaConfig.logo.replace(/^\/?/, "")}`
     : null;
   
+  // Mejorar el manejo de la respuesta para almacenar datos consistentes
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!username || !password) {
@@ -45,12 +47,16 @@ const Login = () => {
     
     try {
       const response = await login(username, password);
-      // Guardar datos del usuario en localStorage
- if (response && response.usuario) {
-    localStorage.setItem('user', JSON.stringify(response));
-  } else {
-    localStorage.setItem('user', JSON.stringify(response));
-  }      navigate("/admin/index");
+      
+      // Guardar datos del usuario de manera consistente
+      if (rememberMe) {
+        localStorage.setItem('user', JSON.stringify(response));
+      } else {
+        sessionStorage.setItem('user', JSON.stringify(response));
+      }
+      
+      // Verificar si el usuario tiene acceso a dashboard antes de redirigir
+      navigate("/admin/index");
     } catch (err) {
       if (err.response) {
         if (err.response.status === 429) {
@@ -73,54 +79,62 @@ const Login = () => {
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
           <CardBody className="px-lg-5 py-lg-5">
-            <div className="text-center mb-4">
-              {loading ? (
-                <Spinner color="primary" />
-              ) : logoUrl ? (
-                <img 
-                  src={logoUrl} 
-                  alt={empresaConfig.nombreEmpresa} 
-                  style={{ 
-                    maxHeight: '80px', 
-                    maxWidth: '100%', 
-                    marginBottom: '15px' 
-                  }} 
-                />
-              ) : (
-                <small className="text-muted">
-                  Inicia sesión en {empresaConfig.nombreEmpresa || "FitTracker"}
-                </small>
-              )}
-            </div>
-            
-            <Form role="form" onSubmit={handleLogin}>
+            <Form role="form" onSubmit={handleLogin} aria-labelledby="login-heading">
+              <div id="login-heading" className="text-center mb-4">
+                <h2 className="mb-3">Iniciar Sesión</h2>
+                {loading ? (
+                  <Spinner color="primary" />
+                ) : logoUrl ? (
+                  <img 
+                    src={logoUrl} 
+                    alt={empresaConfig.nombreEmpresa} 
+                    style={{ 
+                      maxHeight: '80px', 
+                      maxWidth: '100%', 
+                      marginBottom: '15px' 
+                    }} 
+                  />
+                ) : (
+                  <small className="text-muted">
+                    Inicia sesión en {empresaConfig.nombreEmpresa || "FitTracker"}
+                  </small>
+                )}
+              </div>
+              
               <FormGroup className="mb-3">
+                <label htmlFor="username" className="sr-only">Usuario</label>
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-email-83" />
+                      <i className="ni ni-email-83" aria-hidden="true" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                    id="username"
                     placeholder="Usuario"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    required
                   />
                 </InputGroup>
               </FormGroup>
+              
               <FormGroup>
+                <label htmlFor="password" className="sr-only">Contraseña</label>
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-lock-circle-open" />
+                      <i className="ni ni-lock-circle-open" aria-hidden="true" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                    id="password"
                     placeholder="Contraseña"
                     type="password"
                     autoComplete="current-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                 </InputGroup>
               </FormGroup>
@@ -129,6 +143,8 @@ const Login = () => {
                   className="custom-control-input"
                   id="customCheckLogin"
                   type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
                 />
                 <label
                   className="custom-control-label"

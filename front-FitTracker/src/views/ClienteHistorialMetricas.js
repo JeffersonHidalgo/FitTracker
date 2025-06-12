@@ -366,6 +366,11 @@ const ClienteHistorialMetricas = () => {
           <Row className="justify-content-center">
             <Col xl="10" lg="10" md="12">
               <Card className="shadow mb-4">
+                <CardHeader className="bg-transparent">
+  <div className="d-flex justify-content-between align-items-center">
+    <h3 className="mb-0" style={{ color: "#4A628A" }}>Historial de Cliente</h3>
+  </div>
+</CardHeader>
                 <CardBody>
                   <ClientInfo
                     selectedCliente={cliente}

@@ -46,6 +46,7 @@
     "bootstrap": "4.6.2",
     "chart.js": "^2.9.4",
     "classnames": "2.3.2",
+    "file-saver": "^2.0.5",
     "fit-tracker": "file:",
     "leaflet": "^1.9.4",
     "moment": "2.29.4",
@@ -62,7 +63,8 @@
     "react-toastify": "^11.0.5",
     "reactstrap": "8.10.0",
     "recharts": "^2.15.3",
-    "sass": "1.69.5"
+    "sass": "1.69.5",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

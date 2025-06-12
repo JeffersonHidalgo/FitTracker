@@ -162,15 +162,9 @@ const RecomendacionAdmin = () => {
               <Card className="shadow">
                 <CardBody>
                   <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h2
-                      style={{
-                        color: "#344767",
-                        fontWeight: 700,
-                        marginBottom: 0,
-                      }}
-                    >
+                    <h3 className="mb-0" style={{ color: "#4A628A" }}>
                       Mantenimiento de Recomendaciones
-                    </h2>
+                    </h3>
                     <Button color="primary" onClick={handleCrear}>
                       Crear nueva recomendación
                     </Button>

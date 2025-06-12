@@ -14,8 +14,8 @@ const initialForm = {
   accesos: [],
 };
 
-const PAGE_SIZE_ROLES = 8;
-const PAGE_SIZE_PANTALLAS = 8;
+const PAGE_SIZE_ROLES = 15;
+const PAGE_SIZE_PANTALLAS = 15; // Aumentado de 8 a 15 para mostrar más pantallas por página
 
 const RoleManagement = () => {
   const [roles, setRoles] = useState([]);
@@ -318,7 +318,7 @@ const RoleManagement = () => {
                         />
                         <div
                           style={{
-                            maxHeight: 220,
+                            maxHeight: 320, // Aumentar altura máxima para mostrar más pantallas
                             overflowY: "auto",
                             border: "1px solid #e9ecef",
                             borderRadius: 6,
@@ -328,7 +328,7 @@ const RoleManagement = () => {
                           <Table size="sm" bordered responsive className="mb-0">
                             <thead className="thead-light">
                               <tr>
-                                <th style={{ width: 40 }}></th>
+                                <th style={{ width: 60, textAlign: 'center' }}>Acceso</th> {/* Aumentar ancho y centrar texto */}
                                 <th>Nombre</th>
                                 <th>Descripción</th>
                               </tr>
@@ -341,21 +341,18 @@ const RoleManagement = () => {
                               ) : (
                                 paginatedPantallas.map(p => (
                                   <tr key={p.id}>
-                                    <td className="text-center align-middle">
-                                      <Label
-                                        for={`pantalla-${p.id}`}
-                                        className="mb-0 d-flex align-items-center justify-content-center"
-                                        style={{ width: "100%", cursor: "pointer", minHeight: 24 }}
-                                      >
-                                        <Input
+                                    <td className="text-center align-middle" style={{ padding: '0.5rem' }}> {/* Añadir padding consistente */}
+                                      <div className="custom-control custom-checkbox">
+                                        <input
                                           type="checkbox"
+                                          className="custom-control-input"
                                           checked={!!form.accesos.find(a => a.pantallaId === p.id && a.acceso === "S")}
                                           onChange={() => handleAccesoChange(p.id)}
                                           id={`pantalla-${p.id}`}
                                           disabled={saving}
-                                          style={{ margin: 0 }}
                                         />
-                                      </Label>
+                                        <label className="custom-control-label" htmlFor={`pantalla-${p.id}`}></label>
+                                      </div>
                                     </td>
                                     <td className="align-middle">
                                       <Label
@@ -374,26 +371,42 @@ const RoleManagement = () => {
                             )}
                             </tbody>
                           </Table>
+                          {/* Corregir la paginación para que no reinicie la pantalla */}
                           {totalPagesPantallas > 1 && (
                             <Pagination className="justify-content-center mt-2">
                               <PaginationItem disabled={currentPagePantallas === 1}>
-                                <PaginationLink first onClick={() => setCurrentPagePantallas(1)} />
+                                <PaginationLink first onClick={(e) => {
+                                  e.preventDefault();
+                                  setCurrentPagePantallas(1);
+                                }} />
                               </PaginationItem>
                               <PaginationItem disabled={currentPagePantallas === 1}>
-                                <PaginationLink previous onClick={() => setCurrentPagePantallas(currentPagePantallas - 1)} />
+                                <PaginationLink previous onClick={(e) => {
+                                  e.preventDefault();
+                                  setCurrentPagePantallas(currentPagePantallas - 1);
+                                }} />
                               </PaginationItem>
                               {Array.from({ length: totalPagesPantallas }, (_, i) => (
                                 <PaginationItem active={currentPagePantallas === i + 1} key={i}>
-                                  <PaginationLink onClick={() => setCurrentPagePantallas(i + 1)}>
+                                  <PaginationLink onClick={(e) => {
+                                    e.preventDefault();
+                                    setCurrentPagePantallas(i + 1);
+                                  }}>
                                     {i + 1}
                                   </PaginationLink>
                                 </PaginationItem>
                               ))}
                               <PaginationItem disabled={currentPagePantallas === totalPagesPantallas}>
-                                <PaginationLink next onClick={() => setCurrentPagePantallas(currentPagePantallas + 1)} />
+                                <PaginationLink next onClick={(e) => {
+                                  e.preventDefault();
+                                  setCurrentPagePantallas(currentPagePantallas + 1);
+                                }} />
                               </PaginationItem>
                               <PaginationItem disabled={currentPagePantallas === totalPagesPantallas}>
-                                <PaginationLink last onClick={() => setCurrentPagePantallas(totalPagesPantallas)} />
+                                <PaginationLink last onClick={(e) => {
+                                  e.preventDefault();
+                                  setCurrentPagePantallas(totalPagesPantallas);
+                                }} />
                               </PaginationItem>
                             </Pagination>
                           )}

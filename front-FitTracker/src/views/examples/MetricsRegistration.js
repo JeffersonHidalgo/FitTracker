@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Card, CardBody, CardHeader } from "reactstrap";
 import Header from "components/Headers/Header.js";
 import ClientInfo from "components/MetricsRegistration/ClientInfo";
 import MetricsForm from "components/MetricsRegistration/MetricsForm";
@@ -14,8 +14,6 @@ const MetricsRegistration = () => {
     setResult(null);
   };
 
-  console.log(selectedCliente);
-
   return (
     <>
       <Header />
@@ -23,21 +21,35 @@ const MetricsRegistration = () => {
         <Container className="mt--5" fluid>
           <Row className="justify-content-center">
             <Col xl="10" lg="12">
-              <ClientInfo
-                selectedCliente={selectedCliente}
-                setSelectedCliente={setSelectedCliente}
-                onLimpiar={handleLimpiar}
-              />
+              <Card className="shadow mb-4">
+                <CardHeader className="bg-transparent">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <h3 className="mb-0" style={{ color: "#4A628A" }}>
+                      Registro de Métricas
+                    </h3>
+                  </div>
+                </CardHeader>
+                <CardBody>
+                  <ClientInfo
+                    selectedCliente={selectedCliente}
+                    setSelectedCliente={setSelectedCliente}
+                    onLimpiar={handleLimpiar}
+                  />
+                </CardBody>
+              </Card>
             </Col>
           </Row>
-          <Row className="justify-content-center mt-4">
+
+          <Row className="justify-content-center">
             <Col xl="10" lg="12">
               {selectedCliente && selectedCliente.estado === "A" ? (
-                <MetricsForm
-                  codigoCli={selectedCliente?.id || selectedCliente?.codigoCli}
-                  onResult={setResult}
-                  result={result}
-                />
+                
+                    <MetricsForm
+                      codigoCli={selectedCliente?.id || selectedCliente?.codigoCli}
+                      onResult={setResult}
+                      result={result}
+                    />
+                  
               ) : selectedCliente ? (
                 <div className="alert alert-warning text-center">
                   El cliente seleccionado no está activo. No es posible registrar
@@ -46,9 +58,14 @@ const MetricsRegistration = () => {
               ) : null}
             </Col>
           </Row>
-          <Row className="justify-content-center mt-4">
+
+          <Row className="justify-content-center">
             <Col xl="10" lg="12">
-              <ResultsSection result={result} />
+              {result && (
+                
+                    <ResultsSection result={result} />
+                  
+              )}
             </Col>
           </Row>
         </Container>

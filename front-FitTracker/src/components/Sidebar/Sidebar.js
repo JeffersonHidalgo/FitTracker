@@ -86,8 +86,18 @@ const Sidebar = (props) => {
     },
     reportes: {
       name: "Reportes",
-      icon: "ni ni-chart-pie-35 text-danger", // Icono adecuado para reportes
-      items: [] // Vacío por ahora
+      icon: "ni ni-chart-pie-35 text-danger",
+      items: [
+        "/reportes/clientes-por-estado", 
+        "/reportes/clientes-nuevos", 
+        "/reportes/clientes-sin-actividad",
+        "/reportes/clientes-por-ubicacion",
+        "/reportes/clientes-imc-categorias",
+        "/reportes/clientes-riesgo",
+        "/reportes/clientes-reduccion-imc",
+        "/reportes/clientes-ganancia-fuerza", 
+        "/reportes/clientes-progreso-aerobico"
+      ]
     },
     configuracion: {
       name: "Configuración",

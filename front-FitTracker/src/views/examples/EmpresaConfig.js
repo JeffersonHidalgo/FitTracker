@@ -212,7 +212,7 @@ const EmpresaConfig = () => {
                 <CardHeader className="bg-white border-0 pb-2">
                   <Row className="align-items-center">
                     <Col xs="8">
-                      <h3 className="mb-0 text-primary">
+                    <h3 className="mb-0" style={{ color: "#4A628A" }}>
                         <i className="ni ni-settings-gear-65 mr-2"></i>
                         Configuración de Empresa
                       </h3>

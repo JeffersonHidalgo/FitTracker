@@ -26,16 +26,25 @@ export const AuthProvider = ({ children }) => {
     loadUser();
   }, []);
 
-  // Agregar este mapeo de IDs a rutas
+  // Actualizar la constante PANTALLA_ID_TO_ROUTE
   const PANTALLA_ID_TO_ROUTE = {
-    1: "index",               // Dashboard
-    2: "client-form",         // Gestión de Clientes
-    3: "metrics-registration", // Registro de Métricas
-    4: "clientes/historial-metricas", // Historial
-    5: "empresa-config",      // Configuración de Empresa
-    6: "user-permissions",    // Gestión de Usuarios
-    7: "usuarios/roles",      // Roles
-    8: "recomendaciones"      // Recomendaciones
+    1: "index",                            // Dashboard
+    2: "client-form",                      // Gestión de Clientes
+    3: "metrics-registration",             // Registro de Métricas
+    4: "clientes/historial-metricas",      // Historial
+    5: "empresa-config",                   // Configuración de Empresa
+    6: "user-permissions",                 // Gestión de Usuarios
+    7: "usuarios/roles",                   // Roles
+    8: "recomendaciones",                  // Recomendaciones
+    9: "reportes/clientes-por-estado",     // Reporte Clientes por Estado
+    10: "reportes/clientes-nuevos",        // Reporte Clientes Nuevos
+    11: "reportes/clientes-sin-actividad", // Reporte Clientes Sin Actividad
+    12: "reportes/clientes-por-ubicacion", // Reporte Distribución Geográfica
+    13: "reportes/clientes-imc-categorias", // Reporte Categorías IMC
+    14: "reportes/clientes-riesgo",        // Reporte Clientes en Riesgo
+    15: "reportes/clientes-reduccion-imc", // Reporte Reducción de IMC
+    16: "reportes/clientes-ganancia-fuerza", // Reporte Ganancia de Fuerza
+    17: "reportes/clientes-progreso-aerobico" // Reporte Progreso Aeróbico
   };
 
   // Verificar si el usuario tiene acceso a una pantalla específica

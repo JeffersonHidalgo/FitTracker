@@ -822,6 +822,7 @@ const ClientForm = () => {
                                     className="form-control-alternative"
                                     placeholder="Número de teléfono"
                                     type="tel"
+                                    disabled={!(editMode || insertMode)}
                                   />
                                 )}
                               </InputMask>

@@ -86,8 +86,8 @@ const MetricsForm = ({ codigoCli, onResult, result }) => {
   };
 
   // Utilidad para convertir a número o null
-  const safeDecimal = v => v === "" || v === undefined || isNaN(Number(v)) ? null : Number(v);
-  const safeInt = v => v === "" || v === undefined || isNaN(Number(v)) ? null : parseInt(v, 10);
+  const safeDecimal = v => v === "" || v === undefined || isNaN(Number(v)) ? 0 : Number(v);
+  const safeInt = v => v === "" || v === undefined || isNaN(Number(v)) ? 0 : parseInt(v, 10);
 
   const handleAnalizar = async () => {
     // Si ya hay un resultado, no permitas analizar de nuevo
@@ -129,7 +129,8 @@ const MetricsForm = ({ codigoCli, onResult, result }) => {
       // Calcula el IMC localmente (como respaldo)
       const pesoEnKg = safeDecimal(toMetric(weight, "kg"));
       const alturaEnM = safeDecimal(toMetric(height, "cm")) / 100;
-      const imcCalculado = (pesoEnKg && alturaEnM) ? (pesoEnKg / (alturaEnM * alturaEnM)).toFixed(2) : null;
+      const imcCalculado = (pesoEnKg > 0 && alturaEnM > 0) ? 
+        (pesoEnKg / (alturaEnM * alturaEnM)).toFixed(2) : null;
       
       // Actualiza el IMC localmente antes de la llamada
       if (imcCalculado) {

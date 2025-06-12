@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Data;
+﻿using Data;
 using Data.Repos;
+using Microsoft.AspNetCore.Mvc;
 using Models;
+using Utils;
 
 namespace FitTrackerApi.Controllers
 {
@@ -143,6 +144,87 @@ namespace FitTrackerApi.Controllers
         {
            var historial = await _clienteRepository.ObtenerHistorialCompletoAsync(codigoCli);
             return Ok(historial);
+        }
+
+        [HttpGet("clientes-por-estado")]
+        public async Task<IActionResult> ObtenerClientesPorEstado()
+        {
+            var clientes = await _clienteRepository.ObtenerClientesPorEstadoAsync();
+            return Ok(clientes);
+        }
+        [HttpGet("nuevos-clientes/{dias}")]
+        public async Task<IActionResult> ObtenerNuevosClientes(int dias)
+        {
+            var clientes = await _clienteRepository.ObtenerNuevosClientesAsync(dias);
+            return Ok(clientes);
+        }
+        [HttpGet("clientes-sin-actividad/{dias}")]
+        public async Task<IActionResult> ObtenerClientesSinActividad(int dias)
+        {
+            var clientes = await _clienteRepository.ObtenerClientesSinActividadAsync(dias);
+            return Ok(clientes);
+        }
+
+        [HttpGet("imc-categorias")]
+        public async Task<IActionResult> ObtenerClientesPorCategoriaImc()
+        {
+            try
+            {
+                var clientes = await _clienteRepository.ObtenerClientesPorCategoriaImcAsync();
+                return Ok(clientes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener clientes por categoría IMC: {ex.Message}");
+            }
+        }
+        [HttpGet("clientes-riesgo")]
+        public async Task<IActionResult> GetClientesConFactoresRiesgo()
+        {
+            var resultado = await _clienteRepository.ObtenerClientesConFactoresRiesgoAsync();
+            return Ok(resultado);
+        }
+        [HttpGet("reduccion-imc")]
+        public async Task<IActionResult> GetClientesConReduccionImc([FromQuery] int meses)
+        {
+            try
+            {
+                var resultado = await _clienteRepository.ObtenerClientesConReduccionImcAsync(meses);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(GetClientesConReduccionImc), ex);
+                return StatusCode(500, "Error al obtener los datos de reducción de IMC.");
+            }
+        }
+        [HttpGet("ganancia-fuerza")]
+        public async Task<IActionResult> GetClientesConGananciaFuerza()
+        {
+            try
+            {
+                var datos = await _clienteRepository.ObtenerClientesConGananciaFuerzaAsync();
+                return Ok(datos);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(GetClientesConGananciaFuerza), ex);
+                return StatusCode(500, "Error al obtener clientes con ganancia de fuerza.");
+            }
+        }
+        [HttpGet("progreso-aerobico")]
+        public async Task<IActionResult> GetProgresoCapacidadAerobica()
+        {
+            try
+            {
+                var datos = await _clienteRepository.ObtenerProgresoCapacidadAerobicaAsync();
+                return Ok(datos);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(GetProgresoCapacidadAerobica), ex);
+                return StatusCode(500, "Error al obtener progreso en capacidad aeróbica.");
+            }
         }
 
 

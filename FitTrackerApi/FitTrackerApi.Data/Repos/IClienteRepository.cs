@@ -25,5 +25,14 @@ namespace Data.Repos
         Task<DashboardDemografiaDto> ObtenerDemografiaDashboardAsync();
         Task<DashboardSaludDto> ObtenerIndicadoresSaludAsync();
         Task<IEnumerable<CumpleanosDto>> ObtenerCumpleanosProximosAsync();
+
+        Task<IEnumerable<ClienteEstadoDto>> ObtenerClientesPorEstadoAsync();
+        Task<IEnumerable<ClienteNuevoDto>> ObtenerNuevosClientesAsync(int dias);
+        Task<IEnumerable<ClienteSinActividadDto>> ObtenerClientesSinActividadAsync(int dias);
+        Task<IEnumerable<ClienteImcCategoriaDto>> ObtenerClientesPorCategoriaImcAsync();
+        Task<IEnumerable<ClienteRiesgoDto>> ObtenerClientesConFactoresRiesgoAsync();
+        Task<IEnumerable<ClienteCambioImcDto>> ObtenerClientesConReduccionImcAsync(int meses);
+        Task<IEnumerable<ClienteProgresoFuerzaDto>> ObtenerClientesConGananciaFuerzaAsync();
+        Task<IEnumerable<ClienteProgresoCardioDto>> ObtenerProgresoCapacidadAerobicaAsync();
     }
 }

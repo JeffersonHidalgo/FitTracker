@@ -256,7 +256,6 @@ namespace Data.Repos
                 using var connection = GetConnection();
                 await connection.OpenAsync();
 
-                // Transacción para asegurar consistencia
                 using var transaction = await connection.BeginTransactionAsync();
 
                 try
@@ -290,9 +289,25 @@ namespace Data.Repos
                         }
                     }
 
-                    // Actualizar o insertar emails
+                    // --- MANEJO DE EMAILS ---
                     if (cliente.Emails != null)
                     {
+                        // Preparar lista de IDs de emails
+                        var emailIds = cliente.Emails
+                            .Where(e => e.Id > 0)
+                            .Select(e => e.Id.ToString());
+                        string emailIdsString = string.Join(",", emailIds);
+
+                        // Eliminar emails que no están en la lista actual
+                        using (var deleteCmd = new MySqlCommand("DeleteClienteEmailsNotInList", connection, (MySqlTransaction)transaction))
+                        {
+                            deleteCmd.CommandType = CommandType.StoredProcedure;
+                            deleteCmd.Parameters.AddWithValue("prm_CodigoCli", cliente.CodigoCli);
+                            deleteCmd.Parameters.AddWithValue("prm_EmailIds", emailIdsString);
+                            await deleteCmd.ExecuteNonQueryAsync();
+                        }
+
+                        // Actualizar/insertar emails restantes
                         foreach (var email in cliente.Emails)
                         {
                             using var emailCmd = new MySqlCommand("UpdateClienteEmail", connection, (MySqlTransaction)transaction);
@@ -305,10 +320,34 @@ namespace Data.Repos
                             await emailCmd.ExecuteNonQueryAsync();
                         }
                     }
+                    else
+                    {
+                        // Si no hay emails, eliminar todos los existentes
+                        using var deleteAllCmd = new MySqlCommand("DELETE FROM cliente_email WHERE codigo_cli = @codigoCli", 
+                            connection, (MySqlTransaction)transaction);
+                        deleteAllCmd.Parameters.AddWithValue("@codigoCli", cliente.CodigoCli);
+                        await deleteAllCmd.ExecuteNonQueryAsync();
+                    }
 
-                    // Actualizar o insertar teléfonos
+                    // --- MANEJO DE TELÉFONOS ---
                     if (cliente.Telefonos != null)
                     {
+                        // Preparar lista de IDs de teléfonos
+                        var telefonoIds = cliente.Telefonos
+                            .Where(t => t.Id > 0)
+                            .Select(t => t.Id.ToString());
+                        string telefonoIdsString = string.Join(",", telefonoIds);
+
+                        // Eliminar teléfonos que no están en la lista actual
+                        using (var deleteCmd = new MySqlCommand("DeleteClienteTelefonosNotInList", connection, (MySqlTransaction)transaction))
+                        {
+                            deleteCmd.CommandType = CommandType.StoredProcedure;
+                            deleteCmd.Parameters.AddWithValue("prm_CodigoCli", cliente.CodigoCli);
+                            deleteCmd.Parameters.AddWithValue("prm_TelefonoIds", telefonoIdsString);
+                            await deleteCmd.ExecuteNonQueryAsync();
+                        }
+
+                        // Actualizar/insertar teléfonos restantes
                         foreach (var tel in cliente.Telefonos)
                         {
                             using var telCmd = new MySqlCommand("UpdateClienteTelefono", connection, (MySqlTransaction)transaction);
@@ -321,6 +360,14 @@ namespace Data.Repos
                             telCmd.Parameters.AddWithValue("prm_Principal", tel.Principal);
                             await telCmd.ExecuteNonQueryAsync();
                         }
+                    }
+                    else
+                    {
+                        // Si no hay teléfonos, eliminar todos los existentes
+                        using var deleteAllCmd = new MySqlCommand("DELETE FROM cliente_telefono WHERE codigo_cli = @codigoCli", 
+                            connection, (MySqlTransaction)transaction);
+                        deleteAllCmd.Parameters.AddWithValue("@codigoCli", cliente.CodigoCli);
+                        await deleteAllCmd.ExecuteNonQueryAsync();
                     }
 
                     await transaction.CommitAsync();
@@ -879,6 +926,307 @@ namespace Data.Repos
                 return Enumerable.Empty<CumpleanosDto>();
             }
         }
+        public async Task<IEnumerable<ClienteEstadoDto>> ObtenerClientesPorEstadoAsync()
+        {
+            var lista = new List<ClienteEstadoDto>();
+
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+
+                using var cmd = new MySqlCommand("SClientesPorEstado", conn) { CommandType = CommandType.StoredProcedure };
+                using var reader = await cmd.ExecuteReaderAsync();
+
+                while (await reader.ReadAsync())
+                {
+                    lista.Add(new ClienteEstadoDto
+                    {
+                        ClienteId = reader.IsDBNull(reader.GetOrdinal("codigo_cli")) ? 0 : reader.GetInt32("codigo_cli"),
+                        NombreCompleto = reader.IsDBNull(reader.GetOrdinal("nombre_completo")) ? string.Empty : reader.GetString("nombre_completo"),
+                        FechaInicio = (DateTime)(reader.IsDBNull(reader.GetOrdinal("fecha_inicio")) ? (DateTime?)null : reader.GetDateTime("fecha_inicio")),
+                        EmailPrincipal = reader.IsDBNull(reader.GetOrdinal("email")) ? string.Empty : reader.GetString("email"),
+                        TelefonoPrincipal = reader.IsDBNull(reader.GetOrdinal("numero")) ? string.Empty : reader.GetString("numero"),
+                        Estado = reader.IsDBNull(reader.GetOrdinal("estado")) ? null : reader.GetString("estado")
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerClientesPorEstadoAsync), ex);
+            }
+
+            return lista;
+        }
+
+        public async Task<IEnumerable<ClienteNuevoDto>> ObtenerNuevosClientesAsync(int dias)
+        {
+            var lista = new List<ClienteNuevoDto>();
+
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+
+                using var cmd = new MySqlCommand("SClientesNuevosPorDias", conn) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("prm_dias", dias);
+
+                using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    lista.Add(new ClienteNuevoDto
+                    {
+                        ClienteId = reader.GetInt32("codigo_cli"),
+                        NombreCompleto = reader.GetString("nombre_completo"),
+                        FechaRegistro = reader.GetDateTime("fecha_crea"),
+                        Ciudad = reader.GetString("ciudad"),
+                        Provincia = reader.GetString("provincia")
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerNuevosClientesAsync), ex);
+            }
+
+            return lista;
+        }
+
+        public async Task<IEnumerable<ClienteSinActividadDto>> ObtenerClientesSinActividadAsync(int dias)
+        {
+            var lista = new List<ClienteSinActividadDto>();
+
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+
+                using var cmd = new MySqlCommand("SClientesSinActividad", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("prm_dias", dias);
+
+                using var reader = await cmd.ExecuteReaderAsync();
+
+                // Get column ordinals once before reading rows
+                int ordinalCodigo = reader.GetOrdinal("codigo_cli");
+                int ordinalNombre = reader.GetOrdinal("nombre_completo");
+                int ordinalUltimaMetrica = reader.GetOrdinal("UltimaMetrica");
+                int ordinalEmail = reader.GetOrdinal("email");
+                int ordinalTelefono = reader.GetOrdinal("numero");
+
+                while (await reader.ReadAsync())
+                {
+                    lista.Add(new ClienteSinActividadDto
+                    {
+                        // Handle potential NULL for integer
+                        ClienteId = reader.IsDBNull(ordinalCodigo)
+                            ? 0
+                            : reader.GetInt32(ordinalCodigo),
+
+                        // Handle potential NULL for string
+                        NombreCompleto = reader.IsDBNull(ordinalNombre)
+                            ? string.Empty
+                            : reader.GetString(ordinalNombre),
+
+                        // Handle potential NULL for DateTime
+                        UltimaMetrica = reader.IsDBNull(ordinalUltimaMetrica)
+                            ? (DateTime?)null
+                            : reader.GetDateTime(ordinalUltimaMetrica),
+
+                        // Safe handling for string columns
+                        EmailPrincipal = reader.IsDBNull(ordinalEmail)
+                            ? string.Empty
+                            : Convertidor.ToStringSafe(reader.GetString(ordinalEmail)),
+
+                        TelefonoPrincipal = reader.IsDBNull(ordinalTelefono)
+                            ? string.Empty
+                            : Convertidor.ToStringSafe(reader.GetString(ordinalTelefono))
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerClientesSinActividadAsync), ex);
+            }
+
+            return lista;
+        }
+        public async Task<IEnumerable<ClienteImcCategoriaDto>> ObtenerClientesPorCategoriaImcAsync()
+        {
+            var lista = new List<ClienteImcCategoriaDto>();
+
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+
+                using var cmd = new MySqlCommand("SClientesPorCategoriaIMC", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    lista.Add(new ClienteImcCategoriaDto
+                    {
+                        ClienteId = reader.GetInt32("ClienteId"),
+                        NombreCompleto = reader.GetString("NombreCompleto"),
+                        ImcActual = reader.GetDecimal("IMC"),
+                        Categoria = reader.GetString("CategoriaIMC"),
+                        FechaUltimaMedicion = reader.GetDateTime("FechaUltimaMedicion")
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerClientesPorCategoriaImcAsync), ex);
+            }
+
+            return lista;
+        }
+        public async Task<IEnumerable<ClienteRiesgoDto>> ObtenerClientesConFactoresRiesgoAsync()
+        {
+            var lista = new List<ClienteRiesgoDto>();
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+
+                using var cmd = new MySqlCommand("SClientesConFactoresRiesgo", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    lista.Add(new ClienteRiesgoDto
+                    {
+                        ClienteId = reader.GetInt32("ClienteId"),
+                        NombreCompleto = reader.GetString("NombreCompleto"),
+                        Imc = (decimal)(reader["imc"] as decimal?),
+                        FcReposo = (int)(reader["fc_reposo"] as int?),
+                        TestCooper = (decimal)(reader["test_cooper"] as decimal?),
+                        Edad = reader.GetInt32("Edad")
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerClientesConFactoresRiesgoAsync), ex);
+            }
+            return lista;
+        }
+        public async Task<IEnumerable<ClienteCambioImcDto>> ObtenerClientesConReduccionImcAsync(int meses)
+        {
+            var lista = new List<ClienteCambioImcDto>();
+
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+
+                using var cmd = new MySqlCommand("SClientesReduccionImc", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("prm_meses", meses);
+
+                using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    lista.Add(new ClienteCambioImcDto
+                    {
+                        ClienteId = reader.GetInt32("ClienteId"),
+                        NombreCompleto = reader.GetString("NombreCompleto"),
+                        ImcInicial = reader.GetDecimal("ImcInicial"),
+                        ImcActual = reader.GetDecimal("ImcActual"),
+                        Diferencia = reader.GetDecimal("Diferencia"),
+                        PorcentajeCambio = reader.GetDecimal("PorcentajeCambio")
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerClientesConReduccionImcAsync), ex);
+            }
+
+            return lista;
+        }
+        public async Task<IEnumerable<ClienteProgresoFuerzaDto>> ObtenerClientesConGananciaFuerzaAsync()
+        {
+            var lista = new List<ClienteProgresoFuerzaDto>();
+
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+
+                using var cmd = new MySqlCommand("SClientesGananciaFuerza", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    lista.Add(new ClienteProgresoFuerzaDto
+                    {
+                        ClienteId = reader.GetInt32("ClienteId"),
+                        NombreCompleto = reader.GetString("NombreCompleto"),
+                        RmInicial = reader.GetDecimal("RmInicial"),
+                        RmActual = reader.GetDecimal("RmActual"),
+                        Diferencia = reader.GetDecimal("Diferencia"),
+                        PorcentajeIncremento = reader.GetDecimal("PorcentajeIncremento")
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerClientesConGananciaFuerzaAsync), ex);
+            }
+
+            return lista;
+        }
+        public async Task<IEnumerable<ClienteProgresoCardioDto>> ObtenerProgresoCapacidadAerobicaAsync()
+        {
+            var lista = new List<ClienteProgresoCardioDto>();
+
+            try
+            {
+                using var conn = GetConnection();
+                await conn.OpenAsync();
+
+                using var cmd = new MySqlCommand("SClientesProgresoAerobico", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    lista.Add(new ClienteProgresoCardioDto
+                    {
+                        ClienteId = reader.GetInt32("ClienteId"),
+                        NombreCompleto = reader.GetString("NombreCompleto"),
+                        TestCooperInicial = reader.GetDecimal("TestInicial"),
+                        TestCooperActual = reader.GetDecimal("TestActual"),
+                        Diferencia = reader.GetDecimal("Diferencia"),
+                        PorcentajeMejora = reader.GetDecimal("PorcentajeCambio")
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogError(nameof(ObtenerProgresoCapacidadAerobicaAsync), ex);
+            }
+
+            return lista;
+        }
+
 
     }
 }

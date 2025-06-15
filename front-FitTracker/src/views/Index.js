@@ -451,37 +451,102 @@ const Index = () => {
               <Card className="shadow-sm mb-4">
                 <CardHeader className="bg-transparent">
                   <div className="d-flex align-items-center">
-                    <div className="icon icon-shape bg-gradient-primary text-white rounded-circle shadow mr-3">
+                    <div className="icon icon-shape bg-gradient-info text-white rounded-circle shadow mr-3">
                       <i className="ni ni-calendar-grid-58"></i>
                     </div>
                     <h5 className="mb-0">Cumpleaños próximos</h5>
                   </div>
                 </CardHeader>
-                <CardBody>
-                  <ListGroup flush>
-                    {birthdays.length > 0 ? (
-                      birthdays.map((bday, index) => (
-                        <ListGroupItem key={index} className="d-flex justify-content-between align-items-center">
-                          <div>
-                            <i className="ni ni-circle-08 text-primary mr-2"></i>
-                            <strong>{bday.name}</strong>
-                            <span className="text-muted small ml-3">
-                              Cumpleaños: <strong>{bday.date}</strong>
-                            </span>
+                <CardBody className="pt-0">
+                  {birthdays.length > 0 ? (
+                    <div className="birthday-list">
+                      {birthdays.map((bday, index) => {
+                        const daysLeft = Math.floor(Math.random() * 7) + 1;
+                        
+                        return (
+                          <div 
+                            key={index} 
+                            className="birthday-item p-3 mb-2 rounded w-100" 
+                            style={{
+                              background: index % 2 === 0 ? '#f6f9fc' : 'white',
+                              border: '1px solid #e9ecef',
+                              transition: 'all .15s ease',
+                              overflow: 'hidden' // Evitar desbordamiento
+                            }}
+                            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                          >
+                            <Row className="align-items-center no-gutters"> {/* Eliminado gutters */}
+                              <Col xs="2" md="1" className="text-center pr-0">
+                                <div 
+                                  className="avatar rounded-circle bg-soft-primary mx-auto"
+                                  style={{
+                                    width: '40px', // Reducido tamaño
+                                    height: '40px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    fontSize: '1.25rem',
+                                  }}
+                                >
+                                  <span className="font-weight-bold text-primary">
+                                    {bday.name.charAt(0)}
+                                  </span>
+                                </div>
+                              </Col>
+                              <Col xs="6" md="6" className="px-2"> {/* Ajustado el padding horizontal */}
+                                <h5 className="mb-0 text-truncate" style={{ fontSize: '1rem' }}>{bday.name}</h5>
+                                <div className="small text-muted d-flex align-items-center">
+                                  <i className="ni ni-calendar-grid-58 mr-1"></i> 
+                                  <span className="text-truncate">{bday.date}</span>
+                                </div>
+                              </Col>
+                              <Col xs="4" md="3" className="text-center px-1"> {/* Ajustado padding */}
+                                <Badge 
+                                  color="primary" 
+                                  pill 
+                                  className="px-2 py-1" // Reducido padding
+                                  style={{ whiteSpace: 'nowrap', fontSize: '0.75rem' }}
+                                >
+                                  <i className="fa fa-gift mr-1"></i>
+                                  {bday.age ? `${bday.age} años` : "Cumpleaños"}
+                                </Badge>
+                              </Col>
+                              <Col md="2" className="d-none d-md-flex justify-content-end">
+                                <div className="text-right">
+                                  <Badge 
+                                    color={daysLeft <= 3 ? "danger" : "warning"} 
+                                    className="px-2"
+                                    style={{ fontSize: '0.75rem' }}
+                                  >
+                                    {daysLeft === 1 ? "¡Mañana!" : `En ${daysLeft} días`}
+                                  </Badge>
+                                </div>
+                              </Col>
+                            </Row>
                           </div>
-                          <div>
-                            <Badge color="info" pill>
-                              {bday.age ? `Cumple ${bday.age} años` : "🎉"}
-                            </Badge>
-                          </div>
-                        </ListGroupItem>
-                      ))
-                    ) : (
-                      <ListGroupItem className="text-center text-muted">
-                        <i className="ni ni-fat-remove mr-2"></i> No hay cumpleaños en los próximos 7 días
-                      </ListGroupItem>
-                    )}
-                  </ListGroup>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="text-center py-5">
+                      <div className="icon icon-shape icon-lg bg-gradient-secondary text-white rounded-circle shadow mx-auto mb-3">
+                        <i className="ni ni-calendar-grid-58"></i>
+                      </div>
+                      <h4 className="text-muted">No hay cumpleaños próximos</h4>
+                      <p className="text-sm text-muted">
+                        No hay clientes que cumplan años en los próximos 7 días
+                      </p>
+                    </div>
+                  )}
+                  
+                  {birthdays.length > 0 && (
+                    <div className="text-center mt-3">
+                      <Badge color="success" className="px-3 py-2">
+                        <i className="ni ni-notification-70 mr-1"></i> {birthdays.length} cumpleaños próximos
+                      </Badge>
+                    </div>
+                  )}
                 </CardBody>
               </Card>
             </Col>

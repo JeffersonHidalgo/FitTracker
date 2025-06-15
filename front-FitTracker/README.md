@@ -1,257 +1,141 @@
-# FitTracker
+# FitTracker - Sistema de Gestión para Centros de Fitness
 
-Start your development with FitTracker, a dashboard for fitness tracking built with [React](https://reactjs.org/) and [Reactstrap](https://reactstrap.github.io/).
+![FitTracker Logo](public/fittracker-logo.jpg)
 
-**Authors:** Charlie Delgado & Jefferson Hidalgo
+## Descripción
 
-**License:** [MIT](https://github.com/charliedelgado/fittracker/blob/master/LICENSE.md)
+FitTracker es una aplicación web completa para la gestión de gimnasios y centros de fitness, enfocada en el seguimiento del progreso físico de los clientes. Permite registrar y monitorear métricas físicas, generar reportes detallados, y proporcionar recomendaciones personalizadas para mejorar la experiencia de los clientes.
 
-**Product Page:** [FitTracker](https://www.fittracker.com)
+## Tecnologías Utilizadas
 
-![version](https://img.shields.io/badge/version-1.2.4-blue.svg) ![license](https://img.shields.io/badge/license-MIT-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/ fit-tracker.svg?maxAge=2592000)](https://github.com/creativetimofficial/ fit-tracker/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/ fit-tracker.svg?maxAge=2592000)](https://github.com/creativetimofficial/ fit-tracker/issues?q=is%3Aissue+is%3Aclosed) [![Join the chat at https://gitter.im/NIT-dgp/General](https://badges.gitter.im/NIT-dgp/General.svg)](https://gitter.im/creative-tim-general/Lobby) [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/E4aHAQy)
+- **Frontend**: React, Reactstrap, React Router
+- **Estilos**: Bootstrap 4, CSS personalizado
+- **Gráficos**: Chart.js, React-chartjs-2
+- **Manipulación de datos**: XLSX para exportación a Excel
+- **Peticiones HTTP**: Axios
 
-![Product Gif](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/ fit-tracker/ fit-tracker.gif)
+## Características Principales
 
-Start your development with a Dashboard for [Bootstrap 4](https://getbootstrap.com/?ref=creativetim), [React](https://reactjs.org/?ref=creativetim) and [Reactstrap](https://reactstrap.github.io/?ref=creativetim), made with [create-react-app](https://facebook.github.io/create-react-app/?ref=creativetim). It is open source, free and it features many components that can help you create amazing websites.
+### 1. Gestión de Clientes
+- Registro de nuevos clientes
+- Modificación de información de clientes
+- Consulta de información de clientes
+- Activación/Desactivación de clientes
 
-**Fully Coded Components**
+### 2. Métricas y Seguimiento
+- Registro de métricas físicas (peso, altura, IMC, fuerza, capacidad aeróbica)
+- Consulta de historial de métricas
+- Visualización gráfica de la evolución de métricas
+- Impresión y envío por email de informes de progreso
 
-Argon Dashboard React is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in color, that you can easily modify using SASS files.
-You will save a lot of time going from prototyping to full-functional code, because all elements are implemented. This Dashboard is coming with pre-built examples, so the development process is seamless, switching from our pages to the real website is very easy to be done.
-Every element has multiple states for colors, styles, hover, focus, that you can easily access and use.
+### 3. Reportes y Análisis
+- Clientes por estado (activos/inactivos)
+- Clientes nuevos
+- Clientes sin actividad reciente
+- Distribución geográfica de clientes
+- Categorías de IMC
+- Clientes en situación de riesgo
+- Reducción de IMC
+- Ganancia de fuerza
+- Progreso aeróbico
+- Exportación de todos los reportes a Excel
 
-**Complex Documentation**
+### 4. Recomendaciones Personalizadas
+- Creación de recomendaciones basadas en métricas
+- Asignación automática según condición física
 
-Each element is well presented in a very complex documentation. You can read more about the idea behind this [dashboard here](https://demos.creative-tim.com/ fit-tracker/#/documentation/overview?ref=creativetim). You can check the [components here](https://demos.creative-tim.com/ fit-tracker/#/documentation/alerts?ref=creativetim) and the [foundation here](https://demos.creative-tim.com/argon-dashboard/#/documentation/colors?ref=creativetim).
+### 5. Dashboard
+- Resumen general de clientes
+- Estadísticas demográficas
+- Indicadores de salud
+- Próximos cumpleaños
 
-**Example Pages**
+## Instalación y Configuración
 
-If you want to get inspiration or just show something directly to your clients, you can jump start your development with our pre-built example pages. You will be able to quickly set up the basic structure for your web project.
+### Requisitos Previos
+- Node.js (v14.0.0 o superior)
+- npm (v6.0.0 o superior)
 
-## Table of Contents
+### Pasos de Instalación
 
-- [Versions](#versions)
-- [Demo](#demo)
-- [Quick Start](#quick-start)
-- [Deploy](#deploy)
-- [Documentation](#documentation)
-- [File Structure](#file-structure)
-- [Browser Support](#browser-support)
-- [Resources](#resources)
-- [Reporting Issues](#reporting-issues)
-- [Licensing](#licensing)
-- [Useful Links](#useful-links)
+1. **Clonar el repositorio**
+   ```bash
+   git clone <url-del-repositorio>
+   cd front-FitTracker
+   ```
 
-## Versions
+2. **Instalar dependencias**
+   ```bash
+   npm install
+   ```
 
-[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/html-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/argon-dashboard?ref=adr-github-readme)[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/react-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/ fit-tracker?ref=adr-github-readme)[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/angular-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/argon-dashboard-angular)[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/nodejs-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/argon-dashboard-nodejs?ref=adr-github-readme)[<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/laravel_logo.png" width="60" height="60" style="background:white"/>](https://www.creative-tim.com/product/argon-dashboard-laravel?ref=adr-github-readme)[<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/sketch-logo.jpg" width="60" height="60" />](https://www.creative-tim.com/product/ fit-tracker?ref=adr-github-readme)
+3. **Configurar variables de entorno**
+   - Crear un archivo .env en la raíz del proyecto
+   - Definir las variables necesarias:
+     ```
+     REACT_APP_API_URL=http://localhost:3001/api
+     ```
 
-| HTML                                                                                                                                                                                           | React                                                                                                                                                                                                             | Angular                                                                                                                                                                                                                   |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [![Argon Dashboard HTML](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/argon-dashboard.jpg?raw=true)](https://www.creative-tim.com/product/argon-dashboard) | [![Argon Dashboard React](https://github.com/creativetimofficial/public-assets/blob/master/ fit-tracker/ fit-tracker.jpg?raw=true)](https://www.creative-tim.com/product/ fit-tracker) | [![Argon Dashboard Angular](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard-angular/argon-dashboard-angular.jpg?raw=true)](https://www.creative-tim.com/product/argon-dashboard-angular) |
+4. **Iniciar la aplicación en modo desarrollo**
+   ```bash
+   npm start
+   ```
 
-| NodeJS                                                                                                                                                                                                                | Laravel                                                                                                                                                                                                                   |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [![Argon Dashboard NodeJS](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard-nodejs/argon-dashboard-nodejs.jpg?raw=true)](https://www.creative-tim.com/product/argon-dashboard-nodejs) | [![Argon Dashboard Laravel](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard-laravel/argon-dashboard-laravel.jpg?raw=true)](https://www.creative-tim.com/product/argon-dashboard-laravel) |
+5. **Crear build para producción**
+   ```bash
+   npm run build
+   ```
 
-## Demo
-
-| Dashboard Page                                                                                                                                                                                              | Icons Page                                                                                                                                                                                          | Tables Page                                                                                                                                                                                            | Maps Page                                                                                                                                                                                        |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [![Dashboard Page](https://github.com/creativetimofficial/public-assets/blob/master/ fit-tracker/dashboard-page.png?raw=true)](https://demos.creative-tim.com/ fit-tracker/#/admin/index) | [![Icons Page](https://github.com/creativetimofficial/public-assets/blob/master/ fit-tracker/icons-page.png?raw=true)](https://demos.creative-tim.com/ fit-tracker/#/admin/icons) | [![Tables Page](https://github.com/creativetimofficial/public-assets/blob/master/ fit-tracker/tables-page.png?raw=true)](https://demos.creative-tim.com/ fit-tracker/#/admin/tables) | [![Maps Page](https://github.com/creativetimofficial/public-assets/blob/master/ fit-tracker/maps-page.png?raw=true)](https://demos.creative-tim.com/ fit-tracker/#/admin/maps) |
-
-| Register Page                                                                                                                                                                                             | Login Page Page                                                                                                                                                                                         | Profile Page                                                                                                                                                                                                |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [![Login Page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/ fit-tracker/register-page.png)](https://demos.creative-tim.com/ fit-tracker/#/auth/register) | [![Login Page Page](https://github.com/creativetimofficial/public-assets/blob/master/ fit-tracker/login-page.png?raw=true)](https://demos.creative-tim.com/ fit-tracker/#/auth/login) | [![Profile Page](https://github.com/creativetimofficial/public-assets/blob/master/ fit-tracker/user-page.png?raw=true)](https://demos.creative-tim.com/ fit-tracker/#/admin/user-profile) |
-
-[View More](https://demos.creative-tim.com/ fit-tracker?ref=adr-github-readme)
-
-## Quick start
-
-- `npm i  fit-tracker`
-- [Download from Github](https://github.com/creativetimofficial/ fit-tracker/archive/master.zip).
-- [Download from Creative Tim](https://www.creative-tim.com/product/ fit-tracker?ref=adr-github-readme).
-- Install with [Bower](https://bower.io/?ref=creativetim): `bower install  fit-tracker`.
-- Clone the repo: `git clone https://github.com/creativetimofficial/ fit-tracker.git`.
-
-## Deploy
-
-:rocket: You can deploy your own version of the template to Genezio with one click:
-
-[![Deploy to Genezio](https://raw.githubusercontent.com/Genez-io/graphics/main/svg/deploy-button.svg)](https://app.genez.io/start/deploy?repository=https://github.com/creativetimofficial/ fit-tracker&utm_source=github&utm_medium=referral&utm_campaign=github-creativetim&utm_term=deploy-project&utm_content=button-head)
-
-
-## Documentation
-
-The documentation for the Material Kit is hosted at our [website](https://demos.creative-tim.com/ fit-tracker/#/documentation/overview).
-
-## File Structure
-
-Within the download you'll find the following directories and files:
+## Estructura del Proyecto
 
 ```
-Argon Dashboard React
-.
-├── Documentation
-│   └── documentation.html
-├── CHANGELOG.md
-├── ISSUE_TEMPLATE.md
-├── LICENSE
-├── README.md
-├── package.json
-├── public
-│   ├── favicon.ico
-│   ├── index.html
-│   └── manifest.json
-└── src
-    ├── assets
-    │   ├── css
-    │   │   ├──  fit-tracker.css
-    │   │   ├──  fit-tracker.css.map
-    │   │   └──  fit-tracker.min.css
-    │   ├── fonts
-    │   │   └── nucleo
-    │   ├── img
-    │   │   ├── brand
-    │   │   ├── icons
-    │   │   │   └── common
-    │   │   └── theme
-    │   ├── scss
-    │   │   ├──  fit-tracker.scss
-    │   │   ├── bootstrap
-    │   │   │   ├── mixins
-    │   │   │   └── utilities
-    │   │   ├── core
-    │   │   │   ├── alerts
-    │   │   │   ├── avatars
-    │   │   │   ├── badges
-    │   │   │   ├── buttons
-    │   │   │   ├── cards
-    │   │   │   ├── charts
-    │   │   │   ├── close
-    │   │   │   ├── custom-forms
-    │   │   │   ├── dropdowns
-    │   │   │   ├── footers
-    │   │   │   ├── forms
-    │   │   │   ├── headers
-    │   │   │   ├── icons
-    │   │   │   ├── list-groups
-    │   │   │   ├── maps
-    │   │   │   ├── masks
-    │   │   │   ├── mixins
-    │   │   │   ├── modals
-    │   │   │   ├── navbars
-    │   │   │   ├── navs
-    │   │   │   ├── paginations
-    │   │   │   ├── popovers
-    │   │   │   ├── progresses
-    │   │   │   ├── separators
-    │   │   │   ├── tables
-    │   │   │   ├── type
-    │   │   │   ├── utilities
-    │   │   │   └── vendors
-    │   │   ├── custom
-    │   │   └── react
-    │   └── vendor
-    │       ├── @fortawesome
-    │       │   └── fontawesome-free
-    │       │       ├── LICENSE.txt
-    │       │       ├── css
-    │       │       ├── js
-    │       │       ├── less
-    │       │       ├── scss
-    │       │       ├── sprites
-    │       │       ├── svgs
-    │       │       │   ├── brands
-    │       │       │   ├── regular
-    │       │       │   └── solid
-    │       │       └── webfonts
-    │       └── nucleo
-    │           ├── css
-    │           └── fonts
-    ├── components
-    │   ├── Footers
-    │   │   ├── AdminFooter.jsx
-    │   │   └── AuthFooter.jsx
-    │   ├── Headers
-    │   │   ├── Header.jsx
-    │   │   └── UserHeader.jsx
-    │   ├── Navbars
-    │   │   ├── AdminNavbar.jsx
-    │   │   └── AuthNavbar.jsx
-    │   └── Sidebar
-    │       └── Sidebar.jsx
-    ├── index.js
-    ├── layouts
-    │   ├── Admin.jsx
-    │   └── Auth.jsx
-    ├── routes.js
-    ├── variables
-    │   └── charts.jsx
-    └── views
-        ├── Index.jsx
-        └── examples
-            ├── Icons.jsx
-            ├── Login.jsx
-            ├── Maps.jsx
-            ├── Profile.jsx
-            ├── Register.jsx
-            └── Tables.jsx
+front-FitTracker/
+├── public/                  # Archivos públicos
+├── src/                     # Código fuente
+│   ├── components/          # Componentes reutilizables
+│   ├── contexts/            # Contextos de React (AuthContext, etc.)
+│   ├── services/            # Servicios API
+│   ├── utils/               # Utilidades y funciones auxiliares
+│   ├── views/               # Componentes de páginas
+│   │   ├── examples/        # Vistas de ejemplo
+│   │   └── reports/         # Vistas de reportes
+│   ├── App.js               # Componente principal
+│   ├── index.js             # Punto de entrada
+│   └── routes.js            # Configuración de rutas
+└── package.json             # Dependencias y scripts
 ```
 
-## Browser Support
+## Guía de Uso
 
-At present, we officially aim to support the last two versions of the following browsers:
+### Autenticación
+- Utilice sus credenciales proporcionadas para iniciar sesión
+- El sistema mostrará diferentes opciones según su rol (Administrador o Entrenador)
 
-<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/chrome-logo.png?raw=true" width="64" height="64"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/firefox-logo.png" width="64" height="64"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/edge-logo.png" width="64" height="64"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/safari-logo.png" width="64" height="64"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/opera-logo.png" width="64" height="64">
+### Módulo de Clientes
+1. Acceda a la sección "Gestión de Clientes"
+2. Utilice los botones de acción para crear, modificar o consultar clientes
+3. Complete los formularios con la información requerida
 
-## Resources
+### Registro de Métricas
+1. Acceda a "Registro de Métricas"
+2. Seleccione un cliente
+3. Complete las métricas físicas actuales
+4. Guarde los cambios para actualizar el historial
 
-- Demo: <https://demos.creative-tim.com/ fit-tracker/#/admin/index?ref=adr-github-readme>
-- Download Page: <https://www.creative-tim.com/product/ fit-tracker?ref=adr-github-readme>
-- Documentation: <https://demos.creative-tim.com/ fit-tracker/#/documentation/overview?ref=adr-github-readme>
-- License Agreement: <https://www.creative-tim.com/license?ref=adr-github-readme>
-- Support: <https://www.creative-tim.com/contact-us?ref=adr-github-readme>
-- Issues: [Github Issues Page](https://github.com/creativetimofficial/ fit-tracker/issues?ref=creativetim)
-- **Kit:**
+### Reportes
+1. Acceda a la sección "Reportes"
+2. Seleccione el tipo de reporte deseado
+3. Utilice los filtros disponibles para personalizar la información
+4. Exporte a Excel si necesita trabajar con los datos externamente
 
-| HTML                                                                                                                                                                                                            | Vue                                                                                                                                                                                                                       |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [![Argon Design System  HTML](https://github.com/creativetimofficial/public-assets/blob/master/argon-design-system/argon-design-system.jpg?raw=true)](https://www.creative-tim.com/product/argon-design-system) | [![Vue Argon Design System](https://github.com/creativetimofficial/public-assets/blob/master/vue-argon-design-system/vue-argon-design-system.jpg?raw=true)](https://www.creative-tim.com/product/vue-argon-design-system) |
+## Soporte y Contacto
 
-## Reporting Issues
+Para problemas o consultas, contacte al equipo de desarrollo en [email@ejemplo.com](mailto:email@ejemplo.com).
 
-We use GitHub Issues as the official bug tracker for the Material Kit. Here are some advices for our users that want to report an issue:
+## Licencia
 
-1. Make sure that you are using the latest version of the Material Kit. Check the CHANGELOG from your dashboard on our [website](https://www.creative-tim.com/?ref=adr-github-readme).
-2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.
-3. Some issues may be browser specific, so specifying in what browser you encountered the issue might help.
+© 2023 FitTracker. Todos los derechos reservados.
 
-## Licensing
+---
 
-- Copyright 2024 Creative Tim (https://www.creative-tim.com/?ref=adr-github-readme)
-
-- Licensed under MIT (https://github.com/creativetimofficial/ fit-tracker/blob/master/LICENSE.md?ref=creativetim)
-
-## Useful Links
-
-- [Tutorials](https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w?ref=creativetim)
-- [Affiliate Program](https://www.creative-tim.com/affiliates/new?ref=adr-github-readme) (earn money)
-- [Blog Creative Tim](http://blog.creative-tim.com/?ref=adr-github-readme)
-- [Free Products](https://www.creative-tim.com/bootstrap-themes/free?ref=adr-github-readme) from Creative Tim
-- [Premium Products](https://www.creative-tim.com/bootstrap-themes/premium?ref=adr-github-readme) from Creative Tim
-- [React Products](https://www.creative-tim.com/bootstrap-themes/react-themes?ref=adr-github-readme) from Creative Tim
-- [Angular Products](https://www.creative-tim.com/bootstrap-themes/angular-themes?ref=adr-github-readme) from Creative Tim
-- [VueJS Products](https://www.creative-tim.com/bootstrap-themes/vuejs-themes?ref=adr-github-readme) from Creative Tim
-- [More products](https://www.creative-tim.com/bootstrap-themes?ref=adr-github-readme) from Creative Tim
-- Check our Bundles [here](https://www.creative-tim.com/bundles?ref=adr-github-readme)
-
-### Social Media
-
-Twitter: <https://twitter.com/CreativeTim?ref=creativetim>
-
-Facebook: <https://www.facebook.com/CreativeTim?ref=creativetim>
-
-Dribbble: <https://dribbble.com/creativetim?ref=creativetim>
-
-Instagram: <https://www.instagram.com/CreativeTimOfficial?ref=creativetim>
+*Desarrollado con ❤️ para mejorar la gestión de centros de fitness y el seguimiento del progreso de los clientes.*

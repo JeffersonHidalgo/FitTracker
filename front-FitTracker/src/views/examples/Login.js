@@ -19,14 +19,17 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../services/usuarioService";
 import { useEmpresa } from "../../contexts/EmpresaContext";
 import { API_ROOT } from "../../services/apiClient";
+import { useAuth } from "../../contexts/AuthContext"; // Añadir esta importación arriba
 
 const Login = () => {
   const { empresaConfig, loading } = useEmpresa();
+  const auth = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
   const navigate = useNavigate();
   
   // Construir la URL del logo
@@ -46,34 +49,64 @@ const Login = () => {
     setError("");
     
     try {
+      console.log("Intentando iniciar sesión con:", username);
+      
       const response = await login(username, password);
       
-      // Guardar datos del usuario de manera consistente
-      if (rememberMe) {
-        localStorage.setItem('user', JSON.stringify(response));
-      } else {
-        sessionStorage.setItem('user', JSON.stringify(response));
+      console.log("Login exitoso, guardando datos del usuario");
+      
+      // Guardar datos del usuario
+      const userData = {
+        ...response.usuario,
+        sesionValida: response.sesionValida,
+        ultimoAcceso: response.ultimoAcceso
+      };
+      
+      // Almacenar en localStorage independientemente de "Recordarme"
+      // Solo cambia dónde se guarda como copia secundaria
+      localStorage.setItem('user', JSON.stringify(userData));
+      
+      // Si no quieren ser recordados, también ponerlo en sessionStorage
+      // para que se borre al cerrar el navegador
+      if (!rememberMe) {
+        sessionStorage.setItem('user', JSON.stringify(userData));
+        // Y configurar un flag para que se borre de localStorage al cerrar sesión
+        const enhancedData = {...userData, tempSession: true};
+        localStorage.setItem('user', JSON.stringify(enhancedData));
       }
       
-      // Verificar si el usuario tiene acceso a dashboard antes de redirigir
-      navigate("/admin/index");
-    } catch (err) {
-      if (err.response) {
-        if (err.response.status === 429) {
-          setError(err.response.data || "Demasiados intentos fallidos. Intente más tarde.");
-        } else if (err.response.status === 401) {
-          setError(err.response.data || "Usuario o contraseña incorrectos");
-        } else {
-          setError("Error de autenticación. Intente nuevamente.");
-        }
+      // Actualizar el contexto de autenticación
+      if (auth && typeof auth.setUser === 'function') {
+        auth.setUser(userData);
+      } else if (auth && typeof auth.login === 'function') {
+        // Algunos contextos usan login en vez de setUser
+        auth.login(userData);
       } else {
-        setError("No se pudo conectar al servidor");
+        console.warn("No se pudo actualizar el contexto de autenticación - función no disponible");
+        // Continuar con la navegación de todos modos
       }
+      
+      // Añadir un pequeño retraso para asegurar que el estado se actualice
+      setTimeout(() => {
+        navigate("/admin/index");
+      }, 100);
+    } catch (err) {
+      console.error("Error completo:", err);
+      
+      // Mensaje de error simplificado y más amigable
+      setError(err.message || "No se pudo iniciar sesión. Intente nuevamente.");
     } finally {
       setIsLoading(false);
     }
   };
-
+  
+  // Agregar botón para reintentar
+  const handleRetry = () => {
+    setRetryCount(retryCount + 1);
+    setError("");
+    handleLogin({ preventDefault: () => {} });
+  };
+  
   return (
     <>
       <Col lg="5" md="7">
@@ -156,6 +189,13 @@ const Login = () => {
               {error && (
                 <div className="alert alert-danger" role="alert">
                   {error}
+                </div>
+              )}
+              {error && error.includes("No se pudo conectar") && (
+                <div className="text-center mt-2">
+                  <Button color="warning" size="sm" onClick={handleRetry}>
+                    Reintentar conexión
+                  </Button>
                 </div>
               )}
               <div className="text-center">

@@ -215,18 +215,43 @@ const ClientForm = () => {
 
       const res = await insertarCliente(cliente);
       const nuevoCodigo = res?.codigoCli || res?.id || res;
-
+      
+      console.log("Cliente insertado con código:", nuevoCodigo);
+      
       // Subir foto si hay archivo
-      if (foto?.file && nuevoCodigo) {
-        const resultado = await subirFotoCliente(nuevoCodigo, foto.file);
-        // Actualizar cliente con el nombre de la foto
-        await actualizarCliente({
-          ...cliente,
-          codigoCli: nuevoCodigo,
-          fotoPerfil: resultado.nombreArchivo
+      if (foto && foto.file && nuevoCodigo) {
+        console.log("Subiendo foto para cliente nuevo:", foto.file);
+        try {
+          const resultado = await subirFotoCliente(nuevoCodigo, foto.file);
+          console.log("Foto subida exitosamente:", resultado);
+          
+          // Actualizar cliente con el nombre de la foto
+          if (resultado && resultado.nombreArchivo) {
+            await actualizarCliente({
+              ...cliente,
+              codigoCli: nuevoCodigo,
+              fotoPerfil: resultado.nombreArchivo
+            });
+            
+            // AÑADIR ESTO: Actualizar el estado de la foto con la URL correcta
+            setFoto({
+              preview: `${API_ROOT}/api/cliente/imagen/${resultado.nombreArchivo}`,
+              nombreArchivo: resultado.nombreArchivo,
+              url: `${API_ROOT}/api/cliente/imagen/${resultado.nombreArchivo}`
+            });
+          }
+        } catch (fotoError) {
+          console.error("Error al subir foto:", fotoError);
+          showAlert("warning", "Cliente guardado pero hubo un problema al subir la foto");
+        }
+      } else {
+        console.log("No hay foto para subir o falta código de cliente:", {
+          hayFoto: !!foto,
+          hayFile: !!(foto && foto.file),
+          codigo: nuevoCodigo
         });
       }
-
+      
       showAlert("success", "Cliente insertado correctamente");
       setInsertMode(false);
 
@@ -255,9 +280,16 @@ const ClientForm = () => {
       let fotoPerfilFinal = form.fotoPerfil || "";
 
       // Si hay nueva foto, súbela primero y usa el nombre retornado
-      if (foto?.file && form.codigoCli) {
-        const resultado = await subirFotoCliente(form.codigoCli, foto.file);
-        fotoPerfilFinal = resultado.nombreArchivo;
+      if (foto && foto.file && form.codigoCli) {
+        console.log("Subiendo foto para cliente existente:", foto.file);
+        try {
+          const resultado = await subirFotoCliente(form.codigoCli, foto.file);
+          console.log("Foto subida exitosamente:", resultado);
+          fotoPerfilFinal = resultado?.nombreArchivo || fotoPerfilFinal;
+        } catch (fotoError) {
+          console.error("Error al subir foto:", fotoError);
+          showAlert("warning", "Cliente actualizado pero hubo un problema al subir la foto");
+        }
       }
 
       const cliente = {

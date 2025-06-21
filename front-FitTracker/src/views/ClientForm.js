@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -37,6 +37,15 @@ import InputMask from "react-input-mask";
 import { API_ROOT } from "../services/apiClient"; // Asegúrate de que esta ruta sea correct
 import ClienteSelectorModal from "components/ClienteSelectorModal";
 
+// Obtener fecha actual en formato YYYY-MM-DD para establecer valores por defecto y límites
+const getCurrentDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 const ClientForm = () => {
   const [activeTab, setActiveTab] = useState("basic");
   const [phones, setPhones] = useState([{ numero: "", tipo: "", descripcion: "", principal: false }]);
@@ -54,8 +63,8 @@ const ClientForm = () => {
     ciudad: "",
     provincia: "",
     codigoPostal: "",
-    tipoMembresia: "",
-    fechaInicio: "",
+    tipoMembresia: "Básica",  // Establecer Básica por defecto
+    fechaInicio: getCurrentDate(),  // Fecha actual por defecto
     fotoPerfil: "",
     contactoEmergencia: "",
     fechaCrea: "",
@@ -381,6 +390,37 @@ const ClientForm = () => {
     setMunicipios(provObj ? provObj.municipios : []);
   };
 
+  // En el useEffect inicial para cargar los valores por defecto al inicio
+  useEffect(() => {
+    // Establecer valores iniciales por defecto cuando se monta el componente
+    setForm(prevForm => ({
+      ...prevForm,
+      tipoMembresia: "Básica",
+      fechaInicio: getCurrentDate(),
+      estado: "A"
+    }));
+  }, []);
+
+  // También mejorar la validación en handleInputChange para fechas
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    
+    // Validación especial para fechas
+    if ((name === 'fechaNacimiento' || name === 'fechaInicio') && value) {
+      const selectedDate = new Date(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Normalizar a inicio del día
+      
+      if (selectedDate > today) {
+        // Si es fecha futura, mantener el valor anterior
+        showAlert("warning", "No se permiten fechas futuras");
+        return;
+      }
+    }
+    
+    setForm({ ...form, [name]: value });
+  };
+
   
   return (
     <>
@@ -423,8 +463,8 @@ const ClientForm = () => {
                               ciudad: "",
                               provincia: "",
                               codigoPostal: "",
-                              tipoMembresia: "",
-                              fechaInicio: "",
+                              tipoMembresia: "Básica",
+                              fechaInicio: getCurrentDate(),
                               fotoPerfil: "",
                               contactoEmergencia: "",
                               fechaCrea: "",
@@ -473,8 +513,8 @@ const ClientForm = () => {
                                 ciudad: "",
                                 provincia: "",
                                 codigoPostal: "",
-                                tipoMembresia: "",
-                                fechaInicio: "",
+                                tipoMembresia: "Básica",
+                                fechaInicio: getCurrentDate(),
                                 fotoPerfil: "",
                                 contactoEmergencia: "",
                                 fechaCrea: "",
@@ -519,8 +559,8 @@ const ClientForm = () => {
                                 ciudad: "",
                                 provincia: "",
                                 codigoPostal: "",
-                                tipoMembresia: "",
-                                fechaInicio: "",
+                                tipoMembresia: "Básica",
+                                fechaInicio: getCurrentDate(),
                                 fotoPerfil: "",
                                 contactoEmergencia: "",
                                 fechaCrea: "",
@@ -565,8 +605,8 @@ const ClientForm = () => {
                                 ciudad: "",
                                 provincia: "",
                                 codigoPostal: "",
-                                tipoMembresia: "",
-                                fechaInicio: "",
+                                tipoMembresia: "Básica",
+                                fechaInicio: getCurrentDate(),
                                 fotoPerfil: "",
                                 contactoEmergencia: "",
                                 fechaCrea: "",
@@ -688,6 +728,7 @@ const ClientForm = () => {
                               onChange={e => setForm({ ...form, fechaNacimiento: e.target.value })}
                               disabled={!(editMode || insertMode)}
                               required
+                              max={getCurrentDate()} // Añadir esta línea
                             />
                           </FormGroup>
                         </Col>
@@ -924,10 +965,9 @@ const ClientForm = () => {
                               onChange={e => setForm({ ...form, tipoMembresia: e.target.value })}
                               disabled={!(editMode || insertMode)}
                             >
-                              <option value="">Seleccione tipo</option>
-                              <option value="Premium">Premium</option>
-                              <option value="Oferta">Oferta</option>
                               <option value="Básica">Básica</option>
+                              <option value="Intermedia">Intermedia</option>
+                              <option value="Premium">Premium</option>
                             </Input>
                           </FormGroup>
                         </Col>
@@ -942,6 +982,7 @@ const ClientForm = () => {
                               value={form.fechaInicio}
                               onChange={e => setForm({ ...form, fechaInicio: e.target.value })}
                               disabled={!(editMode || insertMode)}
+                              max={getCurrentDate()} // Añadir esta línea
                             />
                           </FormGroup>
                         </Col>

@@ -7,14 +7,19 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Cargar usuario desde localStorage al iniciar
+    // Cargar usuario desde localStorage o sessionStorage al iniciar
     const loadUser = () => {
       try {
+        // Intentar cargar desde localStorage primero
         const savedUser = JSON.parse(localStorage.getItem('user'));
-        if (savedUser && savedUser.usuario) {
-          setCurrentUser(savedUser.usuario);
-        } else if (savedUser) {
-          setCurrentUser(savedUser);
+        // Si no existe en localStorage, intentar con sessionStorage
+        const sessionUser = !savedUser ? JSON.parse(sessionStorage.getItem('user')) : null;
+        
+        if (savedUser) {
+          // Si tiene estructura anidada usuario, extraerla
+          setCurrentUser(savedUser.usuario || savedUser);
+        } else if (sessionUser) {
+          setCurrentUser(sessionUser.usuario || sessionUser);
         }
       } catch (error) {
         console.error("Error cargando usuario:", error);
@@ -25,6 +30,20 @@ export const AuthProvider = ({ children }) => {
     
     loadUser();
   }, []);
+
+  // Función para actualizar el usuario en el estado y almacenamiento
+  const setUser = (userData) => {
+    console.log("Actualizando usuario en contexto:", userData);
+    // Actualizar el estado del contexto
+    setCurrentUser(userData);
+  };
+
+  // Función para cerrar sesión
+  const logout = () => {
+    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
+    setCurrentUser(null);
+  };
 
   // Actualizar la constante PANTALLA_ID_TO_ROUTE
   const PANTALLA_ID_TO_ROUTE = {
@@ -59,7 +78,6 @@ export const AuthProvider = ({ children }) => {
       return false;
     }
     
-    // Simplificar path para comparar (/admin/client-form -> client-form)
     const simplePath = path.replace('/admin/', '').split('/')[0];
     console.log("Verificando acceso a:", simplePath);
     console.log("Accesos del usuario:", currentUser.accesos);
@@ -97,7 +115,10 @@ export const AuthProvider = ({ children }) => {
   const value = {
     currentUser,
     loading,
-    tieneAccesoAPantalla
+    tieneAccesoAPantalla,
+    setUser,  
+    login: setUser,  // Alias para compatibilidad
+    logout  
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -52,3 +52,4 @@ Thumbs.db
 # Rider
 .idea/
 *.sln.iml
+node_modules
